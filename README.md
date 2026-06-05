@@ -35,13 +35,19 @@ Grok Imagine으로 생성한 강남 직장인 여성 일러스트 (오피스 룩
 4. 강남 라운지 → 호텔로 이어지는 다수의 H씬 + 난교
 
 ## Git & Firebase (완료)
-- GitHub: https://github.com/SBND85/game (repo name "game" as requested)
-- Firebase Project: gangnam-game
-- Live URL: https://gangnam-game.web.app (모바일에서 바로 테스트 가능)
+- **GitHub repo "game"**: https://github.com/SBND85/game (정확히 "game" 이름으로 생성 + push 완료)
+- **Firebase Project**: gangnam-game ( "game" ID는 이미 사용중이라 대체 이름 사용; 콘솔 https://console.firebase.google.com/project/gangnam-game )
+- **Live deployed URL**: https://gangnam-game.web.app (모바일 브라우저에서 바로 열어서 테스트. PWA로 홈화면 추가 가능)
 
-배포는 `firebase deploy --only hosting --project gangnam-game` 로 완료됨. 
+모든 업데이트 (스토리 확장, BGM phase, SW 등) 후 재배포 완료. 
 
-정적 파일이라 언제든 `firebase deploy` 로 업데이트 가능.
+로컬에서 수정 후 `firebase deploy --only hosting --project gangnam-game` 로 언제든 업데이트.
+
+**BGM**: Synthetic 다층 (chill/tension/intense phase 자동 전환) + Real MP3 지원 (assets/audio/bgm-chill.mp3 등 넣으면 settings에서 Real 선택).
+
+**스토리**: 20개 장면, 빌드업 대화/백스토리/선택지 다수 (느린 전개 → H escalation), favor/branch 시스템으로 1:1 또는 난교 변주, 동적 엔딩. 랜덤 2~4명 히로인 매 플레이.
+
+**모바일**: 완전 최적화 (탭 진행, 큰 버튼, safe-area, 그룹 이미지 스케일, SW 오프라인, fullscreen 등).
 
 ## 더 확장하고 싶은 부분
 - 더 많은 H씬 / 포즈 / 상황 (이미 기본적으로 8개 이상 H 연속)
