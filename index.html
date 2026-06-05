@@ -36,17 +36,33 @@
       background-size: cover;
       background-position: center;
       transition: background-image 0.4s ease;
+      box-shadow: inset 0 0 80px rgba(0,0,0,0.5);
     }
     
     .character-layer {
       transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
       filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.5));
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #111;
+    }
+    #character-container img.character-layer {
+      max-width: 100%;
+    }
+    #character-container .group-char {
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    #character-container .group-char + div {
+      font-size: 9px;
+      color: #fff9;
     }
     
     .dialogue-box {
-      background: linear-gradient(to bottom, #1a1114, #120c0f);
-      border: 1px solid #4a2f35;
-      box-shadow: 0 -10px 30px rgb(0 0 0 / 0.6);
+      background: linear-gradient(to bottom, #1a1114ee, #120c0fee);
+      border: 1px solid #5c3a40;
+      box-shadow: 0 -12px 40px rgb(0 0 0 / 0.7), inset 0 1px 0 rgba(255,255,255,0.06);
+      backdrop-filter: blur(8px);
     }
     
     .speaker-name {
@@ -59,12 +75,17 @@
       color: #f5e8e0;
       font-size: 16px;
       line-height: 1.65;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.6);
     }
 
     @media (max-width: 640px) {
       .vn-text {
         font-size: 17px;
         line-height: 1.6;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+      }
+      #dialogue-text {
+        min-height: 82px !important;
       }
       .choice-btn {
         min-height: 52px;
@@ -90,13 +111,29 @@
       background: #1f1619;
       border: 1px solid #5c3a40;
       color: #f5e8e0;
-      transition: all 0.1s ease;
+      transition: all 0.15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .choice-btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(159,18,57,0.15), transparent);
+      transition: 0.5s;
     }
     
     .choice-btn:hover {
       background: #3f2a2e;
       border-color: #9f1239;
       transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(159,18,57,0.2);
+    }
+    
+    .choice-btn:hover::before {
+      left: 200%;
     }
     
     .choice-btn:active {
@@ -146,7 +183,7 @@
         </div>
         
         <h1 class="text-6xl sm:text-7xl font-bold tracking-tighter mb-1" style="font-family: 'Noto Serif KR', serif;">강남 리유니온</h1>
-        <p class="text-xl sm:text-2xl text-[#fda4af] font-light tracking-wide mb-8">퇴근 후, 예전 동기들과의 비밀 파티 — 천천히 타오르는 이야기와 욕망</p>
+        <p class="text-xl sm:text-2xl text-[#fda4af] font-light tracking-wide mb-8">퇴근 후, 예전 동기들과의 비밀 파티<br class="hidden sm:block"><span class="text-sm sm:text-base opacity-75">— 천천히 타오르는 욕망과 이야기</span></p>
         
         <div class="space-y-3">
           <button onclick="startGame()" 
@@ -170,18 +207,18 @@
       </div>
     </div>
     
-    <div class="p-4 text-center text-[10px] text-white/30 border-t border-white/10">
-      강남 직장인 전 동기들. 슬로우번 플러팅과 백스토리 후 터지는 노골적 난교. (랜덤 2~4명)
+    <div class="p-4 text-center text-[10px] text-white/30 border-t border-white/10 tracking-widest">
+      강남 직장인 동기들 · 슬로우번 · 랜덤 2~4명 · 노골적 하렘/난교
     </div>
   </div>
 
   <!-- GAME SCREEN -->
   <div id="game-screen" class="hidden min-h-screen flex flex-col">
     <!-- Top bar -->
-    <div class="flex items-center justify-between px-4 py-2.5 bg-black/60 backdrop-blur border-b border-white/10 z-50">
+    <div class="flex items-center justify-between px-4 py-2 bg-black/70 backdrop-blur border-b border-white/10 z-50">
       <div class="flex items-center gap-3">
-        <button onclick="backToTitle()" class="text-white/60 hover:text-white text-xs px-2 py-1">← 타이틀</button>
-        <div class="text-sm font-medium text-white/70">강남 리유니온</div>
+        <button onclick="backToTitle()" class="text-white/50 hover:text-white text-xs px-2 py-1 active:text-white/80">←</button>
+        <div class="text-xs sm:text-sm font-medium text-white/60 tracking-wider">강남 리유니온</div>
       </div>
       
       <div class="flex items-center gap-2">
@@ -202,14 +239,14 @@
          style="background-image: url('assets/images/gangnam_lounge.jpg'); min-height: 52vh;">
       
       <!-- Participants + Character(s) for mobile optimization -->
-      <div id="participants-bar" class="hidden w-full px-4 pt-2 z-20">
-        <div class="flex justify-center gap-2 text-[10px] text-white/60 mb-1">오늘의 참석자</div>
-        <div id="participants-avatars" class="flex justify-center gap-1.5"></div>
+      <div id="participants-bar" class="hidden w-full px-4 pt-1.5 pb-1 z-20 bg-black/30">
+        <div class="flex justify-center gap-2 text-[9px] text-white/50 mb-0.5 tracking-[1px]">참석자</div>
+        <div id="participants-avatars" class="flex justify-center gap-2"></div>
       </div>
 
       <!-- Character(s) -->
-      <div id="character-container" class="relative z-10 w-full max-w-[520px] px-3 pb-3 select-none flex flex-wrap justify-center gap-2">
-        <!-- JS will populate 1 or more imgs here for group/orgy scenes -->
+      <div id="character-container" class="relative z-10 w-full max-w-[520px] px-3 pb-3 select-none flex flex-wrap justify-center gap-2 items-end">
+        <!-- JS will populate 1 or more imgs here for group/orgy scenes. For groups, images are smaller with subtle frame. -->
       </div>
       
       <!-- Subtle vignette overlay -->
@@ -224,15 +261,15 @@
         <div id="speaker" class="speaker-name text-sm mb-1.5 tracking-wider"></div>
         
         <!-- Text -->
-        <div id="dialogue-text" class="vn-text eroge-text text-[15.2px] min-h-[72px] leading-relaxed mb-3"></div>
+        <div id="dialogue-text" class="vn-text eroge-text text-[15.2px] min-h-[78px] leading-relaxed mb-2.5"></div>
         
         <!-- Choices -->
         <div id="choices-container" class="hidden space-y-2 mt-1"></div>
         
         <!-- Next button -->
-        <div id="next-container" class="flex justify-end mt-2">
+        <div id="next-container" class="flex justify-end mt-1">
           <button onclick="nextLine()"
-                  class="px-7 py-2 text-sm font-medium bg-[#9f1239] hover:bg-[#b91c3c] active:bg-[#7e122e] rounded-full text-white flex items-center gap-2 shadow">
+                  class="px-8 py-2.5 text-sm font-medium bg-[#9f1239] hover:bg-[#b91c3c] active:bg-[#7e122e] rounded-full text-white flex items-center gap-2 shadow active:scale-[0.985]">
             <span>다음</span>
             <span class="text-lg leading-none">→</span>
           </button>
@@ -603,8 +640,8 @@
         const div = document.createElement('div');
         div.className = 'flex flex-col items-center';
         div.innerHTML = `
-          <img src="${h.img}" class="w-9 h-9 rounded-full object-cover border border-white/30" style="box-shadow: 0 0 0 1px #3f2a2e;">
-          <div class="text-[9px] text-white/50 mt-0.5">${h.name}</div>
+          <img src="${h.img}" class="w-8 h-8 sm:w-9 sm:h-9 rounded-full object-cover border border-white/40 shadow" style="box-shadow: 0 0 0 1px #3f2a2e, 0 2px 4px rgba(0,0,0,0.4);">
+          <div class="text-[8px] sm:text-[9px] text-white/60 mt-0.5 tracking-wider">${h.name}</div>
         `;
         avatars.appendChild(div);
       });
@@ -1170,16 +1207,22 @@
       // For focus 1:1 h-scenes (specific char set), prefer single image even if group >1
       const isGroupScene = scene.type === 'orgy' || (!scene.char && currentGroup.length > 1 && scene.type === 'h-scene');
       if (isGroupScene && currentGroup.length > 0) {
-        // Show up to 3 small-to-medium images side by side for mobile
+        // Show up to 3 small-to-medium images side by side for mobile, with tiny name labels for clarity in orgy
         const toShow = currentGroup.slice(0, 3);
         toShow.forEach((key, idx) => {
           const h = heroinesPool[key];
+          const wrapper = document.createElement('div');
+          wrapper.className = 'flex flex-col items-center flex-1 min-w-[28%] max-w-[32%]';
           const img = document.createElement('img');
           img.src = h.img;
-          img.className = `character-layer rounded-xl shadow-xl border border-white/10 object-cover flex-1`;
-          img.style.maxHeight = window.innerWidth < 640 ? '38vh' : '48vh';
-          img.style.minWidth = '30%';
-          container.appendChild(img);
+          img.className = `character-layer group-char rounded-xl shadow-xl object-cover w-full`;
+          img.style.maxHeight = window.innerWidth < 640 ? '36vh' : '46vh';
+          const nameLabel = document.createElement('div');
+          nameLabel.className = 'text-[10px] text-white/50 mt-1 tracking-wider text-center truncate w-full';
+          nameLabel.textContent = h.name;
+          wrapper.appendChild(img);
+          wrapper.appendChild(nameLabel);
+          container.appendChild(wrapper);
         });
       } else if (scene.char) {
         const img = document.createElement('img');
