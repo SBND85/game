@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1a0f12">
+  <title>강남 리유니온</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;700&amp;family=Inter:wght@400;500;600&amp;display=swap');
+    
+    :root {
+      --crimson: #9f1239;
+    }
+    
+    body {
+      font-family: 'Noto Serif KR', 'Inter', system-ui, sans-serif;
+    }
+    
+    .eroge-text {
+      font-family: 'Noto Serif KR', serif;
+      line-height: 1.7;
+    }
+    
+    .vn-container {
+      max-width: 100%;
+      margin: 0 auto;
+      background: #0c0709;
+      box-shadow: 0 0 0 1px #3f2a2e;
+    }
+    
+    .game-bg {
+      background-size: cover;
+      background-position: center;
+      transition: background-image 0.4s ease;
+    }
+    
+    .character-layer {
+      transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.5));
+    }
+    
+    .dialogue-box {
+      background: linear-gradient(to bottom, #1a1114, #120c0f);
+      border: 1px solid #4a2f35;
+      box-shadow: 0 -10px 30px rgb(0 0 0 / 0.6);
+    }
+    
+    .speaker-name {
+      color: #fda4af;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    
+    .vn-text {
+      color: #f5e8e0;
+      font-size: 16px;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 640px) {
+      .vn-text {
+        font-size: 17px;
+        line-height: 1.6;
+      }
+      .choice-btn {
+        min-height: 52px;
+        font-size: 15px;
+        padding-top: 14px;
+        padding-bottom: 14px;
+      }
+      #visual-area {
+        min-height: 46vh !important;
+      }
+      .dialogue-box {
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+      }
+      .speaker-name {
+        font-size: 13px;
+      }
+      #character-container img {
+        max-height: 42vh !important;
+      }
+    }
+    
+    .choice-btn {
+      background: #1f1619;
+      border: 1px solid #5c3a40;
+      color: #f5e8e0;
+      transition: all 0.1s ease;
+    }
+    
+    .choice-btn:hover {
+      background: #3f2a2e;
+      border-color: #9f1239;
+      transform: translateY(-1px);
+    }
+    
+    .choice-btn:active {
+      transform: scale(0.985);
+    }
+    
+    .lewd-accent {
+      color: #fda4af;
+    }
+    
+    .section-title {
+      font-family: 'Inter', system-ui, sans-serif;
+      letter-spacing: 0.15em;
+    }
+    
+    .modal {
+      animation: modalPop 0.2s ease forwards;
+    }
+    
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.95) translateY(10px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    
+    .vn-text p {
+      margin-bottom: 0.6em;
+    }
+    
+    .text-reveal {
+      opacity: 0;
+      animation: textFade 0.6s ease forwards;
+    }
+    
+    .erotic-glow {
+      box-shadow: 0 0 15px rgb(159 18 57 / 0.15);
+    }
+  </style>
+</head>
+<body class="bg-[#0a0608] text-[#f5e8e0] min-h-screen overflow-x-hidden">
+  <!-- TITLE SCREEN -->
+  <div id="title-screen" class="min-h-screen flex flex-col">
+    <div class="flex-1 flex items-center justify-center p-6" 
+         style="background: linear-gradient(rgba(12,7,9,0.65), rgba(12,7,9,0.85)), url('assets/images/gangnam_lounge.jpg'); background-size: cover; background-position: center;">
+      <div class="text-center max-w-md w-full">
+        <div class="mb-3">
+          <span class="inline-block px-4 py-1 text-xs tracking-[3px] bg-[#9f1239]/80 text-white rounded-full">ADULT VISUAL NOVEL • MOBILE OPTIMIZED</span>
+        </div>
+        
+        <h1 class="text-6xl sm:text-7xl font-bold tracking-tighter mb-1" style="font-family: 'Noto Serif KR', serif;">강남 리유니온</h1>
+        <p class="text-xl sm:text-2xl text-[#fda4af] font-light tracking-wide mb-8">퇴근 후, 예전 동기들과의 비밀 파티 — 천천히 타오르는 이야기와 욕망</p>
+        
+        <div class="space-y-3">
+          <button onclick="startGame()" 
+                  class="w-full py-4 px-8 bg-[#9f1239] hover:bg-[#b91c3c] active:bg-[#7e122e] text-white text-xl font-semibold rounded-2xl shadow-xl transition-all active:scale-[0.985]">
+            시작하기
+          </button>
+          
+          <div class="flex gap-3">
+            <button onclick="showGallery()" 
+                    class="flex-1 py-3 px-6 bg-white/5 hover:bg-white/10 border border-white/10 text-sm rounded-2xl transition-all">
+              CG 갤러리
+            </button>
+            <button onclick="showSettings()" 
+                    class="flex-1 py-3 px-6 bg-white/5 hover:bg-white/10 border border-white/10 text-sm rounded-2xl transition-all">
+              설정
+            </button>
+          </div>
+        </div>
+        
+        <div class="mt-10 text-[10px] text-white/40 tracking-widest">MOBILE WEB APP • 29+ ONLY</div>
+      </div>
+    </div>
+    
+    <div class="p-4 text-center text-[10px] text-white/30 border-t border-white/10">
+      강남 직장인 전 동기들. 슬로우번 플러팅과 백스토리 후 터지는 노골적 난교. (랜덤 2~4명)
+    </div>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="game-screen" class="hidden min-h-screen flex flex-col">
+    <!-- Top bar -->
+    <div class="flex items-center justify-between px-4 py-2.5 bg-black/60 backdrop-blur border-b border-white/10 z-50">
+      <div class="flex items-center gap-3">
+        <button onclick="backToTitle()" class="text-white/60 hover:text-white text-xs px-2 py-1">← 타이틀</button>
+        <div class="text-sm font-medium text-white/70">강남 리유니온</div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <button onclick="toggleBGM()" id="bgm-btn"
+                class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 flex items-center gap-1.5 active:bg-white/10">
+          <span>♪</span>
+          <span id="bgm-status">BGM ON</span>
+        </button>
+        <button onclick="showGallery()" class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10">갤러리</button>
+        <button onclick="quickSave()" class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10">저장</button>
+        <button onclick="toggleFullscreen()" class="px-2 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10 hidden sm:block">⛶</button>
+      </div>
+    </div>
+
+    <!-- Visual Area -->
+    <div id="visual-area" 
+         class="relative flex-1 bg-black overflow-hidden flex items-end justify-center game-bg"
+         style="background-image: url('assets/images/gangnam_lounge.jpg'); min-height: 52vh;">
+      
+      <!-- Participants + Character(s) for mobile optimization -->
+      <div id="participants-bar" class="hidden w-full px-4 pt-2 z-20">
+        <div class="flex justify-center gap-2 text-[10px] text-white/60 mb-1">오늘의 참석자</div>
+        <div id="participants-avatars" class="flex justify-center gap-1.5"></div>
+      </div>
+
+      <!-- Character(s) -->
+      <div id="character-container" class="relative z-10 w-full max-w-[520px] px-3 pb-3 select-none flex flex-wrap justify-center gap-2">
+        <!-- JS will populate 1 or more imgs here for group/orgy scenes -->
+      </div>
+      
+      <!-- Subtle vignette overlay -->
+      <div class="absolute inset-0 pointer-events-none" 
+           style="background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.45) 82%);"></div>
+    </div>
+
+    <!-- Dialogue Box -->
+    <div class="dialogue-box border-t border-[#4a2f35] px-4 py-4 z-50">
+      <div class="max-w-3xl mx-auto">
+        <!-- Speaker -->
+        <div id="speaker" class="speaker-name text-sm mb-1.5 tracking-wider"></div>
+        
+        <!-- Text -->
+        <div id="dialogue-text" class="vn-text eroge-text text-[15.2px] min-h-[72px] leading-relaxed mb-3"></div>
+        
+        <!-- Choices -->
+        <div id="choices-container" class="hidden space-y-2 mt-1"></div>
+        
+        <!-- Next button -->
+        <div id="next-container" class="flex justify-end mt-2">
+          <button onclick="nextLine()"
+                  class="px-7 py-2 text-sm font-medium bg-[#9f1239] hover:bg-[#b91c3c] active:bg-[#7e122e] rounded-full text-white flex items-center gap-2 shadow">
+            <span>다음</span>
+            <span class="text-lg leading-none">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Modal -->
+  <div id="gallery-modal" onclick="if (event.target.id === 'gallery-modal') hideGallery()" class="hidden fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4">
+    <div onclick="event.stopImmediatePropagation()" class="modal bg-[#120c0f] border border-white/10 rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-hidden flex flex-col">
+      <div class="p-5 border-b border-white/10 flex items-center justify-between">
+        <div>
+          <div class="font-semibold text-xl">CG 갤러리</div>
+          <div class="text-xs text-white/50">강남 동기들의 비밀 순간들</div>
+        </div>
+        <button onclick="hideGallery()" class="text-white/50 hover:text-white text-2xl leading-none px-2">×</button>
+      </div>
+      
+      <div class="flex-1 overflow-auto p-5">
+        <div id="gallery-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+          <!-- Populated by JS -->
+        </div>
+        <div id="gallery-locked" class="hidden text-center py-10 text-white/40 text-sm">
+          아직 해금되지 않은 CG가 있습니다.<br>
+          게임을 진행하면 새로운 일러스트가 추가됩니다.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" onclick="if (event.target.id === 'settings-modal') hideSettings()" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-end sm:items-center justify-center">
+    <div onclick="event.stopImmediatePropagation()" class="modal bg-[#120c0f] border border-white/10 w-full sm:max-w-md sm:rounded-3xl sm:m-4 rounded-t-3xl p-6">
+      <div class="font-semibold text-lg mb-4">설정</div>
+      
+      <div class="space-y-5 text-sm">
+        <div>
+          <div class="flex justify-between mb-1.5 text-white/70">
+            <div>텍스트 속도</div>
+            <div id="text-speed-value">보통</div>
+          </div>
+          <input type="range" id="text-speed" min="1" max="4" step="1" value="2" class="w-full accent-[#9f1239]">
+        </div>
+        
+        <div>
+          <div class="flex justify-between items-center mb-1.5">
+            <div class="text-white/70">BGM 볼륨</div>
+            <div id="bgm-volume-value" class="text-xs">65%</div>
+          </div>
+          <input type="range" id="bgm-volume" min="0" max="100" step="5" value="65" class="w-full accent-[#9f1239]">
+        </div>
+
+        <!-- BGM Mode: Synthetic (always) / Real (if bgm-*.mp3 files present in assets/audio/) -->
+        <div>
+          <div class="text-white/70 mb-1.5">BGM 모드</div>
+          <select id="bgm-mode" class="w-full bg-[#1a1114] border border-white/10 rounded-xl px-3 py-2 text-sm text-white/90 focus:outline-none">
+            <option value="synthetic">Synthetic (내장 신스)</option>
+          </select>
+          <div id="bgm-mode-note" class="text-[10px] text-white/40 mt-1 leading-snug">assets/audio/bgm-chill.mp3 등 파일이 있으면 Real 선택 가능 (루프 재생)</div>
+        </div>
+        
+        <div class="pt-2 border-t border-white/10 flex gap-2">
+          <button onclick="resetProgress()" class="flex-1 py-2 text-xs bg-white/5 hover:bg-red-950/60 border border-white/10 rounded-2xl">진행도 초기화</button>
+          <button onclick="hideSettings()" class="flex-1 py-2 text-xs bg-[#9f1239] hover:bg-[#b91c3c] rounded-2xl">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tailwind script configuration
+    function initTailwind() {
+      document.documentElement.style.setProperty('--accent', '#9f1239');
+    }
+
+    // === GAME STATE ===
+    let currentScene = 0;
+    let currentLine = 0;
+    let flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
+    let unlockedCG = new Set();
+    let bgmEnabled = true;
+    let audioContext = null;
+    let bgmMasterGain = null;
+    let currentPhase = 'chill';
+    let bgmMode = 'synthetic'; // 'synthetic' | 'real'
+    let realAvailable = false;
+    let realAudios = {};
+    let realGains = {};
+    let syntheticNodes = [];
+    let currentBgmController = null;
+    let currentSynthGain = null; // used for internal synth fade references
+
+    // === NEW GAME DATA: 강남 직장인 리유니온 ===
+    const heroinesPool = {
+      sua: { id: 'sua', name: '이수아', job: '마케팅 디렉터', img: 'assets/images/gangnam_sua.jpg', desc: '우아하고 장난 많지만 리드 잘하는 타입. 대학 시절부터 플러팅의 달인.' },
+      jieun: { id: 'jieun', name: '김지은', job: '증권사 선임 애널리스트', img: 'assets/images/gangnam_jieun.jpg', desc: '차갑고 주도적, 말보다 행동파. 속에 숨긴 지배욕.' },
+      harin: { id: 'harin', name: '박하린', job: '대형 로펌 변호사', img: 'assets/images/gangnam_harin.jpg', desc: '차가운 미인, 속은 엄청 야함. 완벽주의 뒤의 변태성.' },
+      yujin: { id: 'yujin', name: '최유진', job: '럭셔리 호텔 PR', img: 'assets/images/gangnam_yujin.jpg', desc: '명랑하고 적극적, 분위기 메이커. 스캔들 좋아하는 타입.' }
+    };
+
+    const nameToKey = {
+      '이수아': 'sua',
+      '김지은': 'jieun',
+      '박하린': 'harin',
+      '최유진': 'yujin'
+    };
+
+    let currentGroup = []; // array of heroine keys, randomly chosen 2~4
+
+    // Scenes - 확장된 스토리: 강남 리유니온. 빌드업 대화/긴장/백스토리 중심 + 선택지 브랜치 + 노골적 H/난교
+    // 총 20개 장면 (0~19). 비H 빌드업 8개 이상, 브랜치(특정 히로인 집중 1:1 vs 그룹), 플래그로 강도/엔딩 영향
+    const scenes = [
+      {
+        id: 0,
+        type: "group-select",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "",
+        text: "강남 테헤란로. 오늘도 긴 회식이 끝났다.\n\n예전 대학 동기들이 모여 있는 단톡방에 메시지가 떴다.\n\n\"오늘 밤, 우리만의 2차 어때? 강남에서... 진짜로.\"",
+        next: 1
+      },
+      {
+        id: 1,
+        type: "narration",
+        bg: "assets/images/gangnam_lounge.jpg",
+        char: null,
+        speaker: "",
+        text: "고급 라운지 바의 은은한 조명 아래. 위스키 잔이 부딪히는 소리와 함께, 대학 시절 추억이 떠오른다.\n\n오늘 밤 이 자리에 나온 동기들. 각자 강남에서 치열하게 살아가는 직장인. 하지만 이 모임은 단순한 회식이 아니다. 오래전부터 쌓인, 말하지 못한 욕망이 꿈틀거린다.\n\n참석한 멤버들이 오늘의 '우리만의 밤'을 만들 것이다.",
+        next: 2
+      },
+      {
+        id: 2,
+        type: "dialogue",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "이수아",
+        char: "assets/images/gangnam_sua.jpg",
+        text: "태현아, 여기 앉아. 오늘은 진짜 우리끼리만 하자고. 회식 끝나고 여기로 오라고 일부러 말했어.\n\n(이수아는 우아한 미소를 지으며 네 소매를 잡는다. 마케팅 디렉터답게 분위기를 부드럽게 리드하는 그녀. 대학 때 마케팅 동아리에서 같이 밤새 프로젝트 하던 때가 떠오른다. 그때부터 수아는 너를 장난스럽게 유혹하곤 했다.)\n\n\"일 끝나고 이렇게 만나는 게 얼마만이야? 수아가 오늘 밤 제대로 재미있게 해줄게. 어때, 기대돼?\"",
+        next: 3
+      },
+      {
+        id: 3,
+        type: "dialogue",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "김지은",
+        char: "assets/images/gangnam_jieun.jpg",
+        text: "늦었네. 벌써 시작한 거야?\n\n(김지은은 차가운 눈으로 앉으며 위스키를 한 모금 마신다. 증권사 선임 애널리스트, 항상 숫자와 압박 속에 사는 그녀. 말수는 적지만 눈빛이 모든 걸 말한다. 대학 때부터 주도적인 성격으로 너를 이끌던 타입.)\n\n\"태현, 오늘은 내가 컨트롤하고 싶어. 증권 일처럼... 정확하고 거칠게. 너도 알지? 내가 원하는 대로 되는 게 제일 좋다는 거.\"",
+        next: 4
+      },
+      {
+        id: 4,
+        type: "dialogue",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "",
+        char: null,
+        text: "두 사람의 대화가 이어지며, 술이 천천히 몸을 데운다. 가벼운 스킨십이 시작된다. 이수아의 손이 네 허벅지에 스치고, 김지은의 발이 은근히 다가온다.\n\n긴장감과 설렘이 섞인다. 회식 때 느꼈던 그 시선들... 오늘은 진짜로 터뜨릴 수 있을까?",
+        choices: [
+          { text: "이수아의 장난스러운 플러팅에 맞장구치며 더 가까이 다가간다", next: 5, flag: { favorSua: 3, lewd: 1 } },
+          { text: "김지은의 차가운 주도에 끌려 그녀의 말에 따르며 술을 권한다", next: 5, flag: { favorJieun: 3, lewd: 1 } },
+          { text: "둘 사이를 중재하며 분위기를 부드럽게 풀어간다", next: 5, flag: { favorSua: 1, favorJieun: 1, lewd: 0 } }
+        ]
+      },
+      {
+        id: 5,
+        type: "dialogue",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "박하린",
+        char: "assets/images/gangnam_harin.jpg",
+        text: "(박하린이 도착했다. 대형 로펌 변호사, 언제나 차갑고 완벽한 미인. 하지만 오늘 그녀의 눈빛은 평소와 다르다.)\n\n하린이 조용히 앉아 치마 자락을 살짝 만지작거리며 말한다.\n\n\"...나도 왔어. 변호사로 사는 건 항상 완벽해야 하잖아. 하지만 오늘 밤은... 다르게 하고 싶어. 더럽게, 추하게. 대학 때부터 너한테 이런 상상 자주 했었지. 태현아, 날 더러운 변호사로 만들어줄래?\"",
+        next: 6
+      },
+      {
+        id: 6,
+        type: "dialogue",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "최유진",
+        char: "assets/images/gangnam_yujin.jpg",
+        text: "(최유진이 활기차게 들어온다. 럭셔리 호텔 PR답게 분위기를 순식간에 밝히는 그녀.)\n\n\"야~ 다들 진지해! 오늘은 내가 PR로 분위기 제대로 띄워줄게. 호텔 스위트룸도 미리 알아봤어. 회식 때부터 눈치 봤잖아, 태현이 너도 우리한테 관심 많았지? 명랑하게 끝까지 가보자고. 스캔들 좋아하는 타입이거든, 나.\"",
+        next: 7
+      },
+      {
+        id: 7,
+        type: "dialogue",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "",
+        char: null,
+        text: "네 명 (또는 참석자들)이 모인 테이블. 술잔이 오가며 개인적인 이야기들이 터져 나온다.\n\n이수아: \"대학 때 마케팅 캠페인 때문에 밤새도록 같이 있었던 거 기억나? 그때 너한테 반했었어, 장난스럽게.\"\n\n김지은: \"증권사에서 매일 압박받다 보면... 가끔 이렇게 완전히 통제당하고 싶을 때가 있어.\"\n\n박하린: \"로펌에서 이기는 것만 생각하다 보니, 속으로는 완전 반대가 되고 싶더라. 더러운 짓...\"\n\n최유진: \"호텔에서 온갖 VIP 스캔들 봤는데, 우리도 그런 재밌는 밤 한번 만들어보자. 적극적으로!\"",
+        choices: [
+          { text: "박하린의 차가운 속내에 공감하며 그녀의 손을 잡아당긴다", next: 8, flag: { favorHarin: 3, lewd: 1 } },
+          { text: "최유진의 명랑함에 맞춰 농담을 주고받으며 어깨를 감는다", next: 8, flag: { favorYujin: 3, lewd: 1 } },
+          { text: "모두에게 골고루 관심을 주며 천천히 분위기를 고조시킨다", next: 8, flag: { favorSua: 1, favorJieun: 1, favorHarin: 1, favorYujin: 1, lewd: 1 } }
+        ]
+      },
+      {
+        id: 8,
+        type: "narration",
+        bg: "assets/images/gangnam_lounge.jpg",
+        char: null,
+        speaker: "",
+        text: "위스키가 두 잔째 들어가자, 라운지 안의 공기가 달라진다.\n\n이수아의 손이 네 다리 위에서 천천히 움직이고, 김지은이 네 귀에 속삭인다. 박하린은 치마를 살짝 올린 채 다리를 꼬고, 최유진은 웃으며 네 셔츠 단추를 하나 풀어준다.\n\n\"오늘 밤은... 그냥 친구가 아니야. 예전 동기에서, 서로의 욕망을 풀어주는 사이로.\"\n\n누가 먼저 시작할까? 긴장과 흥분이 극에 달한다.",
+        next: 9
+      },
+      {
+        id: 9,
+        type: "dialogue",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "이수아",
+        char: "assets/images/gangnam_sua.jpg",
+        text: "수아가 먼저 네 쪽으로 몸을 기울이며 부드럽지만 단호하게 말한다.\n\n\"태현아, 여기서 시작할까? 아니면... 더 프라이빗한 곳으로 갈까? 수아가 먼저 네 입을 탐하고 싶어. 천천히, 하지만 깊게. 다른 애들도 곧 합류할 거야.\"\n\n참석한 동기들의 시선이 너를 향한다. 선택의 순간.",
+        choices: [
+          { text: "이수아와 먼저 가벼운 키스와 애무로 불을 지핀다 (수아 중심 빌드)", next: 10, flag: { favorSua: 2, lewd: 2 } },
+          { text: "김지은을 끌어당겨 그녀의 주도에 몸을 맡긴다", next: 10, flag: { favorJieun: 2, lewd: 2 }, requires: "jieun" },
+          { text: "모두를 부추겨 라운지에서부터 가벼운 집단 플러팅을 시작한다", next: 10, flag: { lewd: 3 } }
+        ]
+      },
+      {
+        id: 10,
+        type: "h-scene",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "이수아",
+        char: "assets/images/gangnam_sua.jpg",
+        text: "이수아가 바 테이블에 기대어 치마를 허벅지까지 올린다. 속옷은 이미 젖어 있다.\n\n\"여기서... 먼저 해. 누가 들어올지 모르니까 더 야해. 수아 보지에 네 손가락부터 넣어줘. 천천히 문지르면서... 아, 거기...\"\n\n수아의 부드러운 신음이 라운지 구석을 울린다. 그녀의 손이 네 바지를 열고 단단해진 것을 잡아당긴다.\n\n\"대학 때부터 상상했어... 태현이랑 이렇게. 더 세게, 수아를 리드해.\"",
+        choices: [
+          { text: "수아를 더 세게 애무하며 키스한다 (수아 집중)", next: 11, flag: { favorSua: 3, lewd: 3 } },
+          { text: "지은을 불러서 수아의 입을 막으며 같이 즐긴다", next: 11, flag: { favorJieun: 2, lewd: 4 }, requires: "jieun" },
+          { text: "하린과 유진도 가까이 부르며 가벼운 3인 시작", next: 11, flag: { lewd: 4 } }
+        ]
+      },
+      {
+        id: 11,
+        type: "h-scene",
+        bg: "assets/images/gangnam_lounge.jpg",
+        speaker: "김지은",
+        char: "assets/images/gangnam_jieun.jpg",
+        text: "지은이 다가와 수아의 머리를 잡아채며 네게 명령한다.\n\n\"태현, 수아 입에 제대로 박아. 내가 보고 싶어서 왔으니까. 수아는 혀로 빨면서... 지은은 네 손으로 내 보지를 만져.\"\n\n두 여자가 동시에 너를 자극한다. 수아의 따뜻하고 부드러운 입 안, 지은의 차갑고 거친 손길.\n\n\"더 깊게. 증권사처럼 솔직하게. 오늘 밤은 네가 우리 모두의 장난감이야.\"",
+        next: 12
+      },
+      {
+        id: 12,
+        type: "narration",
+        bg: "assets/images/gangnam_hotel.jpg",
+        char: null,
+        speaker: "",
+        text: "라운지에서의 가벼운 플레이가 길어지자, 유진이 웃으며 일어선다.\n\n\"여기선 너무 위험해. 내가 호텔 스위트룸 키를 미리 챙겨왔어. 테헤란로 끝에 있는 럭셔리 호텔이야. 우리만의 공간에서... 진짜로 시작하자.\"\n\n택시를 타고 이동하는 동안, 참석한 여자들은 네 몸에 기대어 속삭인다. 이수아는 귀를, 지은은 허벅지를, 하린은 단추를, 유진은 목을.\n\n개인적인 고백이 이어진다. \"사실... 너랑 다시 이렇게 되고 싶었어.\"",
+        next: 13
+      },
+      {
+        id: 13,
+        type: "dialogue",
+        bg: "assets/images/gangnam_hotel.jpg",
+        speaker: "",
+        char: null,
+        text: "호텔 스위트룸. 커다란 침대와 낮은 조명. 문이 닫히자마자 긴장이 폭발한다.\n\n하린이 차가운 얼굴로 치마를 완전히 벗으며 말한다. \"대학 때 지은이랑 나, 너를 두고 은근히 경쟁했었지. 오늘은 그 빚을 갚을 때야. 변호사인 내가 이렇게 벌거벗고... 너한테 정복당하고 싶어.\"\n\n이수아가 웃으며 \"수아가 제일 먼저 리드할게. 하지만 다 같이 하자. 오늘 밤은 우리 모두의 비밀 파티야.\"\n\n선택의 시간. 누구를 더 집중할 것인가? 아니면 모두 함께?",
+        choices: [
+          { text: "이수아와 단둘이 깊고 애정 어린 1:1로 들어간다 (수아 백스토리+집중)", next: 14, flag: { focus: 'sua', favorSua: 4, lewd: 2 }, requires: "sua" },
+          { text: "김지은의 지배적인 명령에 따라 1:1로 그녀만 집중한다", next: 15, flag: { focus: 'jieun', favorJieun: 4, lewd: 2 }, requires: "jieun" },
+          { text: "박하린의 숨겨진 변태성을 풀어주며 그녀와 1:1 (더러운 플레이)", next: 16, flag: { focus: 'harin', favorHarin: 4, lewd: 3 }, requires: "harin" },
+          { text: "최유진의 적극적인 에너지로 그녀와 명랑하고 거친 1:1", next: 17, flag: { focus: 'yujin', favorYujin: 4, lewd: 2 }, requires: "yujin" },
+          { text: "모두 함께 본격 난교로. 2~4명 동시 플레이", next: 18, flag: { lewd: 5 } }
+        ]
+      },
+      {
+        id: 14,
+        type: "h-scene",
+        bg: "assets/images/gangnam_hotel.jpg",
+        speaker: "이수아",
+        char: "assets/images/gangnam_sua.jpg",
+        text: "수아와 단둘이 침대에 눕는다. 다른 참석자들은 잠시 지켜보거나 가볍게 곁에서 만지작거린다.\n\n수아가 네 위에 올라타며 천천히 자지를 자신의 보지에 넣는다. \"아... 태현 거, 수아 안에 들어오네. 마케팅할 때처럼 부드럽게 리드해줘. 수아 보지 조여줄게... 더 깊이 박아.\"\n\n그녀의 부드러운 가슴이 출렁이고, 허리가 리드미컬하게 움직인다. \"대학 때부터 좋아했어. 이렇게... 네 정액으로 수아 자궁까지 채워줘. 느리게, 애정 있게...\"",
+        next: 18
+      },
+      {
+        id: 15,
+        type: "h-scene",
+        bg: "assets/images/gangnam_hotel.jpg",
+        speaker: "김지은",
+        char: "assets/images/gangnam_jieun.jpg",
+        text: "지은이 차가운 표정으로 너를 침대에 밀어붙인다. \"무릎 꿇어. 오늘은 내가 리드한다.\"\n\n그녀가 네 얼굴에 앉아 보지를 문지르며 명령한다. \"혀로 내 클리토리스 빨아. 깊게 파고들어. 증권사 선임이 이렇게까지 타락하는 거, 네가 책임져.\"\n\n지은의 거친 숨소리와 함께 그녀가 네 자지를 손으로 거칠게 주무르며 \"안에 싸. 정확하게. 내 안에 네 정액 가득 채워. 내가 컨트롤할게.\"",
+        next: 18
+      },
+      {
+        id: 16,
+        type: "h-scene",
+        bg: "assets/images/gangnam_hotel.jpg",
+        speaker: "박하린",
+        char: "assets/images/gangnam_harin.jpg",
+        text: "하린이 평소와 달리 몸을 떨며 네 앞에 엎드린다. 치마 속 팬티를 내리고 엉덩이를 내민다.\n\n\"...보지랑 항문 다 보여주지. 변호사 박하린이 이렇게 더러운 년이 된 거, 태현아 네 탓이야. 손가락으로 내 구멍 파고, 자지로 보지에 박아. 아헤가오 되게 만들어... 정액으로 범벅 해줘. 더 세게, 변태처럼.\"",
+        next: 18
+      },
+      {
+        id: 17,
+        type: "h-scene",
+        bg: "assets/images/gangnam_hotel.jpg",
+        speaker: "최유진",
+        char: "assets/images/gangnam_yujin.jpg",
+        text: "유진이 웃으며 옷을 벗고 적극적으로 네 몸 위에 올라탄다. \"태현~ 진짜 좋다! PR답게 나 먼저 움직여볼게.\"\n\n그녀가 빠르게 허리를 흔들며 \"아, 너무 커! 유진 보지 찢어질 것 같아. 더 세게 박아! 소리 지를게~ 다른 애들한테도 자랑할 거야, 오늘 밤은 우리가 제일 미쳤다고!\"\n\n명랑한 그녀의 신음이 방 안을 가득 채운다. 그녀의 손이 자신의 가슴을 주무르며 너를 더욱 자극한다.",
+        next: 18
+      },
+      {
+        id: 18,
+        type: "orgy",
+        bg: "assets/images/gangnam_hotel.jpg",
+        speaker: "",
+        char: null,
+        text: "1:1이 끝나거나 바로, 참석한 모든 여자들이 침대로 몰려든다. 본격적인 집단 플레이가 시작된다.\n\n이수아가 네 위에 타고 자지를 보지에 넣으며 신음한다. \"야... 진짜 4명이서 동시에... 미쳤다. 태현아 더 세게 해. 수아는 앞에서, 지은은 입으로...\"\n\n김지은이 뒤에서 붙어 \"내가 리드할게. 수아는 앞에서 조여. 하린은 입으로 빨아. 유진아, 네년은 손가락으로 서로 더럽게 해.\"\n\n박하린이 아헤가오 직전 표정으로 \"더... 더러워지게 해. 변호사 신경 안 써. 정액으로 범벅 만들어줘...\"\n\n최유진이 웃으며 \"우리 진짜 미친 거 아니야? 한 명한테 여러 명이 달라붙어서... 다음 라운드도 가자!\"",
+        choices: [
+          { text: "모두의 보지와 입, 몸에 동시에 사정 (풀 난교 크림파이)", next: 19, flag: { lewd: 12, creampie: true } },
+          { text: "가장 아낀 여자에게 집중 사정 + 다른 애들은 손/입으로 마무리", next: 19, flag: { lewd: 10 } },
+          { text: "하린처럼 더 변태적으로 여러 구멍과 몸 전체에 범벅", next: 19, flag: { favorHarin: 3, lewd: 11 } }
+        ]
+      },
+      {
+        id: 19,
+        type: "ending",
+        bg: "assets/images/gangnam_hotel.jpg",
+        speaker: "이수아",
+        char: "assets/images/gangnam_sua.jpg",
+        text: "새벽 4시가 훌쩍 지났다.\n\n스위트룸은 땀, 침, 정액, 여성의 애액으로 범벅이 되어 있다. 참석한 동기들이 서로 몸을 기대며 헐떡인다.\n\n이수아가 중얼거린다. \"다음 주에도... 또 하자. 이번엔 더 많은 애들 부를까? 아니면 우리끼리 더 변태적으로?\"\n\n각자의 백스토리가 드러난 밤. 플러팅에서 시작된 긴장이, 결국 모두의 욕망을 터뜨렸다.",
+        choices: [
+          { text: "다음 주에도 이 멤버들 그대로 또 하자", next: "ending1", flag: { lewd: 15 } },
+          { text: "더 많은 대학 동기들 불러서 대규모 강남 파티로", next: "ending2", flag: { lewd: 15 } },
+          { text: "이번엔 특정 한 명(가장 아꼈던)과 특별한 관계로 이어가기", next: "ending3", flag: { lewd: 12 } }
+        ]
+      }
+    ];
+
+    // Gallery CG list - Gangnam office style
+    const cgList = [
+      { id: "sua_office", title: "이수아 - 강남 오피스", src: "assets/images/gangnam_sua.jpg", unlockLewd: 0 },
+      { id: "jieun_office", title: "김지은 - 강남 오피스", src: "assets/images/gangnam_jieun.jpg", unlockLewd: 0 },
+      { id: "harin_office", title: "박하린 - 강남 오피스", src: "assets/images/gangnam_harin.jpg", unlockLewd: 0 },
+      { id: "yujin_office", title: "최유진 - 강남 오피스", src: "assets/images/gangnam_yujin.jpg", unlockLewd: 0 },
+      { id: "lounge", title: "강남 라운지 - 밤", src: "assets/images/gangnam_lounge.jpg", unlockLewd: 0 },
+      { id: "hotel", title: "강남 호텔 스위트 - 난교", src: "assets/images/gangnam_hotel.jpg", unlockLewd: 5, lockedText: "H씬 진행 후 해금" }
+    ];
+
+    function unlockCG(id) {
+      unlockedCG.add(id);
+      try { localStorage.setItem('unlockedCG', JSON.stringify([...unlockedCG])); } catch(e){}
+    }
+
+    function loadUnlockedCG() {
+      try {
+        const saved = localStorage.getItem('unlockedCG');
+        if (saved) unlockedCG = new Set(JSON.parse(saved));
+      } catch(e) {}
+    }
+
+    // === RANDOM HEROINE GROUP (2~4명 랜덤) ===
+    function pickRandomGroup() {
+      const keys = Object.keys(heroinesPool);
+      // Random number 2 to 4
+      const count = Math.floor(Math.random() * 3) + 2; // 2,3,4
+      const shuffled = [...keys].sort(() => Math.random() - 0.5);
+      currentGroup = shuffled.slice(0, count);
+      return currentGroup;
+    }
+
+    function renderParticipantsBar() {
+      const bar = document.getElementById('participants-bar');
+      const avatars = document.getElementById('participants-avatars');
+      if (!bar || !avatars || currentGroup.length === 0) {
+        if (bar) bar.classList.add('hidden');
+        return;
+      }
+      bar.classList.remove('hidden');
+      avatars.innerHTML = '';
+      currentGroup.forEach(key => {
+        const h = heroinesPool[key];
+        const div = document.createElement('div');
+        div.className = 'flex flex-col items-center';
+        div.innerHTML = `
+          <img src="${h.img}" class="w-9 h-9 rounded-full object-cover border border-white/30" style="box-shadow: 0 0 0 1px #3f2a2e;">
+          <div class="text-[9px] text-white/50 mt-0.5">${h.name}</div>
+        `;
+        avatars.appendChild(div);
+      });
+    }
+
+    function showGroupSelectScreen() {
+      pickRandomGroup();
+      const visual = document.getElementById('visual-area');
+      visual.style.backgroundImage = `url('assets/images/gangnam_lounge.jpg')`;
+      
+      const container = document.getElementById('character-container');
+      container.innerHTML = '';
+      container.style.maxWidth = '100%';
+
+      const title = document.createElement('div');
+      title.className = 'w-full text-center py-2';
+      title.innerHTML = `<div class="text-[#fda4af] text-sm tracking-widest mb-1">오늘 밤의 멤버 (랜덤 ${currentGroup.length}명)</div>`;
+
+      const grid = document.createElement('div');
+      grid.className = 'flex flex-wrap justify-center gap-3 px-2';
+
+      currentGroup.forEach(key => {
+        const h = heroinesPool[key];
+        const card = document.createElement('div');
+        card.className = 'bg-black/40 rounded-xl p-1.5 border border-white/10 w-[110px]';
+        card.innerHTML = `
+          <img src="${h.img}" class="w-full aspect-[3/4] object-cover rounded-lg mb-1.5">
+          <div class="text-xs font-medium text-center">${h.name}</div>
+          <div class="text-[10px] text-white/50 text-center">${h.job}</div>
+        `;
+        grid.appendChild(card);
+      });
+
+      container.appendChild(title);
+      container.appendChild(grid);
+
+      // Show special buttons for re-roll and start
+      const btnArea = document.createElement('div');
+      btnArea.className = 'w-full flex gap-2 px-4 mt-4';
+      btnArea.innerHTML = `
+        <button id="reroll-btn" class="flex-1 py-3 text-sm bg-white/5 border border-white/20 rounded-2xl active:bg-white/10">다시 뽑기</button>
+        <button id="start-night-btn" class="flex-1 py-3 text-sm bg-[#9f1239] hover:bg-[#b91c3c] rounded-2xl font-medium">이 멤버로 밤 시작</button>
+      `;
+      container.appendChild(btnArea);
+
+      document.getElementById('speaker').textContent = '';
+      document.getElementById('dialogue-text').innerHTML = `<p class="text-center text-sm text-white/70">강남에서 일하는 예전 동기들.<br>오늘은 몇 명이 올까?</p>`;
+      document.getElementById('next-container').classList.add('hidden');
+      document.getElementById('choices-container').classList.add('hidden');
+
+      // Bind buttons
+      setTimeout(() => {
+        document.getElementById('reroll-btn').onclick = () => {
+          showGroupSelectScreen();
+        };
+        document.getElementById('start-night-btn').onclick = () => {
+          document.getElementById('character-container').innerHTML = ''; // clear
+          renderScene(1); // start the actual story
+          renderParticipantsBar();
+        };
+      }, 50);
+    }
+
+    // === BGM: Multi-layer Synthetic + Real audio support (chill / tension / intense phases) ===
+    function initBGM() {
+      try {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        bgmMasterGain = audioContext.createGain();
+        bgmMasterGain.gain.value = 0.65;
+        bgmMasterGain.connect(audioContext.destination);
+      } catch(e) {
+        console.warn('Web Audio not supported');
+      }
+    }
+
+    async function initRealBGM() {
+      // Detect if real BGM files exist (prefer real over synthetic when available)
+      const modes = ['chill', 'tension', 'intense'];
+      let foundAny = false;
+      for (const mode of modes) {
+        const url = `assets/audio/bgm-${mode}.mp3`;
+        try {
+          const res = await fetch(url, { method: 'HEAD', cache: 'no-store' });
+          if (res.ok) {
+            foundAny = true;
+            break;
+          }
+        } catch (e) {}
+      }
+      realAvailable = foundAny;
+      if (foundAny) {
+        bgmMode = 'real';
+        modes.forEach(mode => {
+          const url = `assets/audio/bgm-${mode}.mp3`;
+          const audio = new Audio(url);
+          audio.loop = true;
+          audio.preload = 'auto';
+          // Hint for mobile: lower default volume on element, actual via gain or master
+          audio.volume = 0.85;
+          realAudios[mode] = audio;
+        });
+      }
+    }
+
+    function getPhaseForScene(scene) {
+      if (!scene || !scene.type) return 'chill';
+      if (scene.type === 'orgy') return 'intense';
+      if (scene.type === 'h-scene') return 'tension';
+      if (scene.type === 'ending') return 'chill';
+      // narration, dialogue, group-select, etc.
+      return 'chill';
+    }
+
+    function getBgmConfig(phase) {
+      switch (phase) {
+        case 'intense':
+          return {
+            bassFreq: 58, bassFilter: 240, bassVol: 1.05,
+            padFreqs: [78, 117, 156, 196],
+            padFilter: 980, padVol: 0.72,
+            pulseBaseFreq: 63, pulseRate: 2.4, pulseDepth: 0.98, pulseLayerVol: 0.9
+          };
+        case 'tension':
+          return {
+            bassFreq: 51, bassFilter: 195, bassVol: 0.95,
+            padFreqs: [72, 108, 144],
+            padFilter: 760, padVol: 0.64,
+            pulseBaseFreq: 56, pulseRate: 1.48, pulseDepth: 0.72, pulseLayerVol: 0.74
+          };
+        case 'chill':
+        default:
+          return {
+            bassFreq: 44, bassFilter: 165, bassVol: 0.82,
+            padFreqs: [66, 99, 132],
+            padFilter: 510, padVol: 0.5,
+            pulseBaseFreq: 49, pulseRate: 0.85, pulseDepth: 0.4, pulseLayerVol: 0.58
+          };
+      }
+    }
+
+    function createNoiseBufferSource() {
+      if (!audioContext) return null;
+      try {
+        const duration = 1.8;
+        const bufferSize = Math.floor(audioContext.sampleRate * duration);
+        const buffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        const noise = audioContext.createBufferSource();
+        noise.buffer = buffer;
+        noise.loop = true;
+        return noise;
+      } catch (e) { return null; }
+    }
+
+    function resumeAudioContextIfNeeded() {
+      if (audioContext && audioContext.state === 'suspended') {
+        audioContext.resume().catch(() => {});
+      }
+    }
+
+    function startSyntheticForPhase(phase) {
+      if (!audioContext || !bgmEnabled) return;
+      resumeAudioContextIfNeeded();
+
+      const config = getBgmConfig(phase);
+      const now = audioContext.currentTime;
+
+      // Per-patch gain for smooth fade in/out of this layer set
+      const layerGain = audioContext.createGain();
+      layerGain.gain.value = 0.0001;
+      layerGain.connect(bgmMasterGain);
+
+      const oscs = [];
+
+      // LAYER 1: Deep bass drone (sensual low foundation)
+      const bassOsc = audioContext.createOscillator();
+      bassOsc.type = 'sine';
+      bassOsc.frequency.value = config.bassFreq;
+      const bassFilter = audioContext.createBiquadFilter();
+      bassFilter.type = 'lowpass';
+      bassFilter.frequency.value = config.bassFilter;
+      const bassLFO = audioContext.createOscillator();
+      bassLFO.type = 'sine';
+      bassLFO.frequency.value = 0.065;
+      const bassLFOGain = audioContext.createGain();
+      bassLFOGain.gain.value = 3.5;
+      bassLFO.connect(bassLFOGain);
+      bassLFOGain.connect(bassOsc.frequency);
+
+      const bassGain = audioContext.createGain();
+      bassGain.gain.value = config.bassVol;
+      bassOsc.connect(bassFilter);
+      bassFilter.connect(bassGain);
+      bassGain.connect(layerGain);
+
+      // LAYER 2: Mid pad (lush, detuned chords, evolving filter)
+      const padFilter = audioContext.createBiquadFilter();
+      padFilter.type = 'lowpass';
+      padFilter.frequency.value = config.padFilter;
+      const padLFO = audioContext.createOscillator();
+      padLFO.type = 'sine';
+      padLFO.frequency.value = 0.035;
+      const padLFOGain = audioContext.createGain();
+      padLFOGain.gain.value = 140;
+      padLFO.connect(padLFOGain);
+      padLFOGain.connect(padFilter.frequency);
+
+      const padBaseGain = audioContext.createGain();
+      padBaseGain.gain.value = config.padVol;
+
+      config.padFreqs.forEach((freq, i) => {
+        const o = audioContext.createOscillator();
+        o.type = (i % 2 === 0) ? 'sine' : 'triangle';
+        o.frequency.value = freq;
+        o.detune.value = (i - 1.5) * 8.5; // lush detuning = more "music" feel
+
+        const g = audioContext.createGain();
+        g.gain.value = 0.88 - (i * 0.08);
+
+        // slow per-voice amp movement
+        const ampLfo = audioContext.createOscillator();
+        ampLfo.type = 'sine';
+        ampLfo.frequency.value = 0.09 + (i * 0.025);
+        const ampLfoG = audioContext.createGain();
+        ampLfoG.gain.value = 0.13;
+        ampLfo.connect(ampLfoG);
+        ampLfoG.connect(g.gain);
+
+        o.connect(g);
+        g.connect(padFilter);
+
+        o.start(now);
+        ampLfo.start(now);
+        oscs.push(o, ampLfo);
+      });
+      padFilter.connect(padBaseGain);
+      padBaseGain.connect(layerGain);
+
+      // LAYER 3: Subtle rhythmic pulses / erotic heartbeat
+      const pulseOsc = audioContext.createOscillator();
+      pulseOsc.type = 'sine';
+      pulseOsc.frequency.value = config.pulseBaseFreq;
+
+      const pulseFilter = audioContext.createBiquadFilter();
+      pulseFilter.type = 'lowpass';
+      pulseFilter.frequency.value = 155;
+
+      const pulseNoise = createNoiseBufferSource();
+      let noiseFilter = null;
+      if (pulseNoise) {
+        noiseFilter = audioContext.createBiquadFilter();
+        noiseFilter.type = 'bandpass';
+        noiseFilter.frequency.value = 85;
+        noiseFilter.Q.value = 3.8;
+        pulseNoise.connect(noiseFilter);
+      }
+
+      const pulseGain = audioContext.createGain();
+      pulseGain.gain.value = 0.001; // modulated by LFOs
+
+      // Primary heartbeat LFO (rate changes by phase for tension)
+      const pulseLFO = audioContext.createOscillator();
+      pulseLFO.type = 'sine';
+      pulseLFO.frequency.value = config.pulseRate;
+      const pulseLFOGain = audioContext.createGain();
+      pulseLFOGain.gain.value = config.pulseDepth;
+      pulseLFO.connect(pulseLFOGain);
+      pulseLFOGain.connect(pulseGain.gain);
+
+      // Secondary for lub-dub erotic feel (slightly offset rate gives natural pulse)
+      const pulseLFO2 = audioContext.createOscillator();
+      pulseLFO2.type = 'sine';
+      pulseLFO2.frequency.value = config.pulseRate * 0.985;
+      const pulseLFOGain2 = audioContext.createGain();
+      pulseLFOGain2.gain.value = config.pulseDepth * 0.42;
+      pulseLFO2.connect(pulseLFOGain2);
+      pulseLFOGain2.connect(pulseGain.gain);
+
+      const pulseEnv = audioContext.createGain();
+      pulseEnv.gain.value = config.pulseLayerVol;
+      pulseOsc.connect(pulseFilter);
+      pulseFilter.connect(pulseGain);
+      if (noiseFilter) noiseFilter.connect(pulseGain);
+      pulseGain.connect(pulseEnv);
+      pulseEnv.connect(layerGain);
+
+      // Start oscillators
+      bassOsc.start(now);
+      pulseOsc.start(now);
+      pulseLFO.start(now);
+      pulseLFO2.start(now);
+      padLFO.start(now);
+      if (pulseNoise) pulseNoise.start(now);
+
+      oscs.push(bassOsc, pulseOsc, pulseLFO, pulseLFO2, padLFO);
+      if (pulseNoise) oscs.push(pulseNoise);
+
+      // Smooth musical fade-in
+      layerGain.gain.linearRampToValueAtTime(1.0, now + 1.35);
+
+      // Store for management
+      syntheticNodes = oscs;
+      currentSynthGain = layerGain;
+
+      // Controller for unified start/stop/switch/fade
+      currentBgmController = {
+        type: 'synth',
+        phase: phase,
+        fadeOut: (dur = 0.7) => {
+          const t = audioContext.currentTime;
+          layerGain.gain.cancelScheduledValues(t);
+          layerGain.gain.linearRampToValueAtTime(0.0001, t + dur);
+          return new Promise(r => setTimeout(r, dur * 1000 + 40));
+        },
+        stop: () => {
+          oscs.forEach(o => { try { o.stop(0); } catch (e) {} });
+        }
+      };
+    }
+
+    function startRealForPhase(phase) {
+      if (!audioContext || !bgmEnabled || !realAudios[phase]) {
+        startSyntheticForPhase(phase);
+        return;
+      }
+      resumeAudioContextIfNeeded();
+
+      const audioEl = realAudios[phase];
+      let gNode = realGains[phase];
+
+      const now = audioContext.currentTime;
+
+      if (!gNode) {
+        try {
+          const source = audioContext.createMediaElementSource(audioEl);
+          const gain = audioContext.createGain();
+          source.connect(gain);
+          gain.connect(bgmMasterGain);
+          realGains[phase] = gain;
+          gNode = gain;
+        } catch (e) {
+          // Fallback for some mobile / already-connected cases: control via element.volume
+          realGains[phase] = null;
+          gNode = null;
+        }
+      }
+
+      // Prepare fade-in
+      audioEl.currentTime = 0;
+      if (gNode) {
+        gNode.gain.value = 0.0001;
+        audioEl.volume = 1.0; // master + this gain control overall
+      } else {
+        audioEl.volume = 0.0001;
+      }
+
+      const playPromise = audioEl.play();
+      if (playPromise && playPromise.then) {
+        playPromise.then(() => {
+          if (gNode) {
+            gNode.gain.linearRampToValueAtTime(0.96, now + 1.1);
+          } else {
+            // manual element volume fade (fallback)
+            let step = 0;
+            const target = 0.82;
+            const steps = 18;
+            const iv = setInterval(() => {
+              step++;
+              audioEl.volume = 0.0001 + (target - 0.0001) * (step / steps);
+              if (step >= steps) clearInterval(iv);
+            }, 55);
+          }
+        }).catch(() => {});
+      }
+
+      currentBgmController = {
+        type: 'real',
+        phase: phase,
+        fadeOut: (dur = 0.7) => {
+          return new Promise(resolve => {
+            const g = realGains[phase];
+            const startTime = Date.now();
+            const startVal = g ? g.gain.value : audioEl.volume;
+            const iv = setInterval(() => {
+              const p = Math.min(1, (Date.now() - startTime) / (dur * 1000));
+              const nv = startVal * (1 - p);
+              if (g) g.gain.value = Math.max(0.0001, nv);
+              else audioEl.volume = Math.max(0.0001, nv);
+              if (p >= 1) {
+                clearInterval(iv);
+                audioEl.pause();
+                if (g) g.gain.value = 0.0001;
+                resolve();
+              }
+            }, 28);
+          });
+        },
+        stop: () => {
+          try { audioEl.pause(); audioEl.currentTime = 0; } catch (e) {}
+        }
+      };
+    }
+
+    async function switchBGM(phase) {
+      if (!bgmEnabled || !audioContext) return;
+      currentPhase = phase;
+
+      const statusEl = document.getElementById('bgm-status');
+      if (statusEl) statusEl.textContent = 'BGM ON';
+
+      // Graceful crossfade: fade old then start new
+      if (currentBgmController) {
+        try {
+          await currentBgmController.fadeOut(0.6);
+          if (currentBgmController && currentBgmController.stop) currentBgmController.stop();
+        } catch (e) {}
+      }
+      currentBgmController = null;
+
+      // Clean any leftover synth
+      syntheticNodes.forEach(o => { try { o.stop(0); } catch (e) {} });
+      syntheticNodes = [];
+      currentSynthGain = null;
+
+      if (realAvailable && bgmMode === 'real' && realAudios[phase]) {
+        startRealForPhase(phase);
+      } else {
+        startSyntheticForPhase(phase);
+      }
+    }
+
+    function stopBGM(fade = false) {
+      if (currentBgmController) {
+        if (fade) {
+          currentBgmController.fadeOut(0.45).then(() => {
+            if (currentBgmController && currentBgmController.stop) currentBgmController.stop();
+            currentBgmController = null;
+          }).catch(() => { currentBgmController = null; });
+        } else {
+          if (currentBgmController.stop) currentBgmController.stop();
+          currentBgmController = null;
+        }
+      }
+      syntheticNodes.forEach(o => { try { o.stop(0); } catch (e) {} });
+      syntheticNodes = [];
+      currentSynthGain = null;
+    }
+
+    function toggleBGM() {
+      bgmEnabled = !bgmEnabled;
+      const statusEl = document.getElementById('bgm-status');
+      const inGame = document.getElementById('game-screen') && !document.getElementById('game-screen').classList.contains('hidden');
+
+      if (bgmEnabled) {
+        if (statusEl) statusEl.textContent = 'BGM ON';
+        if (inGame) {
+          const phase = currentPhase || getPhaseForScene({ type: 'dialogue' });
+          switchBGM(phase);
+        }
+      } else {
+        if (statusEl) statusEl.textContent = 'BGM OFF';
+        stopBGM(true); // fade out
+      }
+    }
+
+    function setBGMVolume(val) {
+      const pct = parseInt(val) || 65;
+      const v = Math.max(0, Math.min(1, pct / 100));
+      const now = (audioContext && audioContext.currentTime) || 0;
+
+      if (bgmMasterGain) {
+        bgmMasterGain.gain.cancelScheduledValues(now);
+        bgmMasterGain.gain.linearRampToValueAtTime(v, now + 0.09);
+      }
+
+      // Fallback direct volume for real audio when no MediaElementSource
+      if (currentBgmController && currentBgmController.type === 'real') {
+        const phase = currentPhase;
+        const el = realAudios[phase];
+        const g = realGains[phase];
+        if (el && !g) {
+          el.volume = Math.max(0.01, 0.82 * v);
+        }
+      }
+
+      const vEl = document.getElementById('bgm-volume-value');
+      if (vEl) vEl.textContent = pct + '%';
+    }
+
+    // === Core VN Logic ===
+    function showScreen(id) {
+      document.getElementById('title-screen').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+      if (id === 'game') {
+        if (bgmEnabled && audioContext) {
+          const phase = currentPhase || 'chill';
+          switchBGM(phase);
+        }
+      }
+    }
+
+    function startGame() {
+      loadProgress();
+      showScreen('game');
+      // Always start with random group selection for this night
+      currentScene = 0;
+      flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
+      renderScene(0); // group-select will handle random + UI
+    }
+
+    function renderScene(sceneId) {
+      const scene = scenes.find(s => s.id === sceneId) || scenes[0];
+      currentScene = scene.id;
+      currentLine = 0;
+
+      // Ensure group is selected if resuming or jumping (original didn't persist group, so re-pick for consistency)
+      if (currentScene !== 0 && (!currentGroup || currentGroup.length === 0)) {
+        pickRandomGroup();
+      }
+
+      // Skip scenes for heroines not in the current random group (2~4명)
+      // This allows dedicated build-up / 1:1 dialogues for only the selected members without breaking flow
+      if (scene.speaker && nameToKey[scene.speaker]) {
+        const key = nameToKey[scene.speaker];
+        if (!currentGroup.includes(key)) {
+          if (scene.next !== undefined) {
+            if (typeof scene.next === 'number') {
+              renderScene(scene.next);
+              return;
+            } else {
+              const end = scenes.find(s => s.id == scene.next);
+              if (end) {
+                showEnding(end);
+                return;
+              }
+            }
+          }
+          // fallback advance
+          const nextId = (typeof currentScene === 'number' ? currentScene + 1 : 1);
+          renderScene(nextId);
+          return;
+        }
+      }
+
+      // BGM phase switch based on scene type (chill → tension → intense)
+      const targetPhase = getPhaseForScene(scene);
+      if (bgmEnabled && audioContext && targetPhase !== currentPhase) {
+        switchBGM(targetPhase);
+      }
+
+      const visual = document.getElementById('visual-area');
+      if (scene.bg) visual.style.backgroundImage = `url('${scene.bg}')`;
+
+      const container = document.getElementById('character-container');
+      container.innerHTML = '';
+      container.style.display = 'flex';
+
+      // Handle group/orgy - show multiple characters when relevant
+      // For focus 1:1 h-scenes (specific char set), prefer single image even if group >1
+      const isGroupScene = scene.type === 'orgy' || (!scene.char && currentGroup.length > 1 && scene.type === 'h-scene');
+      if (isGroupScene && currentGroup.length > 0) {
+        // Show up to 3 small-to-medium images side by side for mobile
+        const toShow = currentGroup.slice(0, 3);
+        toShow.forEach((key, idx) => {
+          const h = heroinesPool[key];
+          const img = document.createElement('img');
+          img.src = h.img;
+          img.className = `character-layer rounded-xl shadow-xl border border-white/10 object-cover flex-1`;
+          img.style.maxHeight = window.innerWidth < 640 ? '38vh' : '48vh';
+          img.style.minWidth = '30%';
+          container.appendChild(img);
+        });
+      } else if (scene.char) {
+        const img = document.createElement('img');
+        img.src = scene.char;
+        img.className = `character-layer w-full max-w-[380px] h-auto rounded-2xl shadow-2xl erotic-glow border border-white/10`;
+        img.style.maxHeight = window.innerWidth < 640 ? '52vh' : '62vh';
+        container.appendChild(img);
+      } else {
+        container.style.display = 'none';
+      }
+
+      // Dialogue
+      document.getElementById('speaker').textContent = scene.speaker || '';
+      document.getElementById('dialogue-text').innerHTML = '';
+      document.getElementById('choices-container').classList.add('hidden');
+      document.getElementById('next-container').classList.remove('hidden');
+
+      if (scene.type === 'group-select') {
+        showGroupSelectScreen();
+        return;
+      }
+      if (scene.type === 'ending') {
+        showEnding(scene);
+        return;
+      }
+
+      const textEl = document.getElementById('dialogue-text');
+      const speed = getTextSpeed();
+
+      if (scene.choices && scene.choices.length > 0) {
+        textEl.innerHTML = `<p>${scene.text.replace(/\n/g, '<br>')}</p>`;
+        showChoices(scene.choices);
+      } else {
+        typeText(textEl, scene.text, speed);
+      }
+
+      // Unlocks
+      if (flags.lewd >= 5) unlockCG('hotel');
+
+      saveProgress();
+      renderParticipantsBar();
+    }
+
+    function typeText(element, text, speedMs, onComplete) {
+      element.innerHTML = '';
+      const lines = text.split('\n');
+      let i = 0;
+      let charIndex = 0;
+      const fullHTML = lines.map(line => `<p>${line}</p>`).join('');
+      
+      function tick() {
+        if (i >= fullHTML.length) {
+          element.innerHTML = fullHTML;
+          if (onComplete) onComplete();
+          return;
+        }
+        element.innerHTML = fullHTML.substring(0, i + 1);
+        i++;
+        setTimeout(tick, speedMs);
+      }
+      tick();
+    }
+
+    function getTextSpeed() {
+      const slider = document.getElementById('text-speed');
+      const val = slider ? parseInt(slider.value) : 2;
+      const speeds = [38, 22, 11, 3]; // slow to fast
+      return speeds[val - 1] || 18;
+    }
+
+    function showChoices(choices) {
+      const container = document.getElementById('choices-container');
+      const nextBtn = document.getElementById('next-container');
+      container.innerHTML = '';
+      nextBtn.classList.add('hidden');
+      container.classList.remove('hidden');
+
+      choices.forEach((choice, idx) => {
+        // Filter out choices that require a heroine not present in this play's random group
+        if (choice.requires) {
+          if (!currentGroup.includes(choice.requires)) return;
+        }
+        const btn = document.createElement('button');
+        btn.className = `choice-btn w-full text-left px-5 py-3.5 rounded-2xl text-sm leading-snug`;
+        btn.innerHTML = choice.text;
+        btn.onclick = () => {
+          if (choice.flag) {
+            Object.assign(flags, choice.flag);
+          }
+          if (typeof choice.next === 'number') {
+            renderScene(choice.next);
+          } else {
+            // string ending id
+            const endScene = scenes.find(s => s.id == choice.next) || scenes[scenes.length-1];
+            showEnding(endScene);
+          }
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function nextLine() {
+      const scene = scenes.find(s => s.id === currentScene);
+      if (!scene) return;
+
+      if (scene.choices && scene.choices.length > 0) {
+        // already handled by choices
+        return;
+      }
+
+      if (scene.next !== undefined) {
+        if (typeof scene.next === 'number') {
+          renderScene(scene.next);
+        } else {
+          const end = scenes.find(s => s.id == scene.next);
+          if (end) showEnding(end);
+        }
+      }
+    }
+
+    function showEnding(scene) {
+      const visual = document.getElementById('visual-area');
+      if (scene.bg) visual.style.backgroundImage = `url('${scene.bg}')`;
+      
+      document.getElementById('character-container').innerHTML = ''; // safety for old ref
+      document.getElementById('speaker').textContent = scene.speaker || '이수아';
+      
+      // Customize ending text based on choices/favors for different narrative branches
+      let endText = scene.text || '';
+      const favors = [
+        { key: 'sua', val: flags.favorSua || 0, name: '이수아' },
+        { key: 'jieun', val: flags.favorJieun || 0, name: '김지은' },
+        { key: 'harin', val: flags.favorHarin || 0, name: '박하린' },
+        { key: 'yujin', val: flags.favorYujin || 0, name: '최유진' }
+      ];
+      const maxFavor = favors.reduce((a, b) => (a.val > b.val ? a : b));
+      const totalLewd = flags.lewd || 0;
+      const focusGirl = flags.focus ? (heroinesPool[flags.focus] ? heroinesPool[flags.focus].name : '') : '';
+
+      if (maxFavor.val >= 4) {
+        endText += `\n\n특히 ${maxFavor.name}와의 깊은 교감이 빛났다. 그녀는 밤이 끝난 후에도 너를 바라보며 속삭였다. "다음에도... 우리 둘만, 아니면 같이."`;
+      } else if (totalLewd >= 10) {
+        endText += `\n\n모두가 극도로 만족한 난교의 밤. 서로의 몸이 엉켜 누구의 것인지 구분이 안 갈 정도였다.`;
+      }
+      if (flags.creampie) {
+        endText += `\n\n모든 여자의 안에 네 정액이 흘러내리는 광경이 인상적이었다.`;
+      }
+      if (focusGirl) {
+        endText += `\n\n${focusGirl}와의 1:1 순간이 오늘 밤의 하이라이트로 남았다.`;
+      }
+
+      const textEl = document.getElementById('dialogue-text');
+      textEl.innerHTML = `<p class="lewd-accent">${endText.replace(/\n/g, '<br>')}</p>`;
+      
+      document.getElementById('next-container').classList.add('hidden');
+      document.getElementById('choices-container').classList.remove('hidden');
+      document.getElementById('choices-container').innerHTML = '';
+
+      // Unlock all CGs on ending
+      unlockCG('sua_nude');
+      unlockCG('creampie');
+
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn w-full py-3.5 rounded-2xl text-sm';
+      btn.textContent = '타이틀로 돌아가기';
+      btn.onclick = () => {
+        document.getElementById('game-screen').classList.add('hidden');
+        document.getElementById('title-screen').classList.remove('hidden');
+        stopBGM();
+      };
+      document.getElementById('choices-container').appendChild(btn);
+
+      // Add replay button
+      const replay = document.createElement('button');
+      replay.className = 'choice-btn w-full py-3.5 rounded-2xl text-sm mt-2';
+      replay.textContent = '다시 플레이하기';
+      replay.onclick = () => {
+        flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
+        unlockedCG = new Set();
+        renderScene(0);
+      };
+      document.getElementById('choices-container').appendChild(replay);
+    }
+
+    // === Progress ===
+    function saveProgress() {
+      try {
+        localStorage.setItem('vn_progress', JSON.stringify({
+          scene: currentScene,
+          flags,
+          unlocked: [...unlockedCG]
+        }));
+      } catch(e) {}
+    }
+
+    function loadProgress() {
+      try {
+        const saved = localStorage.getItem('vn_progress');
+        if (saved) {
+          const data = JSON.parse(saved);
+          currentScene = data.scene || 0;
+          flags = data.flags || { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
+          if (data.unlocked) unlockedCG = new Set(data.unlocked);
+        }
+      } catch(e) {}
+      loadUnlockedCG();
+    }
+
+    function quickSave() {
+      saveProgress();
+      const orig = event.currentTarget;
+      const btns = document.querySelectorAll('button');
+      const msg = document.createElement('div');
+      msg.textContent = '저장됨';
+      msg.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 text-xs px-3 py-1 bg-black/70 rounded-full';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 1200);
+    }
+
+    function resetProgress() {
+      if (!confirm('진행도를 초기화할까요?')) return;
+      localStorage.removeItem('vn_progress');
+      localStorage.removeItem('unlockedCG');
+      flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
+      unlockedCG = new Set();
+      currentScene = 0;
+      document.getElementById('game-screen').classList.add('hidden');
+      document.getElementById('title-screen').classList.remove('hidden');
+      stopBGM();
+      hideSettings();
+    }
+
+    // === Gallery ===
+    function showGallery() {
+      const modal = document.getElementById('gallery-modal');
+      const grid = document.getElementById('gallery-grid');
+      const locked = document.getElementById('gallery-locked');
+      grid.innerHTML = '';
+      let hasAny = false;
+
+      cgList.forEach(cg => {
+        const isUnlocked = unlockedCG.has(cg.id) || cg.unlockLewd === 0;
+        if (!isUnlocked && cg.lockedText) {
+          // show locked placeholder
+          const div = document.createElement('div');
+          div.className = 'aspect-[3/4] bg-[#1a1114] rounded-2xl border border-white/10 flex items-center justify-center text-center p-4';
+          div.innerHTML = `<div class="text-xs text-white/30">${cg.lockedText}</div>`;
+          grid.appendChild(div);
+          return;
+        }
+        hasAny = true;
+        const card = document.createElement('div');
+        card.className = 'group relative overflow-hidden rounded-2xl border border-white/10 bg-black aspect-[3/4] cursor-pointer';
+        card.innerHTML = `
+          <img src="${cg.src}" class="w-full h-full object-cover group-active:scale-105 transition-transform" alt="${cg.title}">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3">
+            <div class="text-xs font-medium">${cg.title}</div>
+          </div>
+        `;
+        card.onclick = () => {
+          // full view
+          const full = document.createElement('div');
+          full.className = 'fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-3';
+          full.innerHTML = `<img src="${cg.src}" class="max-h-[92vh] w-auto rounded-xl shadow-2xl" style="max-width: 100%;">`;
+          full.onclick = () => full.remove();
+          document.body.appendChild(full);
+        };
+        grid.appendChild(card);
+      });
+
+      locked.classList.toggle('hidden', hasAny);
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function hideGallery() {
+      const modal = document.getElementById('gallery-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    // === Settings ===
+    function showSettings() {
+      const modal = document.getElementById('settings-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+
+      // wire sliders
+      const speedSlider = document.getElementById('text-speed');
+      const speedVal = document.getElementById('text-speed-value');
+      const volSlider = document.getElementById('bgm-volume');
+      const volVal = document.getElementById('bgm-volume-value');
+
+      const speeds = ['느림', '보통', '빠름', '매우 빠름'];
+      speedSlider.oninput = () => { speedVal.textContent = speeds[parseInt(speedSlider.value)-1]; };
+      speedSlider.oninput(); // init
+
+      volSlider.oninput = () => {
+        setBGMVolume(volSlider.value);
+      };
+      setBGMVolume(volSlider.value);
+
+      // BGM mode select (Synthetic always; Real only if files detected)
+      const modeSel = document.getElementById('bgm-mode');
+      const noteEl = document.getElementById('bgm-mode-note');
+      if (modeSel) {
+        // Ensure Real option present only when available
+        let realOpt = modeSel.querySelector('option[value="real"]');
+        if (realAvailable) {
+          if (!realOpt) {
+            realOpt = document.createElement('option');
+            realOpt.value = 'real';
+            realOpt.textContent = 'Real (assets/audio)';
+            modeSel.appendChild(realOpt);
+          }
+          if (noteEl) noteEl.textContent = '실제 BGM 파일 사용 중 (부드러운 페이드/루프)';
+        } else {
+          if (realOpt) realOpt.remove();
+          if (noteEl) noteEl.textContent = 'assets/audio/bgm-chill.mp3, bgm-tension.mp3, bgm-intense.mp3 파일 추가 시 Real 사용 가능';
+        }
+        modeSel.value = bgmMode;
+        modeSel.onchange = () => {
+          const newMode = modeSel.value;
+          if (newMode === bgmMode) return;
+          const prevMode = bgmMode;
+          bgmMode = newMode;
+          const inGame = !document.getElementById('game-screen').classList.contains('hidden');
+          if (bgmEnabled && inGame) {
+            const phase = currentPhase || 'chill';
+            // Stop current (fade) then restart under new mode (real<->synth switch)
+            if (currentBgmController) {
+              currentBgmController.fadeOut(0.5).then(() => {
+                if (currentBgmController && currentBgmController.stop) currentBgmController.stop();
+                currentBgmController = null;
+                syntheticNodes = [];
+                switchBGM(phase);
+              }).catch(() => switchBGM(phase));
+            } else {
+              switchBGM(phase);
+            }
+          }
+        };
+      }
+    }
+
+    function hideSettings() {
+      const modal = document.getElementById('settings-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    function backToTitle() {
+      stopBGM();
+      document.getElementById('game-screen').classList.add('hidden');
+      document.getElementById('title-screen').classList.remove('hidden');
+    }
+
+    // === PWA & Mobile helpers ===
+    function initPWA() {
+      // Simple install prompt hint
+      if ('serviceWorker' in navigator) {
+        // We can add a real sw later if needed
+      }
+    }
+
+    // Keyboard support (desktop)
+    function initKeyboard() {
+      document.addEventListener('keydown', (e) => {
+        if (document.getElementById('game-screen').classList.contains('hidden')) return;
+        if (e.key === ' ' || e.key === 'Enter') {
+          e.preventDefault();
+          const choices = document.getElementById('choices-container');
+          if (!choices.classList.contains('hidden') && choices.children.length > 0) {
+            choices.children[0].click();
+          } else {
+            const next = document.getElementById('next-container');
+            if (!next.classList.contains('hidden')) next.querySelector('button').click();
+          }
+        }
+        if (e.key.toLowerCase() === 'g') showGallery();
+      });
+    }
+
+    // === Boot ===
+    function boot() {
+      initTailwind();
+      initBGM();
+      initPWA();
+      initKeyboard();
+
+      // Detect & init real BGM files if present in assets/audio/ (async, non-blocking)
+      initRealBGM().then(() => {
+        // If real files found, prefer 'real' mode (already set inside initRealBGM)
+      }).catch(() => {});
+
+      // Load any saved
+      loadUnlockedCG();
+
+      // Wire volume from settings even if closed
+      const vol = document.getElementById('bgm-volume');
+      if (vol) vol.addEventListener('input', () => setBGMVolume(vol.value));
+
+      // Default volume (after master created)
+      setTimeout(() => {
+        if (bgmMasterGain) {
+          const now = audioContext ? audioContext.currentTime : 0;
+          bgmMasterGain.gain.cancelScheduledValues(now);
+          bgmMasterGain.gain.value = 0.65;
+        }
+      }, 320);
+
+      // Show title
+      document.getElementById('title-screen').classList.remove('hidden');
+
+      // Dev helper: press ` in console to jump to H scene
+      window.jumpToH = () => {
+        document.getElementById('title-screen').classList.add('hidden');
+        document.getElementById('game-screen').classList.remove('hidden');
+        flags.lewd = 9;
+        flags.favorSua = 3;
+        flags.favorJieun = 2;
+        renderScene(18); // jump to orgy for testing new expanded story
+      };
+
+      console.log('%c[강남 리유니온] 확장 완료: 20장면 빌드업 스토리 + 백스토리 대화 + favor 브랜치 1:1 vs 난교 + 노골 H. mobile friendly.');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    // Tap visual area to advance (mobile friendly)
+    function initMobileTap() {
+      const visual = document.getElementById('visual-area');
+      if (!visual) return;
+      visual.addEventListener('click', (e) => {
+        // Don't advance if clicking on buttons or choices
+        if (e.target.closest('button') || e.target.closest('#choices-container')) return;
+        const next = document.getElementById('next-container');
+        const choices = document.getElementById('choices-container');
+        if (!choices.classList.contains('hidden') && choices.children.length > 0) {
+          // let choice buttons handle
+        } else if (!next.classList.contains('hidden')) {
+          next.querySelector('button')?.click();
+        }
+      });
+    }
+
+    window.onload = function() {
+      boot();
+      initMobileTap();
+    };
+  </script>
+</body>
+</html>

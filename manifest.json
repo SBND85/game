@@ -1,0 +1,18 @@
+{
+  "name": "강남 리유니온",
+  "short_name": "강남리유니온",
+  "description": "강남 직장인 동기들의 비밀 야한 파티 - 성인 미연시 웹앱",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0608",
+  "theme_color": "#1a0f12",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "assets/images/gangnam_sua.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
