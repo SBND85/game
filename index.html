@@ -546,9 +546,9 @@
         id: 19,
         type: "ending",
         bg: "assets/images/gangnam_hotel.jpg",
-        speaker: "이수아",
-        char: "assets/images/gangnam_sua.jpg",
-        text: "새벽 4시가 훌쩍 지났다.\n\n스위트룸은 땀, 침, 정액, 여성의 애액으로 범벅이 되어 있다. 참석한 동기들이 서로 몸을 기대며 헐떡인다.\n\n이수아가 중얼거린다. \"다음 주에도... 또 하자. 이번엔 더 많은 애들 부를까? 아니면 우리끼리 더 변태적으로?\"\n\n각자의 백스토리가 드러난 밤. 플러팅에서 시작된 긴장이, 결국 모두의 욕망을 터뜨렸다.",
+        speaker: "",
+        char: null,
+        text: "새벽 4시가 훌쩍 지났다.\n\n스위트룸은 땀, 침, 정액, 여성의 애액으로 범벅이 되어 있다. 참석한 동기들이 서로 몸을 기대며 헐떡인다.\n\n누군가 중얼거린다. \"다음 주에도... 또 하자. 이번엔 더 많은 애들 부를까? 아니면 우리끼리 더 변태적으로?\"\n\n각자의 백스토리가 드러난 밤. 플러팅에서 시작된 긴장이, 결국 모두의 욕망을 터뜨렸다.",
         choices: [
           { text: "다음 주에도 이 멤버들 그대로 또 하자", next: "ending1", flag: { lewd: 15 } },
           { text: "더 많은 대학 동기들 불러서 대규모 강남 파티로", next: "ending2", flag: { lewd: 15 } },
@@ -569,12 +569,12 @@
 
     function unlockCG(id) {
       unlockedCG.add(id);
-      try { localStorage.setItem('unlockedCG', JSON.stringify([...unlockedCG])); } catch(e){}
+      try { localStorage.setItem('game_unlockedCG', JSON.stringify([...unlockedCG])); } catch(e){}
     }
 
     function loadUnlockedCG() {
       try {
-        const saved = localStorage.getItem('unlockedCG');
+        const saved = localStorage.getItem('game_unlockedCG');
         if (saved) unlockedCG = new Set(JSON.parse(saved));
       } catch(e) {}
     }
@@ -676,7 +676,7 @@
         bgmMasterGain.gain.value = 0.65;
         bgmMasterGain.connect(audioContext.destination);
       } catch(e) {
-        console.warn('Web Audio not supported');
+        console.warn('%c[GAME] Web Audio not supported, BGM disabled', 'color:#f5e8e0');
       }
     }
 
@@ -1130,7 +1130,8 @@
 
       // Skip scenes for heroines not in the current random group (2~4명)
       // This allows dedicated build-up / 1:1 dialogues for only the selected members without breaking flow
-      if (scene.speaker && nameToKey[scene.speaker]) {
+      // Do not skip endings (they are always shown; speaker name made generic)
+      if (scene.type !== 'ending' && scene.speaker && nameToKey[scene.speaker]) {
         const key = nameToKey[scene.speaker];
         if (!currentGroup.includes(key)) {
           if (scene.next !== undefined) {
@@ -1304,7 +1305,9 @@
       if (scene.bg) visual.style.backgroundImage = `url('${scene.bg}')`;
       
       document.getElementById('character-container').innerHTML = ''; // safety for old ref
-      document.getElementById('speaker').textContent = scene.speaker || '이수아';
+      // Dynamic speaker for any random group (2-4); ending text is now generic
+      const firstInGroup = (currentGroup && currentGroup.length > 0 && heroinesPool[currentGroup[0]]) ? heroinesPool[currentGroup[0]].name : '';
+      document.getElementById('speaker').textContent = scene.speaker || firstInGroup || '';
       
       // Customize ending text based on choices/favors for different narrative branches
       let endText = scene.text || '';
@@ -1337,9 +1340,7 @@
       document.getElementById('choices-container').classList.remove('hidden');
       document.getElementById('choices-container').innerHTML = '';
 
-      // Unlock all CGs on ending
-      unlockCG('sua_nude');
-      unlockCG('creampie');
+      // No invalid CG refs (sua_nude/creampie cleaned; hotel unlocks via lewd>=5 during play)
 
       const btn = document.createElement('button');
       btn.className = 'choice-btn w-full py-3.5 rounded-2xl text-sm';
@@ -1351,11 +1352,13 @@
       };
       document.getElementById('choices-container').appendChild(btn);
 
-      // Add replay button
+      // Add replay button - clears storage too for true fresh random 2-4 run
       const replay = document.createElement('button');
       replay.className = 'choice-btn w-full py-3.5 rounded-2xl text-sm mt-2';
       replay.textContent = '다시 플레이하기';
       replay.onclick = () => {
+        localStorage.removeItem('game_progress');
+        localStorage.removeItem('game_unlockedCG');
         flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
         unlockedCG = new Set();
         renderScene(0);
@@ -1366,7 +1369,7 @@
     // === Progress ===
     function saveProgress() {
       try {
-        localStorage.setItem('vn_progress', JSON.stringify({
+        localStorage.setItem('game_progress', JSON.stringify({
           scene: currentScene,
           flags,
           unlocked: [...unlockedCG]
@@ -1376,7 +1379,7 @@
 
     function loadProgress() {
       try {
-        const saved = localStorage.getItem('vn_progress');
+        const saved = localStorage.getItem('game_progress');
         if (saved) {
           const data = JSON.parse(saved);
           currentScene = data.scene || 0;
@@ -1389,8 +1392,6 @@
 
     function quickSave() {
       saveProgress();
-      const orig = event.currentTarget;
-      const btns = document.querySelectorAll('button');
       const msg = document.createElement('div');
       msg.textContent = '저장됨';
       msg.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 text-xs px-3 py-1 bg-black/70 rounded-full';
@@ -1400,8 +1401,8 @@
 
     function resetProgress() {
       if (!confirm('진행도를 초기화할까요?')) return;
-      localStorage.removeItem('vn_progress');
-      localStorage.removeItem('unlockedCG');
+      localStorage.removeItem('game_progress');
+      localStorage.removeItem('game_unlockedCG');
       flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
       unlockedCG = new Set();
       currentScene = 0;
@@ -1538,9 +1539,9 @@
 
     // === PWA & Mobile helpers ===
     function initPWA() {
-      // Simple install prompt hint
+      // Register simple service worker for offline cache (index + assets/images)
       if ('serviceWorker' in navigator) {
-        // We can add a real sw later if needed
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
       }
     }
 
@@ -1593,7 +1594,7 @@
       // Show title
       document.getElementById('title-screen').classList.remove('hidden');
 
-      // Dev helper: press ` in console to jump to H scene
+      // Dev helper: press ` in console to jump to H scene (GAME repo test)
       window.jumpToH = () => {
         document.getElementById('title-screen').classList.add('hidden');
         document.getElementById('game-screen').classList.remove('hidden');
@@ -1603,7 +1604,7 @@
         renderScene(18); // jump to orgy for testing new expanded story
       };
 
-      console.log('%c[강남 리유니온] 확장 완료: 20장면 빌드업 스토리 + 백스토리 대화 + favor 브랜치 1:1 vs 난교 + 노골 H. mobile friendly.');
+      console.log('%c[GAME] 강남 리유니온 ready: 20 scenes (random 2-4 heroines + skips/requires/favors/branches/dynamic endings), solid mobile, BGM phases, PWA.');
     }
 
     function toggleFullscreen() {
