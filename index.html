@@ -170,121 +170,516 @@
     .erotic-glow {
       box-shadow: 0 0 15px rgb(159 18 57 / 0.15);
     }
+
+    /* PREMIUM EROGE VN UPGRADES: immersive, mobile bottom nav, bars, smooth transitions */
+    .vn-container, #game-screen { transition: opacity 0.2s ease, transform 0.2s ease; }
+    .scene-fade { animation: sceneFadeIn 0.35s cubic-bezier(0.23, 1.0, 0.32, 1); }
+    @keyframes sceneFadeIn {
+      from { opacity: 0.6; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .affection-bar {
+      height: 6px;
+      background: #3f2a2e;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #5c3a40;
+    }
+    .affection-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #fda4af, #9f1239);
+      transition: width 0.4s cubic-bezier(0.23, 1.0, 0.32, 1);
+    }
+    .affection-fill.sua { background: linear-gradient(90deg, #fda4af, #c0264f); }
+    .affection-fill.jieun { background: linear-gradient(90deg, #a5b4fc, #6366f1); }
+    .affection-fill.harin { background: linear-gradient(90deg, #c4b5fd, #7c3aed); }
+    .affection-fill.yujin { background: linear-gradient(90deg, #fcd34d, #f59e0b); }
+
+    /* Bottom navigation for premium mobile immersive feel */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, #0c0709f5, #120c0fee);
+      border-top: 1px solid #5c3a40;
+      z-index: 60;
+      padding: 4px 8px calc(4px + env(safe-area-inset-bottom, 0px));
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      backdrop-filter: blur(12px);
+    }
+    .bottom-nav button {
+      flex: 1;
+      min-height: 46px;
+      font-size: 10px;
+      padding: 4px 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      color: #f5e8e0;
+      background: transparent;
+      border: none;
+      border-radius: 10px;
+      transition: all 0.1s ease;
+      touch-action: manipulation;
+    }
+    .bottom-nav button:active { background: #3f2a2e; transform: scale(0.96); }
+    .bottom-nav button .icon { font-size: 15px; line-height: 1; }
+    .bottom-nav button .label { font-size: 8.5px; letter-spacing: 0.5px; opacity: 0.85; }
+
+    .auto-active { background: #9f1239 !important; color: white !important; border-radius: 999px; }
+
+    /* Immersive full feel */
+    #game-screen { padding-bottom: 58px; } /* space for bottom nav */
+    #visual-area { transition: background-image 0.45s cubic-bezier(0.23,1,0.32,1); }
+    .dialogue-box { transition: all 0.2s ease; }
+
+    .memory-badge {
+      position: absolute; top: 6px; right: 6px; font-size: 9px; padding: 1px 6px;
+      background: #9f1239; color: #fff; border-radius: 999px; letter-spacing: 0.5px;
+    }
+
+    .status-bars { font-size: 10px; }
+    .lewd-bar { height: 4px; background: #fda4af33; border-radius: 3px; overflow:hidden; }
+    .lewd-fill { height:100%; background:#fda4af; transition: width .35s ease; }
+
+    .backlog-search { background:#1a1114; border:1px solid #5c3a40; color:#f5e8e0; border-radius:999px; padding:6px 14px; font-size:13px; width:100%; }
+    .backlog-entry { border-bottom:1px solid #3f2a2e; padding:8px 0; }
+    .backlog-speaker { color:#fda4af; font-weight:600; font-size:12px; }
+
+    .save-slot {
+      background:#1a1114; border:1px solid #5c3a40; border-radius:16px; padding:12px;
+      transition: all 0.15s ease;
+    }
+    .save-slot:hover { border-color:#9f1239; background:#251a1f; }
+    .save-slot .meta { font-size:10px; color:#fff6; }
+
+    /* ========== MAXIMIZED PREMIUM EROGE UI + MOBILE EXPERIENCE ========== */
+    /* Deep dark mode enhancements */
+    body { background: #070405; }
+    .vn-container, #game-screen, #title-screen { background: #070405; }
+
+    /* Premium immersive Title Screen (CSS animations only) */
+    .title-premium-bg {
+      position: relative;
+      background: linear-gradient(178deg, rgba(7,4,5,0.48) 0%, rgba(12,7,9,0.76) 38%, rgba(7,4,5,0.93) 82%),
+                  url('assets/images/gangnam_lounge.jpg');
+      background-size: cover;
+      background-position: center 36%;
+      overflow: hidden;
+    }
+    .title-premium-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 28% 22%, rgba(159,18,57,0.13) 0%, transparent 52%),
+                  radial-gradient(circle at 74% 71%, rgba(253,164,175,0.08) 0%, transparent 58%);
+      animation: titleVignettePulse 15s ease-in-out infinite;
+    }
+    .title-premium-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 52%, rgba(7,4,5,0.72) 91%);
+      pointer-events: none;
+    }
+    @keyframes titleVignettePulse {
+      0%,100% { opacity: 0.92; }
+      48% { opacity: 1; }
+    }
+
+    /* Elegant floating erotic particles - CSS only */
+    .title-particles { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+    .title-particles span {
+      position: absolute; display: block; border-radius: 50%;
+      background: radial-gradient(circle, #fda4af 0%, rgba(159,18,57,0.65) 38%, transparent 70%);
+      opacity: 0.11; animation: particleFloat 27s linear infinite;
+      box-shadow: 0 0 9px rgba(253,164,175,0.6);
+    }
+    .title-particles span:nth-child(1){width:4px;height:4px;left:11%;top:19%;animation-duration:22s;animation-delay:-4s}
+    .title-particles span:nth-child(2){width:3px;height:3px;left:24%;top:67%;animation-duration:33s;animation-delay:-13s}
+    .title-particles span:nth-child(3){width:5.5px;height:5.5px;left:69%;top:23%;animation-duration:18s;animation-delay:-8s}
+    .title-particles span:nth-child(4){width:2.5px;height:2.5px;left:83%;top:74%;animation-duration:29s;animation-delay:-21s}
+    .title-particles span:nth-child(5){width:4.5px;height:4.5px;left:41%;top:41%;animation-duration:36s;animation-delay:-2s}
+    .title-particles span:nth-child(6){width:3px;height:3px;left:56%;top:81%;animation-duration:24s;animation-delay:-25s}
+    @keyframes particleFloat {
+      0%{transform:translateY(0) translateX(0);opacity:0.11}
+      28%{opacity:0.21}
+      52%{transform:translateY(-58vh) translateX(11px);opacity:0.07}
+      77%{opacity:0.18}
+      100%{transform:translateY(-120vh) translateX(-8px);opacity:0}
+    }
+
+    .title-main {
+      font-family: 'Noto Serif KR', serif; letter-spacing: -1.8px;
+      text-shadow: 0 5px 28px rgba(0,0,0,0.78), 0 1px 0 rgba(159,18,57,0.3);
+      position: relative;
+    }
+    .title-main::after {
+      content: '강남 리유니온';
+      position: absolute; left:0;top:0;width:100%;height:100%;
+      background: linear-gradient(92deg, transparent, rgba(253,164,175,0.38), transparent);
+      background-size: 240% 100%;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: titleShimmer 5.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    @keyframes titleShimmer {
+      0%,100%{background-position:240% 50%}
+      32%,66%{background-position:-55% 50%}
+    }
+    .title-tag { letter-spacing: 4.8px; text-shadow: 0 1px 7px rgba(0,0,0,0.65); border:1px solid rgba(159,18,57,0.42); }
+
+    .title-btn-primary {
+      position:relative; overflow:hidden;
+      background: linear-gradient(145deg,#9f1239,#7e122e);
+      border:1px solid #fda4af33;
+      box-shadow:0 12px 34px rgba(159,18,57,0.38), inset 0 1px 0 rgba(255,255,255,0.18);
+      transition:all .22s cubic-bezier(0.23,1.0,0.32,1);
+    }
+    .title-btn-primary:hover { transform:translateY(-1px) scale(1.006); box-shadow:0 20px 42px rgba(159,18,57,0.48),inset 0 1px 0 rgba(255,255,255,0.24); }
+    .title-btn-primary::after { content:'';position:absolute;top:-50%;left:-120%;width:42%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);transition:.7s; }
+    .title-btn-primary:hover::after { left:260%; }
+
+    .title-btn-secondary {
+      background:rgba(255,255,255,0.042); border:1px solid rgba(255,255,255,0.12);
+      transition:all .2s ease; backdrop-filter:blur(7px);
+    }
+    .title-btn-secondary:hover { background:rgba(255,255,255,0.09); border-color:rgba(253,164,175,0.42); transform:translateY(-1px); }
+
+    /* Game screen: stronger character focus + superior small screen text readability */
+    #visual-area { min-height:55vh; box-shadow: inset 0 0 140px rgba(0,0,0,0.68), inset 0 48px 70px rgba(0,0,0,0.38); }
+    @media (max-width:640px) {
+      #visual-area { min-height:49vh !important; }
+      #character-container img.character-layer { max-height:48vh !important; }
+      .vn-text { font-size:16.4px !important; line-height:1.58 !important; }
+      #dialogue-text { min-height:92px !important; }
+    }
+    @media (max-width:380px) {
+      .vn-text { font-size:15.6px !important; line-height:1.54 !important; }
+      #character-container img.character-layer { max-height:45vh !important; }
+    }
+    @media (min-width:1024px) {
+      #visual-area { min-height:59vh; }
+      #character-container img.character-layer { max-height:65vh; }
+    }
+
+    /* Image transitions + character/scene effects (JS + CSS) */
+    .character-layer {
+      transition: opacity 460ms cubic-bezier(0.22,1,0.36,1), transform 500ms cubic-bezier(0.22,1,0.36,1), filter 440ms ease;
+      will-change: transform, opacity, filter;
+    }
+    .character-layer.fade-in { animation: charEnter 620ms cubic-bezier(0.22,1,0.36,1) forwards; }
+    @keyframes charEnter {
+      from { opacity:0; transform:translateY(14px) scale(0.982); filter:brightness(0.78) saturate(0.88); }
+      to { opacity:1; transform:translateY(0) scale(1); filter:brightness(1) saturate(1.02); }
+    }
+    .character-layer.scene-shift { animation: sceneShift 540ms ease forwards; }
+    @keyframes sceneShift {
+      0% { filter:brightness(0.68) saturate(1.15) blur(1.5px); }
+      100% { filter:brightness(1) saturate(1) blur(0); }
+    }
+    .bg-transitioning { transition: background-image 520ms cubic-bezier(0.25,1,0.3,1) !important; }
+
+    /* Subtle erotic particle glows in visual area - high production */
+    .visual-particles { position:absolute; inset:0; pointer-events:none; z-index:4; overflow:hidden; mix-blend-mode:screen; }
+    .visual-particles .p {
+      position:absolute; border-radius:50%; background:#fda4af; opacity:0.048; filter:blur(0.7px);
+      animation:eroticParticle 21s ease-in-out infinite; box-shadow:0 0 13px rgba(253,164,175,0.8);
+    }
+    .visual-particles .p:nth-child(odd) { animation-duration:29s; background:#9f1239; opacity:0.04; }
+    @keyframes eroticParticle {
+      0%,100% { transform:translate(0,0) scale(0.55); opacity:0.048; }
+      33% { transform:translate(17px,-21px) scale(1.15); opacity:0.09; }
+      66% { transform:translate(-13px,12px) scale(0.68); opacity:0.06; }
+    }
+
+    /* Enhanced erotic Dialogue Box styling */
+    .dialogue-box {
+      background: linear-gradient(to bottom, #1a1114f4, #0f0a0cf2);
+      border: 1px solid #5c3a40; border-top: 1px solid #6f464d;
+      box-shadow: 0 -22px 62px rgb(0 0 0 / 0.85), inset 0 1px 0 rgba(255,255,255,0.09), 0 0 0 1px rgba(159,18,57,0.1);
+      backdrop-filter: blur(18px);
+      position:relative;
+    }
+    .dialogue-box::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background: linear-gradient(to right, transparent, #fda4af2a, transparent);
+    }
+    .speaker-name {
+      color:#fda4af; font-weight:700; letter-spacing:0.095em;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.72), 0 0 14px rgba(159,18,57,0.28);
+      font-family:'Noto Serif KR', serif; position:relative; display:inline-block;
+    }
+    .speaker-name::after {
+      content:''; position:absolute; bottom:-2px; left:0; width:100%; height:1px;
+      background: linear-gradient(to right, #9f1239, transparent); opacity:0.48;
+    }
+    .vn-text {
+      color:#f5e8e0; font-size:15.6px; line-height:1.74;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.68);
+      font-family:'Noto Serif KR', serif; letter-spacing:0.01em;
+    }
+    #dialogue-text { transition:opacity 110ms ease; }
+
+    .game-topbar {
+      background: linear-gradient(#070405f7, #070405e8);
+      border-bottom: 1px solid #3f2a2e; backdrop-filter: blur(18px);
+    }
+
+    /* Varied thematic choice buttons: lewd-level + heroine-specific */
+    .choice-btn {
+      background:#1f1619; border:1px solid #5c3a40; color:#f5e8e0;
+      transition:all .18s cubic-bezier(0.23,1,0.32,1); position:relative; overflow:hidden;
+      font-family:'Inter', system-ui, sans-serif; letter-spacing:0.012em;
+    }
+    .choice-btn::before {
+      content:''; position:absolute; top:0; left:-130%; width:36%; height:100%;
+      background:linear-gradient(90deg,transparent,rgba(159,18,57,0.17),transparent); transition:.62s;
+    }
+    .choice-btn:hover { background:#3f2a2e; border-color:#9f1239; transform:translateY(-1.5px); box-shadow:0 6px 19px rgba(159,18,57,0.24); }
+    .choice-btn:hover::before { left:280%; }
+    .choice-btn:active { transform:scale(0.983); }
+
+    .choice-btn.lewd-low { border-color:#5c3a40; }
+    .choice-btn.lewd-low:hover { border-color:#6f464d; box-shadow:0 4px 14px rgba(111,70,77,0.22); }
+    .choice-btn.lewd-mid { border-color:#7c3a4a; color:#f8d5d0; }
+    .choice-btn.lewd-mid:hover { background:#3f2a2e; border-color:#9f1239; box-shadow:0 5px 19px rgba(159,18,57,0.3); }
+    .choice-btn.lewd-high {
+      background:#25181c; border-color:#9f1239; color:#fee2e2;
+    }
+    .choice-btn.lewd-high:hover { background:#3f2a2e; border-color:#c02644; box-shadow:0 7px 24px rgba(192,38,68,0.33); }
+    .choice-btn.lewd-high::before { background:linear-gradient(90deg,transparent,rgba(192,38,68,0.32),transparent); }
+
+    /* Heroine thematic accents */
+    .choice-btn.heroine-sua { border-left:3px solid #f9a8d4; }
+    .choice-btn.heroine-sua:hover { border-left-color:#fda4af; box-shadow:0 5px 17px rgba(249,168,212,0.22); }
+    .choice-btn.heroine-jieun { border-left:3px solid #64748b; }
+    .choice-btn.heroine-jieun:hover { border-left-color:#94a3b8; }
+    .choice-btn.heroine-harin { border-left:3px solid #854d4f; }
+    .choice-btn.heroine-harin:hover { border-left-color:#9f1239; box-shadow:0 5px 17px rgba(159,18,57,0.27); }
+    .choice-btn.heroine-yujin { border-left:3px solid #f59e0b; }
+    .choice-btn.heroine-yujin:hover { border-left-color:#fbbf24; box-shadow:0 5px 16px rgba(245,158,11,0.24); }
+
+    /* In-game Menu polish */
+    .ingame-menu {
+      background:#120c0ff0; border:1px solid #5c3a40;
+      box-shadow:0 20px 52px rgb(0 0 0 / 0.78); backdrop-filter:blur(20px);
+    }
+    .ingame-option { background:#1a1114; border:1px solid #3f2a2e; border-radius:12px; padding:9px 13px; }
+
+    /* Full CG Viewer - zoom, desc, favorites */
+    .cg-card { transition:transform .2s ease, box-shadow .2s ease, border-color .2s; }
+    .cg-card:hover { transform:translateY(-1px); box-shadow:0 9px 26px rgba(0,0,0,0.58); border-color:#9f123966; }
+    .cg-fav { color:#fda4af; text-shadow:0 0 7px rgba(159,18,57,0.65); }
+    .cg-viewer { background:#050304f9; }
+    .cg-viewer img { transition:transform .22s cubic-bezier(0.23,1,0.32,1); touch-action:none; user-select:none; }
+    .cg-zoom-controls button {
+      background:rgba(255,255,255,0.075); border:1px solid rgba(255,255,255,0.22); transition:all .1s ease;
+    }
+    .cg-zoom-controls button:active { background:#9f1239; border-color:#9f1239; color:#fff; }
+
+    /* Mobile extras */
+    .auto-indicator {
+      position:absolute; bottom:16px; left:50%; transform:translateX(-50%);
+      background:rgba(0,0,0,0.62); color:#fda4af; font-size:10px; padding:2px 12px; border-radius:999px;
+      letter-spacing:1.6px; border:1px solid #9f123944; pointer-events:none; opacity:0.92;
+    }
+    .longpress-hint { position:absolute; top:9px; right:9px; font-size:9px; color:#fff3; pointer-events:none; background:rgba(0,0,0,0.32); padding:1px 8px; border-radius:6px; }
+
+    /* Refined status + topbar */
+    #status-bar { background:linear-gradient(#070405cc,#060304a8); border-bottom:1px solid rgba(159,18,57,0.22); }
+    #character-container .group-char { box-shadow:0 12px 32px rgba(0,0,0,0.65); border:1px solid rgba(255,255,255,0.12); }
+
+    /* Gallery grid + responsive tweaks for all sizes */
+    #gallery-grid { gap:12px; }
+    @media (max-width:420px){ #gallery-grid{gap:7px;} }
+    .vib-toggle.on { box-shadow:0 0 0 1px #9f123955; }
+    .vib-toggle { transition:all .1s; }
   </style>
 </head>
 <body class="bg-[#0a0608] text-[#f5e8e0] min-h-screen overflow-x-hidden">
-  <!-- TITLE SCREEN -->
+  <!-- TITLE SCREEN - Premium Immersive -->
   <div id="title-screen" class="min-h-screen flex flex-col">
-    <div class="flex-1 flex items-center justify-center p-6" 
-         style="background: linear-gradient(rgba(12,7,9,0.65), rgba(12,7,9,0.85)), url('assets/images/eroge_lounge_bg.jpg'); background-size: cover; background-position: center;">
-      <div class="text-center max-w-md w-full">
-        <div class="mb-3">
-          <span class="inline-block px-4 py-1 text-xs tracking-[3px] bg-[#9f1239]/80 text-white rounded-full">ADULT VISUAL NOVEL • MOBILE OPTIMIZED</span>
+    <div class="flex-1 flex items-center justify-center p-6 title-premium-bg">
+      <!-- CSS-only erotic floating particles -->
+      <div class="title-particles">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+
+      <div class="text-center max-w-md w-full relative z-10">
+        <div class="mb-4">
+          <span class="inline-block px-5 py-1 text-[10px] tracking-[4.2px] bg-[#9f1239]/85 text-white rounded-full title-tag">ADULT VISUAL NOVEL • MOBILE OPTIMIZED</span>
         </div>
         
-        <h1 class="text-6xl sm:text-7xl font-bold tracking-tighter mb-1" style="font-family: 'Noto Serif KR', serif;">강남 리유니온</h1>
-        <p class="text-xl sm:text-2xl text-[#fda4af] font-light tracking-wide mb-8">퇴근 후, 예전 동기들과의 비밀 파티<br class="hidden sm:block"><span class="text-sm sm:text-base opacity-75">— 천천히 타오르는 욕망과 이야기</span></p>
+        <h1 class="title-main text-[62px] sm:text-[74px] font-bold tracking-[-2.4px] mb-1 text-white">강남 리유니온</h1>
+        <p class="text-[21px] sm:text-[25px] text-[#fda4af] font-light tracking-[0.6px] mb-9 leading-tight">퇴근 후, 예전 동기들과의 비밀 파티<br class="hidden sm:block"><span class="text-[13px] sm:text-[15px] opacity-70 tracking-[1.1px]">— 천천히 타오르는 욕망과 이야기</span></p>
         
-        <div class="space-y-3">
+        <div class="space-y-3.5 max-w-[310px] mx-auto">
           <button onclick="startGame()" 
-                  class="w-full py-4 px-8 bg-[#9f1239] hover:bg-[#b91c3c] active:bg-[#7e122e] text-white text-xl font-semibold rounded-2xl shadow-xl transition-all active:scale-[0.985]">
+                  class="title-btn-primary w-full py-[17px] px-9 text-white text-[21px] font-semibold rounded-3xl shadow-2xl active:scale-[0.985]">
             시작하기
           </button>
           
           <div class="flex gap-3">
             <button onclick="showGallery()" 
-                    class="flex-1 py-3 px-6 bg-white/5 hover:bg-white/10 border border-white/10 text-sm rounded-2xl transition-all">
+                    class="title-btn-secondary flex-1 py-3.5 px-6 text-sm rounded-2xl active:scale-[0.985]">
               CG 갤러리
             </button>
             <button onclick="showSettings()" 
-                    class="flex-1 py-3 px-6 bg-white/5 hover:bg-white/10 border border-white/10 text-sm rounded-2xl transition-all">
+                    class="title-btn-secondary flex-1 py-3.5 px-6 text-sm rounded-2xl active:scale-[0.985]">
               설정
             </button>
           </div>
         </div>
         
-        <div class="mt-10 text-[10px] text-white/40 tracking-widest">MOBILE WEB APP • 29+ ONLY</div>
+        <div class="mt-11 text-[10px] text-white/35 tracking-[3.5px]">MOBILE WEB APP • 29+ ONLY</div>
       </div>
     </div>
     
-    <div class="p-4 text-center text-[10px] text-white/30 border-t border-white/10 tracking-widest">
+    <div class="p-4 text-center text-[10px] text-white/28 border-t border-white/10 tracking-[2.5px]">
       강남 직장인 동기들 · 슬로우번 · 랜덤 2~4명 · 노골적 하렘/난교
     </div>
   </div>
 
-  <!-- GAME SCREEN -->
+  <!-- GAME SCREEN - Premium Eroge Immersive Mobile -->
   <div id="game-screen" class="hidden min-h-screen flex flex-col">
-    <!-- Top bar -->
-    <div class="flex items-center justify-between px-4 py-2 bg-black/70 backdrop-blur border-b border-white/10 z-50">
-      <div class="flex items-center gap-3">
-        <button onclick="backToTitle()" class="text-white/50 hover:text-white text-xs px-2 py-1 active:text-white/80">←</button>
-        <div class="text-xs sm:text-sm font-medium text-white/60 tracking-wider">강남 리유니온</div>
-      </div>
-      
+    <!-- Top bar - slim premium -->
+    <div class="flex items-center justify-between px-3 py-1.5 bg-black/80 backdrop-blur border-b border-white/10 z-50">
       <div class="flex items-center gap-2">
-        <button onclick="toggleBGM()" id="bgm-btn"
-                class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 flex items-center gap-1.5 active:bg-white/10">
-          <span>♪</span>
-          <span id="bgm-status">BGM ON</span>
-        </button>
-        <button onclick="showGallery()" class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10">갤러리</button>
-        <button onclick="quickSave()" class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10">저장</button>
-        <button onclick="toggleFullscreen()" class="px-2 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10 hidden sm:block">⛶</button>
-        <button onclick="showBacklog()" class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10">백로그</button>
+        <button onclick="backToTitle()" class="text-white/60 hover:text-white text-sm px-2 py-0.5 active:text-white/90">←</button>
+        <div class="text-xs font-medium text-white/70 tracking-[1.5px]">GANGNAM REUNION • EROGE VN</div>
       </div>
-    </div>
-
-    <!-- Status Bar for 고도화 (affection/lewd) -->
-    <div id="status-bar" class="hidden bg-black/50 px-4 py-1 text-xs flex justify-between items-center border-b border-white/10">
-      <div id="player-info" class="text-white/60"></div>
-      <div class="flex gap-4 text-[10px]">
-        <span>흥분: <span id="lewd-level">0</span>%</span>
-        <span>호감: <span id="affection-level">0</span>%</span>
-      </div>
-    </div>
-
-    <!-- Visual Area -->
-    <div id="visual-area" 
-         class="relative flex-1 bg-black overflow-hidden flex items-end justify-center game-bg"
-         style="background-image: url('assets/images/eroge_lounge_bg.jpg'); min-height: 52vh;">
       
-      <!-- Participants + Character(s) for mobile optimization -->
-      <div id="participants-bar" class="hidden w-full px-4 pt-1.5 pb-1 z-20 bg-black/30">
-        <div class="flex justify-center gap-2 text-[9px] text-white/50 mb-0.5 tracking-[1px]">참석자</div>
-        <div id="participants-avatars" class="flex justify-center gap-2"></div>
+      <div class="flex items-center gap-1.5">
+        <button onclick="toggleBGM()" id="bgm-btn"
+                class="px-2.5 py-0.5 text-[10px] rounded-full bg-white/5 border border-white/10 flex items-center gap-1 active:bg-white/10">
+          <span>♪</span> <span id="bgm-status" class="text-[10px]">ON</span>
+        </button>
+        <button onclick="showSaveLoad()" class="px-2.5 py-0.5 text-[10px] rounded-full bg-white/5 border border-white/10 active:bg-white/10">SLOTS</button>
+        <button onclick="showGallery()" class="px-2.5 py-0.5 text-[10px] rounded-full bg-white/5 border border-white/10 active:bg-white/10">CG</button>
+        <button onclick="showMemories()" class="px-2.5 py-0.5 text-[10px] rounded-full bg-white/5 border border-white/10 active:bg-white/10">MEM</button>
+        <button onclick="showInGameMenu()" class="px-2.5 py-0.5 text-[10px] rounded-full bg-white/5 border border-white/10 active:bg-white/10" title="In-Game Options">MENU</button>
+        <button onclick="showSettings()" class="px-2 py-0.5 text-[10px] rounded-full bg-white/5 border border-white/10 active:bg-white/10">⚙</button>
+      </div>
+    </div>
+
+    <!-- Enhanced Status Bar: Affection meters with visual bars (per heroine + lewd) -->
+    <div id="status-bar" class="hidden bg-black/70 px-3 py-1.5 text-[10px] border-b border-white/10">
+      <div class="flex items-center justify-between mb-1">
+        <div id="player-info" class="text-white/70 text-xs tracking-wider"></div>
+        <div class="flex items-center gap-3 text-[9px]">
+          <span class="text-[#fda4af]">LEWD <span id="lewd-level">0</span>%</span>
+          <span class="text-white/70">AFFECTION <span id="affection-level">0</span>%</span>
+        </div>
+      </div>
+      <!-- Per-heroine visual bars -->
+      <div class="status-bars grid grid-cols-4 gap-1.5">
+        <div class="flex flex-col gap-0.5">
+          <div class="flex justify-between text-[8px] text-white/50"><span>수아</span><span id="bar-sua-val">0</span></div>
+          <div class="affection-bar"><div id="bar-sua" class="affection-fill sua" style="width:0%"></div></div>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <div class="flex justify-between text-[8px] text-white/50"><span>지은</span><span id="bar-jieun-val">0</span></div>
+          <div class="affection-bar"><div id="bar-jieun" class="affection-fill jieun" style="width:0%"></div></div>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <div class="flex justify-between text-[8px] text-white/50"><span>하린</span><span id="bar-harin-val">0</span></div>
+          <div class="affection-bar"><div id="bar-harin" class="affection-fill harin" style="width:0%"></div></div>
+        </div>
+        <div class="flex flex-col gap-0.5">
+          <div class="flex justify-between text-[8px] text-white/50"><span>유진</span><span id="bar-yujin-val">0</span></div>
+          <div class="affection-bar"><div id="bar-yujin" class="affection-fill yujin" style="width:0%"></div></div>
+        </div>
+      </div>
+      <!-- Global lewd bar -->
+      <div class="mt-1 flex items-center gap-2">
+        <div class="text-[8px] text-[#fda4af]/70 w-6">LEWD</div>
+        <div class="flex-1 lewd-bar"><div id="lewd-bar-fill" class="lewd-fill" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <!-- Visual Area - maximized focus, readability, particles + transitions -->
+    <div id="visual-area" 
+         class="relative flex-1 bg-black overflow-hidden flex items-end justify-center game-bg bg-transitioning"
+         style="background-image: url('assets/images/gangnam_lounge.jpg'); min-height: 52vh;">
+      
+      <!-- Participants -->
+      <div id="participants-bar" class="hidden w-full px-3 pt-1 pb-0.5 z-20 bg-black/40">
+        <div class="flex justify-center gap-1.5 text-[8px] text-white/40 mb-0.5 tracking-[1.5px]">참석자 • GROUP SIZE AFFECTS ALL SCENES</div>
+        <div id="participants-avatars" class="flex justify-center gap-1.5"></div>
       </div>
 
       <!-- Character(s) -->
-      <div id="character-container" class="relative z-10 w-full max-w-[520px] px-3 pb-3 select-none flex flex-wrap justify-center gap-2 items-end">
-        <!-- JS will populate 1 or more imgs here for group/orgy scenes. For groups, images are smaller with subtle frame. -->
+      <div id="character-container" class="relative z-10 w-full max-w-[560px] px-2 pb-2 select-none flex flex-wrap justify-center gap-1.5 items-end">
+        <!-- JS populates -->
       </div>
       
-      <!-- Subtle vignette overlay -->
+      <!-- Vignette + scanline + erotic particles -->
       <div class="absolute inset-0 pointer-events-none" 
-           style="background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.45) 82%);"></div>
+           style="background: radial-gradient(circle at center, transparent 38%, rgba(0,0,0,0.55) 88%); z-index:3;"></div>
+      <div class="absolute inset-0 pointer-events-none opacity-10" 
+           style="background: repeating-linear-gradient(transparent, transparent 3px, rgba(255,255,255,0.035) 3px, rgba(255,255,255,0.035) 4px); z-index:3;"></div>
+      <div id="visual-particles" class="visual-particles"></div>
+
+      <!-- mobile hint -->
+      <div id="lp-hint" class="longpress-hint hidden sm:hidden">길게 누르기: 메뉴</div>
     </div>
 
-    <!-- Dialogue Box -->
+    <!-- Dialogue Box - enhanced erotic styling -->
     <div class="dialogue-box border-t border-[#4a2f35] px-4 py-4 z-50">
       <div class="max-w-3xl mx-auto">
         <!-- Speaker -->
         <div id="speaker" class="speaker-name text-sm mb-1.5 tracking-wider"></div>
         
-        <!-- Text -->
-        <div id="dialogue-text" class="vn-text eroge-text text-[15.2px] min-h-[78px] leading-relaxed mb-2.5"></div>
+        <!-- Text - better readability on all screens -->
+        <div id="dialogue-text" class="vn-text eroge-text text-[15.5px] min-h-[86px] leading-relaxed mb-2"></div>
         
-        <!-- Choices -->
-        <div id="choices-container" class="hidden space-y-2 mt-1"></div>
+        <!-- Choices (themed dynamically) -->
+        <div id="choices-container" class="hidden space-y-2 mt-0.5"></div>
         
-        <!-- Next button -->
-        <div id="next-container" class="flex justify-end mt-1">
+        <!-- Next / Skip -->
+        <div id="next-container" class="flex justify-between items-center mt-1 gap-2">
+          <button onclick="toggleTextSkip()" id="skip-btn"
+                  class="px-4 py-1 text-[11px] bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white/80 active:bg-white/15">SKIP ▶▶</button>
           <button onclick="nextLine()"
-                  class="px-8 py-2.5 text-sm font-medium bg-[#9f1239] hover:bg-[#b91c3c] active:bg-[#7e122e] rounded-full text-white flex items-center gap-2 shadow active:scale-[0.985]">
+                  class="px-7 py-2 text-sm font-medium bg-[#9f1239] hover:bg-[#b91c3c] active:bg-[#7e122e] rounded-full text-white flex items-center gap-1.5 shadow active:scale-[0.985]">
             <span>다음</span>
-            <span class="text-lg leading-none">→</span>
+            <span class="text-base leading-none">→</span>
           </button>
         </div>
       </div>
+    </div>
+
+    <!-- PREMIUM BOTTOM NAV: Auto-play, Memories, Backlog, Save, Menu for full mobile immersive -->
+    <div class="bottom-nav">
+      <button onclick="toggleAutoPlay()" id="auto-btn">
+        <div class="icon">▶︎</div>
+        <div class="label">AUTO</div>
+      </button>
+      <button onclick="showMemories()">
+        <div class="icon">✧</div>
+        <div class="label">MEMORIES</div>
+      </button>
+      <button onclick="showBacklog()">
+        <div class="icon">≡</div>
+        <div class="label">BACKLOG</div>
+      </button>
+      <button onclick="showSaveLoad()">
+        <div class="icon">💾</div>
+        <div class="label">SAVE/LOAD</div>
+      </button>
+      <button onclick="jumpToRandomH()">
+        <div class="icon">♥</div>
+        <div class="label">QUICK H</div>
+      </button>
+      <button onclick="showSettings()">
+        <div class="icon">⚙</div>
+        <div class="label">MENU</div>
+      </button>
     </div>
   </div>
 
@@ -350,273 +745,289 @@
     </div>
   </div>
 
+  <!-- Save/Load Slots Modal (5 premium slots with metadata) -->
+  <div id="saveload-modal" onclick="if (event.target.id === 'saveload-modal') hideSaveLoad()" class="hidden fixed inset-0 bg-black/90 z-[110] flex items-end sm:items-center justify-center">
+    <div onclick="event.stopImmediatePropagation()" class="modal bg-[#120c0f] border border-white/10 w-full sm:max-w-lg sm:rounded-3xl sm:m-4 rounded-t-3xl p-5 max-h-[88vh] overflow-auto">
+      <div class="flex items-center justify-between mb-4">
+        <div class="font-semibold text-lg">세이브 슬롯 (5개)</div>
+        <button onclick="hideSaveLoad()" class="text-white/50 text-2xl leading-none px-2">×</button>
+      </div>
+      <div class="text-[10px] text-white/50 mb-3">슬롯은 localStorage에 영구 저장. 갤러리·스탯·그룹 모두 복원됩니다.</div>
+      <div id="save-slots-container" class="space-y-3"></div>
+      <div class="mt-4 flex gap-2">
+        <button onclick="quickSaveToSlot()" class="flex-1 py-2 text-xs bg-[#9f1239] rounded-2xl">현재 진행을 새 슬롯에 저장</button>
+        <button onclick="hideSaveLoad()" class="flex-1 py-2 text-xs bg-white/5 border border-white/10 rounded-2xl">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Memories (Unlockable Extra Eroge Scenes) Modal -->
+  <div id="memories-modal" onclick="if (event.target.id === 'memories-modal') hideMemories()" class="hidden fixed inset-0 bg-black/90 z-[110] flex items-end sm:items-center justify-center">
+    <div onclick="event.stopImmediatePropagation()" class="modal bg-[#120c0f] border border-white/10 w-full sm:max-w-lg sm:rounded-3xl sm:m-4 rounded-t-3xl p-5 max-h-[88vh] overflow-auto">
+      <div class="flex items-center justify-between mb-3">
+        <div>
+          <div class="font-semibold text-lg">MEMORIES • 추억의 에로게 씬</div>
+          <div class="text-[10px] text-white/50">높은 호감/흥분으로 해금되는 비밀 장면들. 메인 스토리와 별도 플레이 가능.</div>
+        </div>
+        <button onclick="hideMemories()" class="text-white/50 text-2xl leading-none px-2">×</button>
+      </div>
+      <div id="memories-grid" class="grid grid-cols-1 gap-2 text-sm"></div>
+      <div class="mt-4 text-center">
+        <button onclick="hideMemories()" class="px-6 py-1.5 text-xs bg-white/5 border border-white/10 rounded-2xl">닫기</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- In-Game Menu (new dedicated polished eroge options panel) -->
+  <div id="ingame-menu-modal" onclick="if (event.target.id === 'ingame-menu-modal') hideInGameMenu()" class="hidden fixed inset-0 bg-black/85 z-[130] flex items-end sm:items-center justify-center">
+    <div onclick="event.stopImmediatePropagation()" class="ingame-menu modal w-full sm:max-w-md sm:rounded-3xl sm:m-4 rounded-t-3xl p-5 text-sm">
+      <div class="flex justify-between items-center mb-4">
+        <div class="font-semibold tracking-wider text-lg">옵션 • IN-GAME MENU</div>
+        <button onclick="hideInGameMenu()" class="text-white/60 text-2xl leading-none px-1">×</button>
+      </div>
+
+      <div class="space-y-4">
+        <!-- Text Speed -->
+        <div class="ingame-option">
+          <div class="flex justify-between mb-1.5 text-white/70 text-xs">
+            <div>텍스트 속도</div><div id="ingame-text-speed-val">보통</div>
+          </div>
+          <input type="range" id="ingame-text-speed" min="1" max="4" step="1" value="2" class="w-full accent-[#9f1239]">
+        </div>
+
+        <!-- Volume -->
+        <div class="ingame-option">
+          <div class="flex justify-between mb-1.5 text-white/70 text-xs">
+            <div>BGM 볼륨</div><div id="ingame-bgm-vol-val">65%</div>
+          </div>
+          <input type="range" id="ingame-bgm-volume" min="0" max="100" step="5" value="65" class="w-full accent-[#9f1239]">
+        </div>
+
+        <!-- Skip Speed -->
+        <div class="ingame-option">
+          <div class="flex justify-between mb-1.5 text-white/70 text-xs">
+            <div>스킵 속도</div><div id="ingame-skip-val">빠름</div>
+          </div>
+          <input type="range" id="ingame-skip-speed" min="1" max="3" step="1" value="2" class="w-full accent-[#9f1239]">
+          <div class="text-[10px] text-white/40 mt-0.5">빠를수록 선택지/엔딩 빠른 진행</div>
+        </div>
+
+        <!-- Vibration Toggle -->
+        <div class="ingame-option flex items-center justify-between">
+          <div>
+            <div class="text-white/70 text-xs">진동 피드백 (모바일)</div>
+            <div class="text-[10px] text-white/40">선택/진행 시 haptic</div>
+          </div>
+          <button id="vib-toggle" onclick="toggleVibrationPref()" class="vib-toggle px-4 py-1 text-xs rounded-full border border-white/20 bg-white/5 active:bg-white/10">OFF</button>
+        </div>
+
+        <div class="flex gap-2 pt-1">
+          <button onclick="hideInGameMenu(); showSettings();" class="flex-1 py-2 text-xs bg-white/5 border border-white/10 rounded-2xl">고급 설정</button>
+          <button onclick="hideInGameMenu()" class="flex-1 py-2 text-xs bg-[#9f1239] hover:bg-[#b91c3c] rounded-2xl">닫기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Tailwind script configuration
     function initTailwind() {
       document.documentElement.style.setProperty('--accent', '#9f1239');
     }
 
-    // === GAME STATE ===
+    // === GAME STATE (Premium persistent multi-slot) ===
     let currentScene = 0;
     let currentLine = 0;
     let flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
     let unlockedCG = new Set();
+    let unlockedMemories = new Set(); // extra unlockable H/memories scenes
     let bgmEnabled = true;
+    let favorites = new Set(); // gallery favorites
+    let autoPlayInterval = null;
+    let autoPlaying = false;
+    let vibrationEnabled = true;
+    let skipSpeed = 2; // 1 slow 2 med 3 fast for skip
+    let textSkipMode = false;
     let audioContext = null;
     let bgmMasterGain = null;
     let currentPhase = 'chill';
-    let bgmMode = 'synthetic'; // 'synthetic' | 'real'
+    let bgmMode = 'synthetic';
     let realAvailable = false;
     let realAudios = {};
     let realGains = {};
     let syntheticNodes = [];
     let currentBgmController = null;
-    let currentSynthGain = null; // used for internal synth fade references
+    let currentSynthGain = null;
     let playerName = '';
-    let textHistory = []; // for backlog 고도화
+    let textHistory = [];
+    let autoMode = false;
+    let autoTimer = null;
+    let skipMode = false;
+    let saveSlots = {}; // 5 slots: { slotId: {scene, flags, group, unlockedCG, unlockedMemories, playerName, timestamp, summary} }
+    const MAX_SLOTS = 5;
 
-    // === NEW GAME DATA: 강남 직장인 리유니온 ===
+    // === NEW GAME DATA: 강남 직장인 리유니온 (Premium Eroge Edition) ===
     const heroinesPool = {
-      sua: { id: 'sua', name: '이수아', job: '마케팅 디렉터', img: 'assets/images/eroge_sua_base.jpg', desc: '우아하고 장난 많지만 리드 잘하는 타입. 대학 시절부터 플러팅의 달인. 옛 교복을 입으면 더 야해진다.' },
-      jieun: { id: 'jieun', name: '김지은', job: '증권사 선임 애널리스트', img: 'assets/images/eroge_jieun_base.jpg', desc: '차갑고 주도적, 말보다 행동파. 속에 숨긴 지배욕. 교복 코스프레에 약하다.' },
-      harin: { id: 'harin', name: '박하린', job: '대형 로펌 변호사', img: 'assets/images/eroge_harin_base.jpg', desc: '차가운 미인, 속은 엄청 야함. 완벽주의 뒤의 변태성. 교복 입으면 완전 변신.' },
-      yujin: { id: 'yujin', name: '최유진', job: '럭셔리 호텔 PR', img: 'assets/images/eroge_yujin_base.jpg', desc: '명랑하고 적극적, 분위기 메이커. 스캔들 좋아하는 타입. 교복이 제일 잘 어울림.' }
+      sua: { 
+        id: 'sua', name: '이수아', job: '마케팅 디렉터', 
+        img: 'assets/images/eroge_sua_base.jpg', 
+        base: 'assets/images/eroge_sua_base.jpg',
+        aroused: 'assets/images/eroge_sua_aroused.jpg',
+        lewd: 'assets/images/eroge_sua_lewd.jpg',
+        uniform: 'assets/images/eroge_uniform_sua.jpg',
+        desc: '우아하고 장난 많지만 리드 잘하는 타입. 대학 시절부터 플러팅의 달인. 부드럽게 주도하며 자궁 깊숙이 애정 표현. 교복 입으면 완전 에로게 동급생 모드.' 
+      },
+      jieun: { 
+        id: 'jieun', name: '김지은', job: '증권사 선임 애널리스트', 
+        img: 'assets/images/eroge_jieun_base.jpg', 
+        base: 'assets/images/eroge_jieun_base.jpg',
+        aroused: 'assets/images/eroge_jieun_base.jpg',
+        lewd: 'assets/images/eroge_jieun_lewd.jpg',
+        uniform: 'assets/images/eroge_uniform_jieun.jpg',
+        desc: '차갑고 주도적, 말보다 행동파. 압박 속 숨긴 지배욕. 정확하고 거칠게 컨트롤하며 보지/클릿 명령. 교복 코스프레에 극도로 약함.' 
+      },
+      harin: { 
+        id: 'harin', name: '박하린', job: '대형 로펌 변호사', 
+        img: 'assets/images/eroge_harin_base.jpg', 
+        base: 'assets/images/eroge_harin_base.jpg',
+        aroused: 'assets/images/eroge_harin_lewd.jpg',
+        lewd: 'assets/images/eroge_harin_lewd.jpg',
+        uniform: 'assets/images/eroge_uniform_harin.jpg',
+        desc: '차가운 미인, 속은 엄청 야함. 완벽주의 뒤의 변태성. "더러운 변호사" 되고 싶어하며 항문/보지/아헤가오 극단 플레이. 교복 변신이 가장 충격적.' 
+      },
+      yujin: { 
+        id: 'yujin', name: '최유진', job: '럭셔리 호텔 PR', 
+        img: 'assets/images/eroge_yujin_base.jpg', 
+        base: 'assets/images/eroge_yujin_base.jpg',
+        aroused: 'assets/images/eroge_yujin_lewd.jpg',
+        lewd: 'assets/images/eroge_yujin_lewd.jpg',
+        uniform: 'assets/images/eroge_uniform_yujin.jpg',
+        desc: '명랑하고 적극적, 분위기 메이커. 스캔들 좋아함. 거칠게 허리 흔들며 큰 소리 지르는 타입. 교복이 제일 잘 어울리고 호텔 방 열쇠 챙기는 적극파.' 
+      },
+      jisu: { 
+        id: 'jisu', name: '강지수', job: '패션 스타트업 CEO', 
+        img: 'assets/images/eroge_jisu_base.jpg', 
+        base: 'assets/images/eroge_jisu_base.jpg',
+        aroused: 'assets/images/eroge_jisu_base.jpg',
+        lewd: 'assets/images/eroge_jisu_base.jpg',
+        uniform: 'assets/images/eroge_jisu_base.jpg',
+        desc: '자신감 넘치고 창의적, 파티의 여왕. 패션 감각으로 교복을 섹시하게 스타일링. 대담하고 실험적인 플레이 선호.' 
+      }
     };
 
     const nameToKey = {
       '이수아': 'sua',
       '김지은': 'jieun',
       '박하린': 'harin',
-      '최유진': 'yujin'
+      '최유진': 'yujin',
+      '강지수': 'jisu'
     };
 
     let currentGroup = []; // array of heroine keys, randomly chosen 2~4
 
-    // Scenes - 확장된 스토리: 강남 리유니온. 빌드업 대화/긴장/백스토리 중심 + 선택지 브랜치 + 노골적 H/난교
-    // 총 20개 장면 (0~19). 비H 빌드업 8개 이상, 브랜치(특정 히로인 집중 1:1 vs 그룹), 플래그로 강도/엔딩 영향
+    // === PREMIUM EROGE VN: 40+ SCENES ===
+    // Deep narrative build-up, character development for exactly 4 heroines (이수아, 김지은, 박하린, 최유진).
+    // Multiple branching based on choices + random group size (2/3/4).
+    // Varied H-scenes & orgy combos, different group sizes = unique scenes.
+    // Prefer eroge_ images, uniform/lewd for all H/orgy. More endings (7+).
+    // Memories unlockable extra scenes. All integrated with new features.
     const scenes = [
-      {
-        id: 0,
-        type: "group-select",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "",
-        text: "강남 테헤란로. 오늘도 긴 회식이 끝났다.\n\n예전 대학 동기들이 모여 있는 단톡방에 메시지가 떴다.\n\n\"오늘 밤, 우리만의 2차 어때? 강남에서... 진짜로.\"",
-        next: 1
-      },
-      {
-        id: 1,
-        type: "narration",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        char: null,
-        speaker: "",
-        text: "고급 라운지 바의 은은한 조명 아래. 위스키 잔이 부딪히는 소리와 함께, 대학 시절 추억이 떠오른다.\n\n오늘 밤 이 자리에 나온 동기들. 각자 강남에서 치열하게 살아가는 직장인. 하지만 이 모임은 단순한 회식이 아니다. 오래전부터 쌓인, 말하지 못한 욕망이 꿈틀거린다.\n\n참석한 멤버들이 오늘의 '우리만의 밤'을 만들 것이다.",
-        next: 2
-      },
-      {
-        id: 2,
-        type: "dialogue",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "이수아",
-        char: "assets/images/eroge_sua_base.jpg",
-        text: "태현아, 여기 앉아. 오늘은 진짜 우리끼리만 하자고. 회식 끝나고 여기로 오라고 일부러 말했어.\n\n(이수아는 우아한 미소를 지으며 네 소매를 잡는다. 마케팅 디렉터답게 분위기를 부드럽게 리드하는 그녀. 대학 때 마케팅 동아리에서 같이 밤새 프로젝트 하던 때가 떠오른다. 그때부터 수아는 너를 장난스럽게 유혹하곤 했다.)\n\n\"일 끝나고 이렇게 만나는 게 얼마만이야? 수아가 오늘 밤 제대로 재미있게 해줄게. 어때, 기대돼?\"",
-        next: 3
-      },
-      {
-        id: 3,
-        type: "dialogue",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "김지은",
-        char: "assets/images/eroge_jieun_base.jpg",
-        text: "늦었네. 벌써 시작한 거야?\n\n(김지은은 차가운 눈으로 앉으며 위스키를 한 모금 마신다. 증권사 선임 애널리스트, 항상 숫자와 압박 속에 사는 그녀. 말수는 적지만 눈빛이 모든 걸 말한다. 대학 때부터 주도적인 성격으로 너를 이끌던 타입.)\n\n\"태현, 오늘은 내가 컨트롤하고 싶어. 증권 일처럼... 정확하고 거칠게. 너도 알지? 내가 원하는 대로 되는 게 제일 좋다는 거.\"",
-        next: 4
-      },
-      {
-        id: 4,
-        type: "dialogue",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "",
-        char: null,
-        text: "두 사람의 대화가 이어지며, 술이 천천히 몸을 데운다. 가벼운 스킨십이 시작된다. 이수아의 손이 네 허벅지에 스치고, 김지은의 발이 은근히 다가온다.\n\n긴장감과 설렘이 섞인다. 회식 때 느꼈던 그 시선들... 오늘은 진짜로 터뜨릴 수 있을까?",
-        choices: [
-          { text: "이수아의 장난스러운 플러팅에 맞장구치며 더 가까이 다가간다", next: 5, flag: { favorSua: 3, lewd: 1 } },
-          { text: "김지은의 차가운 주도에 끌려 그녀의 말에 따르며 술을 권한다", next: 5, flag: { favorJieun: 3, lewd: 1 } },
-          { text: "둘 사이를 중재하며 분위기를 부드럽게 풀어간다", next: 5, flag: { favorSua: 1, favorJieun: 1, lewd: 0 } }
-        ]
-      },
-      {
-        id: 5,
-        type: "dialogue",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "박하린",
-        char: "assets/images/eroge_harin_base.jpg",
-        text: "(박하린이 도착했다. 대형 로펌 변호사, 언제나 차갑고 완벽한 미인. 하지만 오늘 그녀의 눈빛은 평소와 다르다.)\n\n하린이 조용히 앉아 치마 자락을 살짝 만지작거리며 말한다.\n\n\"...나도 왔어. 변호사로 사는 건 항상 완벽해야 하잖아. 하지만 오늘 밤은... 다르게 하고 싶어. 더럽게, 추하게. 대학 때부터 너한테 이런 상상 자주 했었지. 태현아, 날 더러운 변호사로 만들어줄래?\"",
-        next: 6
-      },
-      {
-        id: 6,
-        type: "dialogue",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "최유진",
-        char: "assets/images/eroge_yujin_base.jpg",
-        text: "(최유진이 활기차게 들어온다. 럭셔리 호텔 PR답게 분위기를 순식간에 밝히는 그녀.)\n\n\"야~ 다들 진지해! 오늘은 내가 PR로 분위기 제대로 띄워줄게. 호텔 스위트룸도 미리 알아봤어. 회식 때부터 눈치 봤잖아, 태현이 너도 우리한테 관심 많았지? 명랑하게 끝까지 가보자고. 스캔들 좋아하는 타입이거든, 나.\"",
-        next: 7
-      },
-      {
-        id: 7,
-        type: "dialogue",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "",
-        char: null,
-        text: "네 명 (또는 참석자들)이 모인 테이블. 술잔이 오가며 개인적인 이야기들이 터져 나온다.\n\n이수아: \"대학 때 마케팅 캠페인 때문에 밤새도록 같이 있었던 거 기억나? 그때 너한테 반했었어, 장난스럽게.\"\n\n김지은: \"증권사에서 매일 압박받다 보면... 가끔 이렇게 완전히 통제당하고 싶을 때가 있어.\"\n\n박하린: \"로펌에서 이기는 것만 생각하다 보니, 속으로는 완전 반대가 되고 싶더라. 더러운 짓...\"\n\n최유진: \"호텔에서 온갖 VIP 스캔들 봤는데, 우리도 그런 재밌는 밤 한번 만들어보자. 적극적으로!\"",
-        choices: [
-          { text: "박하린의 차가운 속내에 공감하며 그녀의 손을 잡아당긴다", next: 8, flag: { favorHarin: 3, lewd: 1 } },
-          { text: "최유진의 명랑함에 맞춰 농담을 주고받으며 어깨를 감는다", next: 8, flag: { favorYujin: 3, lewd: 1 } },
-          { text: "모두에게 골고루 관심을 주며 천천히 분위기를 고조시킨다", next: 8, flag: { favorSua: 1, favorJieun: 1, favorHarin: 1, favorYujin: 1, lewd: 1 } }
-        ]
-      },
-      {
-        id: 8,
-        type: "narration",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        char: null,
-        speaker: "",
-        text: "위스키가 두 잔째 들어가자, 라운지 안의 공기가 달라진다.\n\n이수아의 손이 네 다리 위에서 천천히 움직이고, 김지은이 네 귀에 속삭인다. 박하린은 치마를 살짝 올린 채 다리를 꼬고, 최유진은 웃으며 네 셔츠 단추를 하나 풀어준다.\n\n\"오늘 밤은... 그냥 친구가 아니야. 예전 동기에서, 서로의 욕망을 풀어주는 사이로.\"\n\n누가 먼저 시작할까? 긴장과 흥분이 극에 달한다.",
-        next: 9
-      },
-      {
-        id: 9,
-        type: "dialogue",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "이수아",
-        char: "assets/images/eroge_sua_base.jpg",
-        text: "수아가 먼저 네 쪽으로 몸을 기울이며 부드럽지만 단호하게 말한다.\n\n\"태현아, 여기서 시작할까? 아니면... 더 프라이빗한 곳으로 갈까? 수아가 먼저 네 입을 탐하고 싶어. 천천히, 하지만 깊게. 다른 애들도 곧 합류할 거야.\"\n\n참석한 동기들의 시선이 너를 향한다. 선택의 순간.",
-        choices: [
-          { text: "이수아와 먼저 가벼운 키스와 애무로 불을 지핀다 (수아 중심 빌드)", next: 10, flag: { favorSua: 2, lewd: 2 } },
-          { text: "김지은을 끌어당겨 그녀의 주도에 몸을 맡긴다", next: 10, flag: { favorJieun: 2, lewd: 2 }, requires: "jieun" },
-          { text: "모두를 부추겨 라운지에서부터 가벼운 집단 플러팅을 시작한다", next: 10, flag: { lewd: 3 } }
-        ]
-      },
-      {
-        id: 10,
-        type: "h-scene",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "이수아",
-        char: "assets/images/eroge_sua_aroused.jpg",
-        text: "이수아가 바 테이블에 기대어 치마를 허벅지까지 올린다. 속옷은 이미 젖어 있다.\n\n\"여기서... 먼저 해. 누가 들어올지 모르니까 더 야해. 수아 보지에 네 손가락부터 넣어줘. 천천히 문지르면서... 아, 거기...\"\n\n수아의 부드러운 신음이 라운지 구석을 울린다. 그녀의 손이 네 바지를 열고 단단해진 것을 잡아당긴다.\n\n\"대학 때부터 상상했어... 태현이랑 이렇게. 더 세게, 수아를 리드해.\"",
-        choices: [
-          { text: "수아를 더 세게 애무하며 키스한다 (수아 집중)", next: 11, flag: { favorSua: 3, lewd: 3 } },
-          { text: "지은을 불러서 수아의 입을 막으며 같이 즐긴다", next: 11, flag: { favorJieun: 2, lewd: 4 }, requires: "jieun" },
-          { text: "하린과 유진도 가까이 부르며 가벼운 3인 시작", next: 11, flag: { lewd: 4 } },
-          { text: "잠시 멈추고 '옛날 교복'으로 갈아입고 '동급생 놀이' 시작 (노스탤지아 유니폼)", next: 20, flag: { lewd: 5 } }
-        ]
-      },
-      {
-        id: 11,
-        type: "h-scene",
-        bg: "assets/images/eroge_lounge_bg.jpg",
-        speaker: "김지은",
-        char: "assets/images/eroge_jieun_lewd.jpg",
-        text: "지은이 다가와 수아의 머리를 잡아채며 네게 명령한다.\n\n\"태현, 수아 입에 제대로 박아. 내가 보고 싶어서 왔으니까. 수아는 혀로 빨면서... 지은은 네 손으로 내 보지를 만져.\"\n\n두 여자가 동시에 너를 자극한다. 수아의 따뜻하고 부드러운 입 안, 지은의 차갑고 거친 손길.\n\n\"더 깊게. 증권사처럼 솔직하게. 오늘 밤은 네가 우리 모두의 장난감이야.\"",
-        next: 12
-      },
-      {
-        id: 12,
-        type: "narration",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        char: null,
-        speaker: "",
-        text: "라운지에서의 가벼운 플레이가 길어지자, 유진이 웃으며 일어선다.\n\n\"여기선 너무 위험해. 내가 호텔 스위트룸 키를 미리 챙겨왔어. 테헤란로 끝에 있는 럭셔리 호텔이야. 우리만의 공간에서... 진짜로 시작하자.\"\n\n택시를 타고 이동하는 동안, 참석한 여자들은 네 몸에 기대어 속삭인다. 이수아는 귀를, 지은은 허벅지를, 하린은 단추를, 유진은 목을.\n\n개인적인 고백이 이어진다. \"사실... 너랑 다시 이렇게 되고 싶었어.\"",
-        next: 13
-      },
-      {
-        id: 13,
-        type: "dialogue",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        speaker: "",
-        char: null,
-        text: "호텔 스위트룸. 커다란 침대와 낮은 조명. 문이 닫히자마자 긴장이 폭발한다.\n\n하린이 차가운 얼굴로 치마를 완전히 벗으며 말한다. \"대학 때 지은이랑 나, 너를 두고 은근히 경쟁했었지. 오늘은 그 빚을 갚을 때야. 변호사인 내가 이렇게 벌거벗고... 너한테 정복당하고 싶어.\"\n\n이수아가 웃으며 \"수아가 제일 먼저 리드할게. 하지만 다 같이 하자. 오늘 밤은 우리 모두의 비밀 파티야.\"\n\n선택의 시간. 누구를 더 집중할 것인가? 아니면 모두 함께?",
-        choices: [
-          { text: "이수아와 단둘이 깊고 애정 어린 1:1로 들어간다 (수아 백스토리+집중)", next: 14, flag: { focus: 'sua', favorSua: 4, lewd: 2 }, requires: "sua" },
-          { text: "김지은의 지배적인 명령에 따라 1:1로 그녀만 집중한다", next: 15, flag: { focus: 'jieun', favorJieun: 4, lewd: 2 }, requires: "jieun" },
-          { text: "박하린의 숨겨진 변태성을 풀어주며 그녀와 1:1 (더러운 플레이)", next: 16, flag: { focus: 'harin', favorHarin: 4, lewd: 3 }, requires: "harin" },
-          { text: "최유진의 적극적인 에너지로 그녀와 명랑하고 거친 1:1", next: 17, flag: { focus: 'yujin', favorYujin: 4, lewd: 2 }, requires: "yujin" },
-          { text: "모두 함께 본격 난교로. 2~4명 동시 플레이", next: 18, flag: { lewd: 5 } }
-        ]
-      },
-      {
-        id: 14,
-        type: "h-scene",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        speaker: "이수아",
-        char: "assets/images/eroge_sua_base.jpg",
-        text: "수아와 단둘이 침대에 눕는다. 다른 참석자들은 잠시 지켜보거나 가볍게 곁에서 만지작거린다.\n\n수아가 네 위에 올라타며 천천히 자지를 자신의 보지에 넣는다. \"아... 태현 거, 수아 안에 들어오네. 마케팅할 때처럼 부드럽게 리드해줘. 수아 보지 조여줄게... 더 깊이 박아.\"\n\n그녀의 부드러운 가슴이 출렁이고, 허리가 리드미컬하게 움직인다. \"대학 때부터 좋아했어. 이렇게... 네 정액으로 수아 자궁까지 채워줘. 느리게, 애정 있게...\"",
-        next: 18
-      },
-      {
-        id: 15,
-        type: "h-scene",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        speaker: "김지은",
-        char: "assets/images/eroge_jieun_base.jpg",
-        text: "지은이 차가운 표정으로 너를 침대에 밀어붙인다. \"무릎 꿇어. 오늘은 내가 리드한다.\"\n\n그녀가 네 얼굴에 앉아 보지를 문지르며 명령한다. \"혀로 내 클리토리스 빨아. 깊게 파고들어. 증권사 선임이 이렇게까지 타락하는 거, 네가 책임져.\"\n\n지은의 거친 숨소리와 함께 그녀가 네 자지를 손으로 거칠게 주무르며 \"안에 싸. 정확하게. 내 안에 네 정액 가득 채워. 내가 컨트롤할게.\"",
-        next: 18
-      },
-      {
-        id: 16,
-        type: "h-scene",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        speaker: "박하린",
-        char: "assets/images/eroge_harin_lewd.jpg",
-        text: "하린이 평소와 달리 몸을 떨며 네 앞에 엎드린다. 치마 속 팬티를 내리고 엉덩이를 내민다.\n\n\"...보지랑 항문 다 보여주지. 변호사 박하린이 이렇게 더러운 년이 된 거, 태현아 네 탓이야. 손가락으로 내 구멍 파고, 자지로 보지에 박아. 아헤가오 되게 만들어... 정액으로 범벅 해줘. 더 세게, 변태처럼.\"",
-        next: 18
-      },
-      {
-        id: 17,
-        type: "h-scene",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        speaker: "최유진",
-        char: "assets/images/eroge_yujin_base.jpg",
-        text: "유진이 웃으며 옷을 벗고 적극적으로 네 몸 위에 올라탄다. \"태현~ 진짜 좋다! PR답게 나 먼저 움직여볼게.\"\n\n그녀가 빠르게 허리를 흔들며 \"아, 너무 커! 유진 보지 찢어질 것 같아. 더 세게 박아! 소리 지를게~ 다른 애들한테도 자랑할 거야, 오늘 밤은 우리가 제일 미쳤다고!\"\n\n명랑한 그녀의 신음이 방 안을 가득 채운다. 그녀의 손이 자신의 가슴을 주무르며 너를 더욱 자극한다.",
-        next: 18
-      },
-      {
-        id: 20,
-        type: "h-scene",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        speaker: "이수아",
-        char: "assets/images/eroge_uniform_sua.jpg",
-        text: "모두 잠시 멈추고, 방 구석 '노스탤지아 코너'에서 옛날 대학/고교 교복을 꺼내 입기 시작한다.\n\n\"대학 때 동아리 MT 때 입었던 이 교복... 입으니까 진짜 그때 생각나네. 태현아, 우리 이제 '동급생' 놀이 하자. 수아가 먼저 유혹할게.\"\n\n이수아가 교복 블라우스를 입고 리본을 느슨하게 매며 치마를 짧게 입는다. 다른 애들도 각자 교복 차림으로 변신. 일본 에로게 같은 '옛날 동급생' 분위기가 방을 가득 채운다.\n\n\"이제... 진짜 시작이야. 교복 입은 우리를 망가뜨려줘.\"",
-        next: 18
-      },
-      {
-        id: 18,
-        type: "orgy",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        speaker: "",
-        char: null,
-        text: "교복 차림의 4명이 침대로 몰려든다. 본격적인 집단 '동급생' 난교가 시작된다.\n\n이수아(교복)가 네 위에 타고 \"태현아... 교복 입은 수아 보지에 넣어...\" 하며 신음한다.\n\n김지은(교복)이 뒤에서 붙어 \"내가 리드할게. 수아는 앞에서 조여. 하린은 입으로 빨아. 유진아, 네년은 손가락으로 서로 더럽게 해.\"\n\n박하린(교복)이 아헤가오 직전으로 \"더... 더러워지게 해. 변호사 신경 안 써. 정액으로 범벅 만들어줘... 교복에 싫은 소리 하지 마...\"\n\n최유진(교복)이 웃으며 \"우리 진짜 미친 거 아니야? 교복 입고 한 명한테 여러 명이 달라붙어서... 다음 라운드도 가자!\"",
-        choices: [
-          { text: "모두의 보지와 입, 몸에 동시에 사정 (풀 난교 크림파이, 교복 범벅)", next: 19, flag: { lewd: 12, creampie: true } },
-          { text: "가장 아낀 여자에게 집중 사정 + 다른 애들은 손/입으로 마무리 (교복 코스프레)", next: 19, flag: { lewd: 10 } },
-          { text: "하린처럼 더 변태적으로 여러 구멍과 몸 전체에 범벅 (교복 난교)", next: 19, flag: { favorHarin: 3, lewd: 11 } }
-        ]
-      },
-      {
-        id: 19,
-        type: "ending",
-        bg: "assets/images/eroge_hotel_bg.jpg",
-        speaker: "",
-        char: null,
-        text: "새벽 4시가 훌쩍 지났다.\n\n스위트룸은 땀, 침, 정액, 여성의 애액으로 범벅이 되어 있다. 참석한 동기들이 서로 몸을 기대며 헐떡인다.\n\n누군가 중얼거린다. \"다음 주에도... 또 하자. 이번엔 더 많은 애들 부를까? 아니면 우리끼리 더 변태적으로?\"\n\n각자의 백스토리가 드러난 밤. 플러팅에서 시작된 긴장이, 결국 모두의 욕망을 터뜨렸다.",
-        choices: [
-          { text: "다음 주에도 이 멤버들 그대로 또 하자", next: "ending1", flag: { lewd: 15 } },
-          { text: "더 많은 대학 동기들 불러서 대규모 강남 파티로", next: "ending2", flag: { lewd: 15 } },
-          { text: "이번엔 특정 한 명(가장 아꼈던)과 특별한 관계로 이어가기", next: "ending3", flag: { lewd: 12 } }
-        ]
-      }
+      { id: 0, type: "group-select", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "", text: "강남 테헤란로. 오늘도 긴 회식이 끝났다.\n\n예전 대학 동기들이 모여 있는 단톡방에 메시지가 떴다.\n\n\"오늘 밤, 우리만의 2차 어때? 강남에서... 진짜로.\"", next: 1 },
+      { id: 1, type: "narration", bg: "assets/images/eroge_lounge_bg.jpg", char: null, speaker: "", text: "고급 라운지 바의 은은한 조명 아래. 위스키 잔이 부딪히는 소리와 함께, 대학 시절 추억이 떠오른다.\n\n오늘 밤 이 자리에 나온 동기들. 각자 강남에서 치열하게 살아가는 직장인. 하지만 이 모임은 단순한 회식이 아니다. 오래전부터 쌓인, 말하지 못한 욕망이 꿈틀거린다.\n\n참석한 멤버들이 오늘의 '우리만의 밤'을 만들 것이다. 그룹 크기(2~4명)에 따라 모든 H씬과 난교가 완전히 달라진다.", next: 2 },
+      { id: 2, type: "dialogue", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "이수아", char: "assets/images/eroge_sua_base.jpg", text: "태현아, 여기 앉아. 오늘은 진짜 우리끼리만 하자고. 회식 끝나고 여기로 오라고 일부러 말했어.\n\n(이수아는 우아한 미소를 지으며 네 소매를 잡는다. 마케팅 디렉터답게 분위기를 부드럽게 리드하는 그녀. 대학 때 마케팅 동아리에서 같이 밤새 프로젝트 하던 때가 떠오른다. 그때부터 수아는 너를 장난스럽게 유혹하곤 했다.)\n\n\"일 끝나고 이렇게 만나는 게 얼마만이야? 수아가 오늘 밤 제대로 재미있게 해줄게. 어때, 기대돼? 수아 보지에 손가락 넣는 상상만으로도 젖었어.\"", next: 3 },
+      { id: 3, type: "dialogue", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_base.jpg", text: "늦었네. 벌써 시작한 거야?\n\n(김지은은 차가운 눈으로 앉으며 위스키를 한 모금 마신다. 증권사 선임 애널리스트, 항상 숫자와 압박 속에 사는 그녀. 말수는 적지만 눈빛이 모든 걸 말한다. 대학 때부터 주도적인 성격으로 너를 이끌던 타입.)\n\n\"태현, 오늘은 내가 컨트롤하고 싶어. 증권 일처럼... 정확하고 거칠게. 너도 알지? 내가 원하는 대로 되는 게 제일 좋다는 거. 보지부터 확인해줄까.\"", next: 4 },
+      { id: 4, type: "dialogue", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "", char: null, text: "두 사람의 대화가 이어지며, 술이 천천히 몸을 데운다. 가벼운 스킨십이 시작된다. 이수아의 손이 네 허벅지에 스치고, 김지은의 발이 은근히 다가온다.\n\n긴장감과 설렘이 섞인다. 회식 때 느꼈던 그 시선들... 오늘은 진짜로 터뜨릴 수 있을까? (참석 인원에 따라 더 많은 여자가 합류)", choices: [
+        { text: "이수아의 장난스러운 플러팅에 맞장구치며 더 가까이 다가간다", next: 5, flag: { favorSua: 3, lewd: 2 } },
+        { text: "김지은의 차가운 주도에 끌려 그녀의 말에 따르며 술을 권한다", next: 5, flag: { favorJieun: 3, lewd: 2 } },
+        { text: "둘 사이를 중재하며 분위기를 부드럽게 풀어간다", next: 5, flag: { favorSua: 1, favorJieun: 1, lewd: 1 } }
+      ] },
+      { id: 5, type: "dialogue", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "박하린", char: "assets/images/eroge_harin_base.jpg", text: "(박하린이 도착했다. 대형 로펌 변호사, 언제나 차갑고 완벽한 미인. 하지만 오늘 그녀의 눈빛은 평소와 다르다.)\n\n하린이 조용히 앉아 치마 자락을 살짝 만지작거리며 말한다.\n\n\"...나도 왔어. 변호사로 사는 건 항상 완벽해야 하잖아. 하지만 오늘 밤은... 다르게 하고 싶어. 더럽게, 추하게. 대학 때부터 너한테 이런 상상 자주 했었지. 태현아, 날 더러운 변호사로 만들어줄래?\"", next: 6 },
+      { id: 6, type: "dialogue", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "최유진", char: "assets/images/eroge_yujin_base.jpg", text: "(최유진이 활기차게 들어온다. 럭셔리 호텔 PR답게 분위기를 순식간에 밝히는 그녀.)\n\n\"야~ 다들 진지해! 오늘은 내가 PR로 분위기 제대로 띄워줄게. 호텔 스위트룸도 미리 알아봤어. 회식 때부터 눈치 봤잖아, 태현이 너도 우리한테 관심 많았지? 명랑하게 끝까지 가보자고. 스캔들 좋아하는 타입이거든, 나.\"", next: 7 },
+      { id: 7, type: "dialogue", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "", char: null, text: "참석자들이 모인 테이블. 술잔이 오가며 개인적인 이야기들이 터져 나온다.\n\n이수아: \"대학 때 마케팅 캠페인 때문에 밤새도록 같이 있었던 거 기억나? 그때 너한테 반했었어, 장난스럽게.\"\n\n김지은: \"증권사에서 매일 압박받다 보면... 가끔 이렇게 완전히 통제당하고 싶을 때가 있어.\"\n\n박하린: \"로펌에서 이기는 것만 생각하다 보니, 속으로는 완전 반대가 되고 싶더라. 더러운 짓...\"\n\n최유진: \"호텔에서 온갖 VIP 스캔들 봤는데, 우리도 그런 재밌는 밤 한번 만들어보자. 적극적으로!\"", choices: [
+        { text: "박하린의 차가운 속내에 공감하며 그녀의 손을 잡아당긴다", next: 8, flag: { favorHarin: 3, lewd: 2 } },
+        { text: "최유진의 명랑함에 맞춰 농담을 주고받으며 어깨를 감는다", next: 8, flag: { favorYujin: 3, lewd: 2 } },
+        { text: "모두에게 골고루 관심을 주며 천천히 분위기를 고조시킨다", next: 8, flag: { favorSua: 1, favorJieun: 1, favorHarin: 1, favorYujin: 1, lewd: 2 } }
+      ] },
+      { id: 8, type: "narration", bg: "assets/images/eroge_lounge_bg.jpg", char: null, speaker: "", text: "위스키가 두 잔째 들어가자, 라운지 안의 공기가 달라진다.\n\n이수아의 손이 네 다리 위에서 천천히 움직이고, 김지은이 네 귀에 속삭인다. 박하린은 치마를 살짝 올린 채 다리를 꼬고, 최유진은 웃으며 네 셔츠 단추를 하나 풀어준다.\n\n\"오늘 밤은... 그냥 친구가 아니야. 예전 동기에서, 서로의 욕망을 풀어주는 사이로.\"\n\n누가 먼저 시작할까? 긴장과 흥분이 극에 달한다. (그룹 ${groupSize}명 — 규모가 클수록 더 화려한 난교)", next: 9 },
+      { id: 9, type: "dialogue", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "이수아", char: "assets/images/eroge_sua_aroused.jpg", text: "수아가 먼저 네 쪽으로 몸을 기울이며 부드럽지만 단호하게 말한다.\n\n\"태현아, 여기서 시작할까? 아니면... 더 프라이빗한 곳으로 갈까? 수아가 먼저 네 입을 탐하고 싶어. 천천히, 하지만 깊게. 다른 애들도 곧 합류할 거야. ${groupSize}명이면 더 미칠 거야.\"\n\n참석한 동기들의 시선이 너를 향한다. 선택의 순간.", choices: [
+        { text: "이수아와 먼저 가벼운 키스와 애무로 불을 지핀다 (수아 중심 빌드)", next: 10, flag: { favorSua: 3, lewd: 3 } },
+        { text: "김지은을 끌어당겨 그녀의 주도에 몸을 맡긴다 (듀오/그룹)", next: 11, flag: { favorJieun: 3, lewd: 3 }, requires: "jieun" },
+        { text: "모두를 부추겨 라운지에서부터 가벼운 집단 플러팅을 시작", next: 12, flag: { lewd: 4 } },
+        { text: "교복으로 갈아입고 '동급생 에로게' 모드로 전환 (모든 멤버 lewd+)", next: 13, flag: { lewd: 6 } }
+      ] },
+      { id: 10, type: "h-scene", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "이수아", char: "assets/images/eroge_sua_lewd.jpg", text: "이수아가 바 테이블에 기대어 치마를 허벅지까지 올린다. 속옷은 이미 젖어 있다.\n\n\"여기서... 먼저 해. 누가 들어올지 모르니까 더 야해. 수아 보지에 네 손가락부터 넣어줘. 천천히 문지르면서... 아, 거기...\"\n\n수아의 부드러운 신음이 라운지 구석을 울린다. 그녀의 손이 네 바지를 열고 단단해진 것을 잡아당긴다.\n\n\"대학 때부터 상상했어... 태현이랑 이렇게. 더 세게, 수아를 리드해. 자궁까지.\"", choices: [
+        { text: "수아를 더 세게 애무하며 키스한다 (수아 집중)", next: 14, flag: { favorSua: 4, lewd: 5 } },
+        { text: "지은을 불러서 수아의 입을 막으며 같이 즐긴다 (2인)", next: 15, flag: { favorJieun: 3, lewd: 6 }, requires: "jieun" },
+        { text: "하린과 유진도 가까이 부르며 3인+ 시작", next: 16, flag: { lewd: 7 } }
+      ] },
+      { id: 11, type: "h-scene", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_lewd.jpg", text: "지은이 다가와 수아의 머리를 잡아채며 네게 명령한다.\n\n\"태현, 수아 입에 제대로 박아. 내가 보고 싶어서 왔으니까. 수아는 혀로 빨면서... 지은은 네 손으로 내 보지를 만져.\"\n\n두 여자가 동시에 너를 자극한다. 수아의 따뜻하고 부드러운 입 안, 지은의 차갑고 거친 손길.\n\n\"더 깊게. 증권사처럼 솔직하게. 오늘 밤은 네가 우리 모두의 장난감이야.\"", next: 14 },
+      { id: 12, type: "h-scene", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "", char: null, text: "모두가 가까이 몰려든다. ${groupSize}명의 손과 입이 동시에 너를 덮친다.\n\n이수아: \"태현아, 수아 보지 먼저 보여줄게... 손가락 두 개 넣어.\"\n\n김지은: \"내 클릿 빨아. 하린은 네 자지 잡고. 유진은 내 입에.\"\n\n라운지 구석에서 시작된 가벼운 H가 점점 노골적으로. 치마들이 올라가고 속옷이 벗겨진다.", next: 16 },
+      { id: 13, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "이수아", char: "assets/images/eroge_uniform_sua.jpg", text: "모두가 '노스탤지아 코너'의 옛 교복으로 갈아입는다. 블라우스, 리본, 짧은 치마.\n\n이수아(교복): \"태현아... 이제 진짜 '동급생' 놀이야. 수아가 먼저 유혹할게. 치마 속 팬티 내리고... 교복 입은 수아 보지에 넣어.\"\n\n김지은(교복): \"지은이 리드한다. 교복 입은 년들 다 더럽혀.\"\n\n박하린(교복): \"변호사 하린이 교복 입고 이렇게... 아헤가오 되게 해.\"\n\n최유진(교복): \"유진 교복 입으니까 진짜 미친 기분! 적극적으로 움직여줄게~\"", next: 18 },
+      { id: 14, type: "narration", bg: "assets/images/eroge_hotel_bg.jpg", char: null, speaker: "", text: "라운지에서의 첫 H가 길어지자 유진이 웃으며 일어선다.\n\n\"여기선 너무 위험해. 내가 호텔 스위트룸 키를 미리 챙겨왔어. 테헤란로 끝에 있는 럭셔리 호텔이야. 우리만의 공간에서... 진짜로 시작하자.\"\n\n택시를 타고 이동하는 동안, 참석한 여자들은 네 몸에 기대어 속삭인다. (그룹 ${groupSize}명)\n이수아는 귀를, 지은은 허벅지를, 하린은 단추를, 유진은 목을.\n\n개인적인 고백이 이어진다. \"사실... 너랑 다시 이렇게 되고 싶었어.\"", next: 19 },
+      { id: 15, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_lewd.jpg", text: "택시 안에서도 멈추지 않는 2인 플레이. 지은이 네 손을 자신의 보지에 가져가며 속삭인다. \"이동 중에도... 손가락으로 해. 교복 입은 지은 보지 느껴봐. 호텔 도착 전까지 climax 못 하게 할게.\" (그룹 규모 따라 관찰자 추가)", next: 19 },
+      { id: 16, type: "h-scene", bg: "assets/images/eroge_lounge_bg.jpg", speaker: "", char: null, text: "라운지 3인+ 플레이. ${groupSize}명 중 일부가 동시에 너를 자극한다.\n\n수아의 입 + 지은의 손 + 하린의 다리 사이. 유진이 \"여기서 끝내지 말고 호텔 가서 진짜 하자\"고 웃으며 부추긴다.", next: 19 },
+      { id: 17, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "이동 중 호텔 키를 받은 유진이 분위기를 띄운다. 교복 차림으로 택시 안에서 가벼운 플레이 지속. \"도착하면 바로 시작이야. ${groupSize}명 다 준비됐지?\"", next: 19 },
+      { id: 18, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "이수아", char: "assets/images/eroge_uniform_sua.jpg", text: "호텔 도착 직전 교복 착용 완료. 모두가 에로게 스타일 '동급생'으로 변신. \"이제 호텔 방에서 진짜 시작이야. 교복 입은 우리를 망가뜨려줘.\"", next: 19 },
+      { id: 19, type: "dialogue", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "호텔 스위트룸. 커다란 침대와 낮은 조명. 문이 닫히자마자 긴장이 폭발한다.\n\n하린이 차가운 얼굴로 치마를 완전히 벗으며 말한다. \"대학 때 지은이랑 나, 너를 두고 은근히 경쟁했었지. 오늘은 그 빚을 갚을 때야. 변호사인 내가 이렇게 벌거벗고... 너한테 정복당하고 싶어.\"\n\n이수아가 웃으며 \"수아가 제일 먼저 리드할게. 하지만 ${groupSize}명 다 같이 하자. 오늘 밤은 우리 모두의 비밀 파티야.\"\n\n선택의 시간. 누구를 더 집중할 것인가? 아니면 모두 함께? (그룹 크기와 favor가 가능한 장면을 결정)", choices: [
+        { text: "이수아와 단둘이 깊고 애정 어린 1:1 (자궁 + 교복)", next: 20, flag: { focus: 'sua', favorSua: 5, lewd: 4 }, requires: "sua" },
+        { text: "김지은의 지배적인 명령에 따라 1:1 (보지/클릿 + 교복)", next: 21, flag: { focus: 'jieun', favorJieun: 5, lewd: 4 }, requires: "jieun" },
+        { text: "박하린의 숨겨진 변태성을 풀어주며 1:1 (항문/아헤 + 교복)", next: 22, flag: { focus: 'harin', favorHarin: 5, lewd: 5 }, requires: "harin" },
+        { text: "최유진의 적극적인 에너지로 1:1 (거칠게 허리 + 교복)", next: 23, flag: { focus: 'yujin', favorYujin: 5, lewd: 4 }, requires: "yujin" },
+        { text: "듀오/트리오 H: 2~3명 조합 플레이 (그룹에 따라)", next: 24, flag: { lewd: 6 } },
+        { text: "본격 풀 난교로 돌입 (그룹 최대 동시)", next: 26, flag: { lewd: 8 } }
+      ] },
+      { id: 20, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "이수아", char: "assets/images/eroge_uniform_sua.jpg", text: "수아와 단둘이. 교복 차림으로 침대에 눕는다.\n\n\"태현아... 교복 입은 수아 보지에 천천히 넣어. 자궁까지 닿게. 수아가 조여줄게... 아, 깊어... 대학 때부터 좋아했어. 더 세게 박아. 네 정액으로 수아 자궁 가득 채워... 애정 있게, 느리게... 오랫동안.\" (다른 멤버 관찰/보조)", next: 25 },
+      { id: 21, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_lewd.jpg", text: "지은이 차가운 표정으로 너를 침대에 밀어붙인다. 교복 치마 올리고.\n\n\"무릎 꿇어. 오늘은 내가 리드한다. 혀로 내 클리토리스 빨아. 깊게 파고들어. 증권사 선임이 이렇게까지 타락하는 거 네가 책임져.\"\n\n\"안에 싸. 정확하게. 내 보지에 네 정액 가득 채워. 내가 컨트롤할게. 교복 입은 년 보지 망가뜨려.\"", next: 25 },
+      { id: 22, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "박하린", char: "assets/images/eroge_uniform_harin.jpg", text: "하린이 몸을 떨며 네 앞에 엎드린다. 교복 치마 속 팬티 내리고 엉덩이 내민다.\n\n\"...보지랑 항문 다 보여주지. 변호사 박하린이 이렇게 더러운 년이 된 거, 태현아 네 탓이야. 손가락으로 내 구멍 파고, 자지로 보지에 박아. 아헤가오 되게 만들어... 정액으로 범벅 해줘. 항문도... 교복 입고 이렇게 변태처럼.\"", next: 25 },
+      { id: 23, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "최유진", char: "assets/images/eroge_uniform_yujin.jpg", text: "유진이 웃으며 교복 입은 채 적극적으로 네 몸 위에 올라탄다. \"태현~ 진짜 좋다! PR답게 나 먼저 움직여볼게!\"\n\n그녀가 빠르게 허리를 흔들며 \"아, 너무 커! 유진 보지 찢어질 것 같아. 더 세게 박아! 소리 지를게~ 다른 애들한테도 자랑할 거야, 교복 입은 우리가 제일 미쳤다고!\"", next: 25 },
+      { id: 24, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "1:1 후 다른 멤버들이 합류. ${groupSize}명 몸이 겹쳐진다.\n\n듀오/트리오 조합이 시작된다. 예: 수아+지은이 동시에 너를 빨고, 하린은 옆에서 자위를 하며 지켜본다. 유진은 적극적으로 몸을 비비며 \"우리 셋이서도 충분히 미칠 수 있어!\"\n\n그룹 크기에 따라 포지션과 대사가 완전히 달라진다.", choices: [
+        { text: "듀오 집중 H 계속", next: 25, flag: { lewd: 8 } },
+        { text: "트리오/그룹 난교로 바로 확장", next: 26, flag: { lewd: 9 } }
+      ] },
+      { id: 25, type: "narration", bg: "assets/images/eroge_hotel_bg.jpg", char: null, speaker: "", text: "1:1의 열기가 식지 않은 채, 참석자들이 모두 침대로 몰려든다. ${groupSize}명의 몸이 겹쳐진다.\n\n이제 본격적인 그룹 H. 교복 차림이거나 반쯤 벗은 상태로, 서로의 구멍과 손길이 교차한다. (그룹이 2명이면 친밀한 듀오 지속; 3명이면 트리오 난교; 4명이면 풀 오르지.)", next: 26 },
+      { id: 26, type: "orgy", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "본격 집단 난교. 교복/속옷 범벅.\n\n이수아(교복/야한): \"태현아... 교복 입은 수아 보지에 넣어... 자궁까지. 다른 애들도 같이 조여줄게.\"\n\n김지은(야한): \"내가 리드. 수아 앞에서, 하린은 입으로 빨아. 유진은 서로 손가락으로 더럽게 해. ${groupSize}명 다 네 정액 맛보게 해.\"\n\n박하린(교복): \"더... 더러워지게 해. 변호사 신경 안 써. 항문도 파고... 아헤가오 되게 만들어. 정액으로 교복 범벅.\"\n\n최유진(교복/야한): \"우리 진짜 미친 거 아니야? 한 명한테 여러 명이 달라붙어서... 소리 질러! 유진 보지 제일 크게 울려!\"", choices: [
+        { text: "풀 크림파이: 모두의 보지/입/몸에 동시에 사정 (그룹 크기별 난교)", next: 28, flag: { lewd: 14, creampie: true } },
+        { text: "가장 아낀 여자에게 집중 사정 + 나머지는 손/입/서로 플레이", next: 28, flag: { lewd: 12 } },
+        { text: "하린 변태 모드: 여러 구멍+몸 전체 범벅 + 아헤 연속", next: 27, flag: { favorHarin: 4, lewd: 13 } }
+      ] },
+      { id: 27, type: "orgy", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "박하린", char: "assets/images/eroge_harin_lewd.jpg", text: "하린이 앞장서서 더 극단적인 포지션. ${groupSize}명이 그녀의 몸을 공유한다.\n\n\"보지랑 항문 동시에... 교복 입은 채로. 태현아 자지로 보지 박고, 다른 년 손가락으로 항문 파. 아헤가오 되게... 정액 범벅으로 변호사 하린 완전 타락시켜.\"\n\n다른 여자들도 합세해 서로의 보지를 핥으며 난교가 절정에.", next: 28 },
+      { id: 28, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "스위트룸은 땀과 애액, 정액으로 가득. ${groupSize}명의 여자들이 서로 몸을 기대 헐떡인다.\n\n이수아: \"수아 자궁... 가득 찼어. 아직 더 하고 싶어.\"\n김지은: \"정확히 계산한 대로... 다들 만족했지?\"\n하린: \"더러워... 아직 모자라.\"\n유진: \"다음 라운드 가자!\"\n\n마무리 사정 모드 선택 — 이후 엔딩에 큰 영향.", choices: [
+        { text: "모두의 안에 마지막 풀 크림파이 (creampie + lewd max)", next: 29, flag: { lewd: 16, creampie: true } },
+        { text: "특정 한 명(최고 favor)에게 집중 내사 + 다른 애들 얼굴/가슴/교복", next: 29, flag: { lewd: 14 } },
+        { text: "모두가 서로를 핥으며 클린업 + 추가 라운드", next: 29, flag: { lewd: 15 } }
+      ] },
+      { id: 29, type: "dialogue", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "새벽이 깊어진다. ${groupSize}명이 침대에서 얽혀 있다.\n\n그룹이 작을수록 (2명) 친밀한 애프터케어 H가 길고, 클수록 (4명) 또 다른 난교가 이어질 수 있다.\n\n\"다음 주에도... 또 하자. 이번엔 더 많은 애들 부를까? 아니면 우리끼리 더 변태적으로?\"\n\n(특정 favor가 높으면 Memories 해금 조건 충족)", choices: [
+        { text: "수아와 은밀한 2차 애프터 (자궁 애무 지속)", next: 30, flag: { favorSua: 3, lewd: 3 }, requires: "sua" },
+        { text: "지은의 지배적 마무리 플레이", next: 31, flag: { favorJieun: 3, lewd: 3 }, requires: "jieun" },
+        { text: "하린+유진 듀오 변태 마무리 (그룹 3+ 추천)", next: 32, flag: { favorHarin: 2, favorYujin: 2, lewd: 4 } },
+        { text: "모두 함께 새벽 마지막 풀 오르지 (그룹 규모 최대)", next: 33, flag: { lewd: 10 } }
+      ] },
+      { id: 30, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "이수아", char: "assets/images/eroge_sua_lewd.jpg", text: "수아가 조용히 네 위에 다시 올라탄다. \"아직... 수아 안에 더 남아있지? 자궁까지 느껴져. 천천히 마지막으로... 사랑하게 해줘.\" (애정 가득 1:1 마무리 H)", next: 34 },
+      { id: 31, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_lewd.jpg", text: "지은이 다시 명령한다. \"한 번 더. 내 보지에 정확히. 교복 입은 채로 마지막으로 타락시켜.\" (지배적 마무리)", next: 34 },
+      { id: 32, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "박하린", char: "assets/images/eroge_harin_lewd.jpg", text: "하린과 유진이 서로 몸을 포개며 너를 유혹. \"우리 둘... 교복 입고 더러운 짓 하게 해. 하린 항문, 유진 보지 동시에.\"\n(3인+ 듀오 변태 마무리)", next: 34 },
+      { id: 33, type: "orgy", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "새벽 마지막 풀 그룹 난교. ${groupSize}명 전원이 동시에 움직인다. 교복이 정액과 애액으로 흠뻑. 신음과 \"더 세게\", \"아헤\", \"자궁에\", \"범벅\" 등의 말이 방 안을 가득 채운다.\n\n이것이 오늘 밤의 절정.", next: 34 },
+      { id: 34, type: "ending", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "새벽 5시. 스위트룸은 완전 난장판.\n\n${groupSize}명의 여자들이 지친 채 서로 기대고 있다. 각자의 백스토리와 오늘의 선택이 모두 드러난 밤.\n\n\"다음에도... 우리끼리 또 하자.\"\n\n(엔딩은 favor, lewd, focus, creampie, groupSize에 따라 완전히 달라진다. Memories도 일부 해금.)", choices: [
+        { text: "다음 주에 이 멤버 그대로 또 모이자 (반복 플레이 엔딩)", next: "end1", flag: { lewd: 18 } },
+        { text: "더 많은 대학 동기 불러 대규모 강남 파티 (대규모 엔딩)", next: "end2", flag: { lewd: 18 } },
+        { text: "최고 호감의 그녀와 특별한 관계로 이어가기 (로맨스 엔딩)", next: "end3", flag: { lewd: 14 } },
+        { text: "하린처럼 극단 변태 관계 지속 (변태 엔딩)", next: "end4", flag: { favorHarin: 6, lewd: 17 } },
+        { text: "모든 멤버와의 추억을 간직하며 다음을 기약 (멀티 엔딩)", next: "end5", flag: { lewd: 15 } }
+      ] },
+      { id: "end1", type: "ending", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "다음 주 약속. 같은 멤버로 또. (반복 플레이 가능성)", next: null },
+      { id: "end2", type: "ending", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "더 많은 동기 초대. 대규모 강남 파티의 시작.", next: null },
+      { id: "end3", type: "ending", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "특별한 한 명과의 깊은 관계. (favor max 기반)", next: null },
+      { id: "end4", type: "ending", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "극단적인 변태 관계. 하린(또는 해당 favor)과 지속.", next: null },
+      { id: "end5", type: "ending", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "모든 멤버와의 추억을 소중히. 멀티 엔딩.", next: null },
+      // MEMORY EXTRA SCENES (playable from Memories menu when unlocked)
+      { id: "mem_sua1", type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "이수아", char: "assets/images/eroge_uniform_sua.jpg", text: "[MEMORY • 해금됨] 수아 단독 교복 자궁 애무. \"태현아... 오늘은 우리 둘만. 수아 보지 끝까지 파고 자궁에 사랑을 채워줘.\"", next: null },
+      { id: "mem_jieun1", type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_lewd.jpg", text: "[MEMORY • 해금됨] 지은 지배 오피스 판타지. 교복 입고 \"무릎 꿇고 클릿 빨아. 네가 증권사 타락의 원인이다.\"", next: null },
+      { id: "mem_harin1", type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "박하린", char: "assets/images/eroge_harin_lewd.jpg", text: "[MEMORY • 해금됨] 하린 변태 3구멍. \"보지, 항문, 입... 교복 입은 채로 다 더럽혀. 아헤가오 풀가동.\"", next: null },
+      { id: "mem_yujin1", type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "최유진", char: "assets/images/eroge_uniform_yujin.jpg", text: "[MEMORY • 해금됨] 유진 적극 명랑 대형 오르지. \"소리 지를게! PR답게 제일 시끄럽게!\"", next: null },
+      { id: "mem_group2", type: "orgy", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "[MEMORY • 해금됨] 2인 듀오 스페셜. 수아+지은 or 하린+유진. 친밀하고 노골적인 2인 난교.", next: null },
+      { id: "mem_group4", type: "orgy", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "[MEMORY • 해금됨] 풀 4인 교복 오르지. 모든 구멍과 몸이 얽힌 극단 난교.", next: null }
     ];
 
-    // Gallery CG list - Gangnam office style
+    // Gallery CG list - Eroge style (all new images properly referenced) + new gangnam variants integrated for variety
     const cgList = [
       { id: "sua_base", title: "이수아 - 일본 에로게 동급생 톤", src: "assets/images/eroge_sua_base.jpg", unlockLewd: 0 },
       { id: "jieun_base", title: "김지은 - 일본 에로게 동급생 톤", src: "assets/images/eroge_jieun_base.jpg", unlockLewd: 0 },
@@ -631,7 +1042,18 @@
       { id: "jieun_lewd", title: "김지은 - 흥분 (에로게 스타일)", src: "assets/images/eroge_jieun_lewd.jpg", unlockLewd: 5 },
       { id: "harin_lewd", title: "박하린 - 흥분 (에로게 스타일)", src: "assets/images/eroge_harin_lewd.jpg", unlockLewd: 5 },
       { id: "lounge", title: "강남 라운지 - 일본 에로게 배경", src: "assets/images/eroge_lounge_bg.jpg", unlockLewd: 0 },
-      { id: "hotel", title: "강남 호텔 - 난교 (에로게 스타일)", src: "assets/images/eroge_hotel_bg.jpg", unlockLewd: 5, lockedText: "H씬 진행 후 해금" }
+      { id: "hotel", title: "강남 호텔 - 난교 (에로게 스타일)", src: "assets/images/eroge_hotel_bg.jpg", unlockLewd: 5, lockedText: "H씬 진행 후 해금" },
+      // Memory unlockable CGs (extra lewd threshold)
+      { id: "mem_sua", title: "MEMORY: 수아 교복 자궁 애무", src: "assets/images/eroge_uniform_sua.jpg", unlockLewd: 9, memory: true },
+      { id: "mem_jieun", title: "MEMORY: 지은 지배 교복", src: "assets/images/eroge_jieun_lewd.jpg", unlockLewd: 9, memory: true },
+      { id: "mem_harin", title: "MEMORY: 하린 3구멍 변태", src: "assets/images/eroge_harin_lewd.jpg", unlockLewd: 10, memory: true },
+      { id: "mem_yujin", title: "MEMORY: 유진 적극 교복 오르지", src: "assets/images/eroge_uniform_yujin.jpg", unlockLewd: 9, memory: true },
+      // NEW images properly referenced in CG + gallery
+      { id: "jieun_office_lewd", title: "김지은 - 오피스 레드 (에로게 스타일)", src: "assets/images/eroge_jieun_office_lewd.jpg", unlockLewd: 7 },
+      { id: "sua_office_lewd", title: "이수아 - 오피스 레드 (에로게 스타일)", src: "assets/images/eroge_sua_office_lewd.jpg", unlockLewd: 7 },
+      { id: "yujin_lewd", title: "최유진 - 강한 흥분 (에로게 스타일)", src: "assets/images/eroge_yujin_lewd.jpg", unlockLewd: 6 },
+      { id: "yujin_office_lewd", title: "최유진 - 오피스 레드 (에로게 스타일)", src: "assets/images/eroge_yujin_office_lewd.jpg", unlockLewd: 8 },
+      { id: "jisu_base", title: "강지수 - 일본 에로게 동급생 톤", src: "assets/images/eroge_jisu_base.jpg", unlockLewd: 0 }
     ];
 
     function unlockCG(id) {
@@ -646,11 +1068,21 @@
       } catch(e) {}
     }
 
+    function loadFavorites() {
+      try {
+        const saved = localStorage.getItem('game_favorites');
+        if (saved) favorites = new Set(JSON.parse(saved));
+      } catch(e) {}
+    }
+    function saveFavorites() {
+      try { localStorage.setItem('game_favorites', JSON.stringify([...favorites])); } catch(e){}
+    }
+
     // === RANDOM HEROINE GROUP (2~4명 랜덤) ===
     function pickRandomGroup() {
       const keys = Object.keys(heroinesPool);
-      // Random number 2 to 4
-      const count = Math.floor(Math.random() * 3) + 2; // 2,3,4
+      // Random number 3 to 5 for more 고도화 (max 5 heroines)
+      const count = Math.floor(Math.random() * 3) + 3; // 3,4,5
       const shuffled = [...keys].sort(() => Math.random() - 0.5);
       currentGroup = shuffled.slice(0, count);
       return currentGroup;
@@ -685,16 +1117,33 @@
       if (!bar || !playerInfo || !lewdEl || !affEl) return;
       bar.classList.remove('hidden');
       if (playerName) playerInfo.textContent = `${playerName} (강남 직장인)`;
-      const lewd = Math.min(100, (flags.lewd || 0) * 8);
-      const aff = Math.min(100, ((flags.favorSua || 0) + (flags.favorJieun || 0) + (flags.favorHarin || 0) + (flags.favorYujin || 0)) * 5);
-      lewdEl.textContent = Math.floor(lewd);
-      affEl.textContent = Math.floor(aff);
+      const lewd = Math.min(100, Math.floor((flags.lewd || 0) * 6.5));
+      const totalFavor = (flags.favorSua || 0) + (flags.favorJieun || 0) + (flags.favorHarin || 0) + (flags.favorYujin || 0);
+      const aff = Math.min(100, Math.floor(totalFavor * 4.5));
+      lewdEl.textContent = lewd;
+      affEl.textContent = aff;
+      // Visual bars
+      const setBar = (key, val) => {
+        const fill = document.getElementById('bar-' + key);
+        const v = document.getElementById('bar-' + key + '-val');
+        if (fill && v) {
+          const pct = Math.min(100, Math.floor((flags['favor' + key[0].toUpperCase() + key.slice(1)] || 0) * 11));
+          fill.style.width = pct + '%';
+          v.textContent = pct;
+        }
+      };
+      setBar('sua', flags.favorSua);
+      setBar('jieun', flags.favorJieun);
+      setBar('harin', flags.favorHarin);
+      setBar('yujin', flags.favorYujin);
+      const lewdFill = document.getElementById('lewd-bar-fill');
+      if (lewdFill) lewdFill.style.width = lewd + '%';
     }
 
     function showGroupSelectScreen() {
       pickRandomGroup();
       const visual = document.getElementById('visual-area');
-      visual.style.backgroundImage = `url('assets/images/eroge_lounge_bg.jpg')`;
+      visual.style.backgroundImage = `url('assets/images/gangnam_lounge.jpg')`;
       
       const container = document.getElementById('character-container');
       container.innerHTML = '';
@@ -702,7 +1151,7 @@
 
       const title = document.createElement('div');
       title.className = 'w-full text-center py-2';
-      title.innerHTML = `<div class="text-[#fda4af] text-sm tracking-widest mb-1">오늘 밤의 멤버 (랜덤 ${currentGroup.length}명)</div>`;
+      title.innerHTML = `<div class="text-[#fda4af] text-sm tracking-widest mb-1">오늘 밤의 멤버 (랜덤 ${currentGroup.length}명 / 최대 5명 고도화)</div>`;
 
       const grid = document.createElement('div');
       grid.className = 'flex flex-wrap justify-center gap-3 px-2';
@@ -732,7 +1181,7 @@
       container.appendChild(btnArea);
 
       document.getElementById('speaker').textContent = '';
-      document.getElementById('dialogue-text').innerHTML = `<p class="text-center text-sm text-white/70">강남에서 일하는 예전 동기들.<br>오늘은 몇 명이 올까?</p>`;
+      document.getElementById('dialogue-text').innerHTML = `<p class="text-center text-sm text-white/70">강남에서 일하는 예전 동기들 (최대 5명).<br>오늘은 몇 명이 올까? 3~5명 랜덤 고도화.</p>`;
       document.getElementById('next-container').classList.add('hidden');
       document.getElementById('choices-container').classList.add('hidden');
 
@@ -767,6 +1216,41 @@
       content.innerHTML = html + '<div class="mt-4 text-right"><button class="px-4 py-2 bg-white/10 rounded" onclick="this.closest(\'.fixed\').remove()">닫기</button></div>';
       modal.appendChild(content);
       document.body.appendChild(modal);
+    }
+
+    function toggleAuto() {
+      autoMode = !autoMode;
+      const btn = document.getElementById('auto-btn');
+      if (autoMode) {
+        btn.textContent = 'AUTO ON';
+        btn.classList.add('bg-[#9f1239]/50');
+        startAuto();
+      } else {
+        btn.textContent = 'AUTO';
+        btn.classList.remove('bg-[#9f1239]/50');
+        stopAuto();
+      }
+    }
+
+    function startAuto() {
+      stopAuto();
+      autoTimer = setInterval(() => {
+        const next = document.getElementById('next-container');
+        const choices = document.getElementById('choices-container');
+        if (!choices.classList.contains('hidden') && choices.children.length > 0) {
+          // pick first choice for auto
+          choices.children[0].click();
+        } else if (!next.classList.contains('hidden')) {
+          next.querySelector('button')?.click();
+        }
+      }, 2500); // 2.5s per line, adjustable
+    }
+
+    function stopAuto() {
+      if (autoTimer) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
     }
 
     // === BGM: Multi-layer Synthetic + Real audio support (chill / tension / intense phases) ===
@@ -826,14 +1310,21 @@
             bassFreq: 58, bassFilter: 240, bassVol: 1.05,
             padFreqs: [78, 117, 156, 196],
             padFilter: 980, padVol: 0.72,
-            pulseBaseFreq: 63, pulseRate: 2.4, pulseDepth: 0.98, pulseLayerVol: 0.9
+            pulseBaseFreq: 63, pulseRate: 2.4, pulseDepth: 0.98, pulseLayerVol: 0.9,
+            // NEW more layers for richer intense
+            shimmerFreqs: [620, 780, 965, 1120], shimmerVol: 0.22, shimmerFilter: 2800, shimmerLfoRate: 0.11,
+            melodyNotes: [328, 415, 492, 555], melodyRate: 0.78, melodyVol: 0.13,
+            ambientNoiseVol: 0.07
           };
         case 'tension':
           return {
             bassFreq: 51, bassFilter: 195, bassVol: 0.95,
             padFreqs: [72, 108, 144],
             padFilter: 760, padVol: 0.64,
-            pulseBaseFreq: 56, pulseRate: 1.48, pulseDepth: 0.72, pulseLayerVol: 0.74
+            pulseBaseFreq: 56, pulseRate: 1.48, pulseDepth: 0.72, pulseLayerVol: 0.74,
+            shimmerFreqs: [540, 710, 860], shimmerVol: 0.16, shimmerFilter: 1950, shimmerLfoRate: 0.075,
+            melodyNotes: [294, 370, 440], melodyRate: 0.55, melodyVol: 0.09,
+            ambientNoiseVol: 0.045
           };
         case 'chill':
         default:
@@ -841,7 +1332,10 @@
             bassFreq: 44, bassFilter: 165, bassVol: 0.82,
             padFreqs: [66, 99, 132],
             padFilter: 510, padVol: 0.5,
-            pulseBaseFreq: 49, pulseRate: 0.85, pulseDepth: 0.4, pulseLayerVol: 0.58
+            pulseBaseFreq: 49, pulseRate: 0.85, pulseDepth: 0.4, pulseLayerVol: 0.58,
+            shimmerFreqs: [480, 610, 770], shimmerVol: 0.11, shimmerFilter: 1550, shimmerLfoRate: 0.04,
+            melodyNotes: [262, 330, 392], melodyRate: 0.32, melodyVol: 0.065,
+            ambientNoiseVol: 0.03
           };
       }
     }
@@ -995,19 +1489,106 @@
       pulseGain.connect(pulseEnv);
       pulseEnv.connect(layerGain);
 
-      // Start oscillators
+      // NEW LAYER 4: Shimmer / airy high harmonics (sensual sparkling top layer, more musical)
+      const shimmerFilter = audioContext.createBiquadFilter();
+      shimmerFilter.type = 'bandpass';
+      shimmerFilter.frequency.value = (config.shimmerFilter || 1800);
+      shimmerFilter.Q.value = 1.7;
+      const shimmerLFO = audioContext.createOscillator();
+      shimmerLFO.type = 'sine';
+      shimmerLFO.frequency.value = (config.shimmerLfoRate || 0.07);
+      const shimmerLFOGain = audioContext.createGain();
+      shimmerLFOGain.gain.value = 210;
+      shimmerLFO.connect(shimmerLFOGain);
+      shimmerLFOGain.connect(shimmerFilter.frequency);
+
+      const shimmerBaseGain = audioContext.createGain();
+      shimmerBaseGain.gain.value = (config.shimmerVol || 0.14);
+      (config.shimmerFreqs || [520, 680, 820]).forEach((freq, i) => {
+        const o = audioContext.createOscillator();
+        o.type = 'triangle';
+        o.frequency.value = freq;
+        o.detune.value = (i - 1) * 5.2;
+        const sg = audioContext.createGain();
+        sg.gain.value = 0.72 - (i * 0.09);
+        // gentle amp movement for shimmer
+        const sLfo = audioContext.createOscillator();
+        sLfo.type = 'sine';
+        sLfo.frequency.value = 0.065 + (i * 0.02);
+        const sLg = audioContext.createGain();
+        sLg.gain.value = 0.24;
+        sLfo.connect(sLg);
+        sLg.connect(sg.gain);
+        o.connect(sg);
+        sg.connect(shimmerFilter);
+        o.start(now);
+        sLfo.start(now);
+        oscs.push(o, sLfo);
+      });
+      shimmerFilter.connect(shimmerBaseGain);
+      shimmerBaseGain.connect(layerGain);
+
+      // NEW LAYER 5: Soft evolving melodic sighs / tones (phase-aware sparse melody layer for musicality)
+      const melodyFilter = audioContext.createBiquadFilter();
+      melodyFilter.type = 'lowpass';
+      melodyFilter.frequency.value = 1480;
+      const melodyBase = audioContext.createGain();
+      melodyBase.gain.value = (config.melodyVol || 0.08);
+      (config.melodyNotes || [262, 330]).forEach((note, idx) => {
+        const mo = audioContext.createOscillator();
+        mo.type = 'sine';
+        mo.frequency.value = note;
+        const mg = audioContext.createGain();
+        mg.gain.value = 0.62;
+        const mLfo = audioContext.createOscillator();
+        mLfo.type = 'sine';
+        mLfo.frequency.value = (config.melodyRate || 0.35) * (0.7 + idx * 0.25);
+        const mLg = audioContext.createGain();
+        mLg.gain.value = 0.52;
+        mLfo.connect(mLg);
+        mLg.connect(mg.gain);
+        mo.connect(mg);
+        mg.connect(melodyFilter);
+        mo.start(now);
+        mLfo.start(now);
+        oscs.push(mo, mLfo);
+      });
+      melodyFilter.connect(melodyBase);
+      melodyBase.connect(layerGain);
+
+      // NEW LAYER 6: Subtle ambient noise wash (textural depth, very low tasteful)
+      let ambientNoise = null;
+      if ((config.ambientNoiseVol || 0) > 0.001) {
+        ambientNoise = createNoiseBufferSource();
+        if (ambientNoise) {
+          const ambF = audioContext.createBiquadFilter();
+          ambF.type = 'bandpass';
+          ambF.frequency.value = 580;
+          ambF.Q.value = 0.9;
+          const ambG = audioContext.createGain();
+          ambG.gain.value = config.ambientNoiseVol;
+          ambientNoise.connect(ambF);
+          ambF.connect(ambG);
+          ambG.connect(layerGain);
+        }
+      }
+
+      // Start oscillators (core + new layers)
       bassOsc.start(now);
       pulseOsc.start(now);
       pulseLFO.start(now);
       pulseLFO2.start(now);
       padLFO.start(now);
       if (pulseNoise) pulseNoise.start(now);
+      shimmerLFO.start(now);
+      if (ambientNoise) ambientNoise.start(now);
 
-      oscs.push(bassOsc, pulseOsc, pulseLFO, pulseLFO2, padLFO);
+      oscs.push(bassOsc, pulseOsc, pulseLFO, pulseLFO2, padLFO, shimmerLFO);
       if (pulseNoise) oscs.push(pulseNoise);
+      if (ambientNoise) oscs.push(ambientNoise);
 
-      // Smooth musical fade-in
-      layerGain.gain.linearRampToValueAtTime(1.0, now + 1.35);
+      // Smooth musical fade-in (slightly longer for richer layers)
+      layerGain.gain.linearRampToValueAtTime(1.0, now + 1.55);
 
       // Store for management
       syntheticNodes = oscs;
@@ -1017,11 +1598,11 @@
       currentBgmController = {
         type: 'synth',
         phase: phase,
-        fadeOut: (dur = 0.7) => {
+        fadeOut: (dur = 0.75) => {
           const t = audioContext.currentTime;
           layerGain.gain.cancelScheduledValues(t);
           layerGain.gain.linearRampToValueAtTime(0.0001, t + dur);
-          return new Promise(r => setTimeout(r, dur * 1000 + 40));
+          return new Promise(r => setTimeout(r, dur * 1000 + 50));
         },
         stop: () => {
           oscs.forEach(o => { try { o.stop(0); } catch (e) {} });
@@ -1114,15 +1695,17 @@
 
     async function switchBGM(phase) {
       if (!bgmEnabled || !audioContext) return;
+      const prevPhase = currentPhase;
       currentPhase = phase;
 
       const statusEl = document.getElementById('bgm-status');
       if (statusEl) statusEl.textContent = 'BGM ON';
 
-      // Graceful crossfade: fade old then start new
+      // Better phase transitions: longer graceful crossfade for musicality, slight dur variance
+      const fadeDur = (phase === 'intense' || prevPhase === 'intense') ? 0.82 : 0.68;
       if (currentBgmController) {
         try {
-          await currentBgmController.fadeOut(0.6);
+          await currentBgmController.fadeOut(fadeDur);
           if (currentBgmController && currentBgmController.stop) currentBgmController.stop();
         } catch (e) {}
       }
@@ -1137,6 +1720,19 @@
         startRealForPhase(phase);
       } else {
         startSyntheticForPhase(phase);
+      }
+
+      // Post-transition "settle" enhancement: for intense add a quick sensual swell (tasteful)
+      if (phase === 'intense' && currentSynthGain && audioContext) {
+        setTimeout(() => {
+          try {
+            const t = audioContext.currentTime;
+            currentSynthGain.gain.cancelScheduledValues(t);
+            const cur = currentSynthGain.gain.value || 1;
+            currentSynthGain.gain.linearRampToValueAtTime(Math.min(1.12, cur * 1.08), t + 0.18);
+            currentSynthGain.gain.linearRampToValueAtTime(1.0, t + 1.05);
+          } catch(e){}
+        }, 420);
       }
     }
 
@@ -1198,6 +1794,101 @@
       if (vEl) vEl.textContent = pct + '%';
     }
 
+    // === NEW: Subtle Web Audio SFX (tasteful, low volume, not overdone) + Mobile Vibration ===
+    function playSFX(type) {
+      if (!audioContext) return;
+      try {
+        resumeAudioContextIfNeeded();
+        const now = audioContext.currentTime;
+        const g = audioContext.createGain();
+        const dest = bgmMasterGain || audioContext.destination;
+        g.connect(dest);
+
+        if (type === 'text' || type === 'click') {
+          // Subtle soft text/advance click (high soft tick, very short)
+          g.gain.value = 0.09;
+          const osc = audioContext.createOscillator();
+          osc.type = 'triangle';
+          osc.frequency.value = 1650;
+          const f = audioContext.createBiquadFilter();
+          f.type = 'lowpass';
+          f.frequency.value = 2100;
+          const ng = audioContext.createGain();
+          ng.gain.value = 0.7;
+          osc.connect(f);
+          f.connect(ng);
+          ng.connect(g);
+          osc.start(now);
+          ng.gain.linearRampToValueAtTime(0.0001, now + 0.045);
+          osc.stop(now + 0.06);
+        } else if (type === 'choice') {
+          // Choice select: soft pleasant two note chime (tasteful UI feedback)
+          g.gain.value = 0.14;
+          const o1 = audioContext.createOscillator();
+          o1.type = 'sine';
+          o1.frequency.value = 640;
+          const o2 = audioContext.createOscillator();
+          o2.type = 'sine';
+          o2.frequency.value = 860;
+          const fg = audioContext.createGain();
+          fg.gain.value = 0.32;
+          o1.connect(fg);
+          o2.connect(fg);
+          fg.connect(g);
+          o1.start(now);
+          o2.start(now);
+          g.gain.linearRampToValueAtTime(0.0001, now + 0.32);
+          o1.stop(now + 0.38);
+          o2.stop(now + 0.38);
+        } else if (type === 'h' || type === 'lewd' || type === 'orgy') {
+          // Tasteful H moment SFX: very low soft breathy/wet pulse hint (subtle, erotic but minimal)
+          g.gain.value = 0.055;
+          const osc = audioContext.createOscillator();
+          osc.type = 'sine';
+          osc.frequency.value = 92;
+          const f = audioContext.createBiquadFilter();
+          f.type = 'lowpass';
+          f.frequency.value = 195;
+          const ng = audioContext.createGain();
+          ng.gain.value = 0.55;
+          osc.connect(f);
+          f.connect(ng);
+          ng.connect(g);
+          osc.start(now);
+          g.gain.linearRampToValueAtTime(0.0001, now + 0.26);
+          osc.stop(now + 0.3);
+          // optional second soft layer for "wet" feel
+          setTimeout(() => {
+            try {
+              if (!audioContext) return;
+              const g2 = audioContext.createGain();
+              g2.gain.value = 0.03;
+              g2.connect(dest);
+              const o3 = audioContext.createOscillator();
+              o3.type = 'sine';
+              o3.frequency.value = 68;
+              const f2 = audioContext.createBiquadFilter();
+              f2.type = 'lowpass'; f2.frequency.value = 140;
+              o3.connect(f2); f2.connect(g2);
+              const t2 = audioContext.currentTime;
+              o3.start(t2);
+              g2.gain.linearRampToValueAtTime(0.0001, t2 + 0.22);
+              o3.stop(t2 + 0.26);
+            } catch(e){}
+          }, 90);
+        }
+      } catch (e) {}
+    }
+
+    function triggerVibrate(pattern) {
+      try {
+        if (navigator.vibrate) {
+          // pattern: number ms or array [on,off,on...]
+          navigator.vibrate(pattern);
+        }
+      } catch (e) {}
+    }
+
     // === Core VN Logic ===
     function showScreen(id) {
       document.getElementById('title-screen').classList.add('hidden');
@@ -1207,23 +1898,28 @@
           const phase = currentPhase || 'chill';
           switchBGM(phase);
         }
+        // Seed erotic particles for immersive game screen
+        setTimeout(createVisualParticles, 140);
       }
     }
 
     function startGame() {
       loadProgress();
+      loadMemories();
+      loadAllSlots();
       showScreen('game');
       if (!playerName) {
         playerName = prompt("당신의 이름은? (기본: 태현)", "태현") || "태현";
       }
-      // Always start with random group selection for this night
       currentScene = 0;
       flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
       textHistory = [];
-      renderScene(0); // group-select will handle random + UI
+      unlockedMemories = new Set();
+      renderScene(0);
     }
 
     function renderScene(sceneId) {
+      stopAuto();
       const scene = scenes.find(s => s.id === sceneId) || scenes[0];
       currentScene = scene.id;
       currentLine = 0;
@@ -1264,12 +1960,28 @@
         switchBGM(targetPhase);
       }
 
+      // NEW: SFX + vibration on key H/orgy moments (tasteful)
+      if (scene.type === 'h-scene') {
+        playSFX('h');
+        triggerVibrate(35);
+      } else if (scene.type === 'orgy') {
+        playSFX('orgy');
+        triggerVibrate([25, 15, 45]);
+      }
+
       const visual = document.getElementById('visual-area');
-      if (scene.bg) visual.style.backgroundImage = `url('${scene.bg}')`;
+      if (scene.bg) {
+        visual.classList.add('bg-transitioning');
+        visual.style.backgroundImage = `url('${scene.bg}')`;
+        setTimeout(() => { if (visual) visual.classList.remove('bg-transitioning'); }, 620);
+      }
 
       const container = document.getElementById('character-container');
       container.innerHTML = '';
       container.style.display = 'flex';
+
+      // Refresh subtle erotic particle glows on every scene/character change
+      createVisualParticles();
 
       // Handle group/orgy - show multiple characters when relevant
       // For focus 1:1 h-scenes (specific char set), prefer single image even if group >1
@@ -1282,8 +1994,16 @@
           const wrapper = document.createElement('div');
           wrapper.className = 'flex flex-col items-center flex-1 min-w-[28%] max-w-[32%]';
           const img = document.createElement('img');
-          img.src = h.img;
-          img.className = `character-layer group-char rounded-xl shadow-xl object-cover w-full`;
+          // 고도화: scene type에 따라 적절한 이미지 선택 (uniform for nostalgia, lewd for H, base default)
+          let imgSrc = h.img || h.base;
+          if (scene.type === 'h-scene' || scene.type === 'orgy') {
+            imgSrc = h.lewd || h.aroused || h.base || h.img;
+          }
+          if (scene.id === 20 || scene.text.includes('교복') || scene.text.includes('uniform')) {
+            imgSrc = h.uniform || h.base || h.img;
+          }
+          img.src = imgSrc;
+          img.className = `character-layer group-char rounded-xl shadow-xl object-cover w-full fade-in`;
           img.style.maxHeight = window.innerWidth < 640 ? '36vh' : '46vh';
           const nameLabel = document.createElement('div');
           nameLabel.className = 'text-[10px] text-white/50 mt-1 tracking-wider text-center truncate w-full';
@@ -1295,9 +2015,11 @@
       } else if (scene.char) {
         const img = document.createElement('img');
         img.src = scene.char;
-        img.className = `character-layer w-full max-w-[380px] h-auto rounded-2xl shadow-2xl erotic-glow border border-white/10`;
+        img.className = `character-layer w-full max-w-[380px] h-auto rounded-2xl shadow-2xl erotic-glow border border-white/10 character-focus fade-in`;
         img.style.maxHeight = window.innerWidth < 640 ? '52vh' : '62vh';
         container.appendChild(img);
+        // Subtle transition polish for character/scene change
+        setTimeout(() => { if (img && img.classList) img.classList.add('scene-shift'); }, 70);
       } else {
         container.style.display = 'none';
       }
@@ -1340,6 +2062,11 @@
       saveProgress();
       renderParticipantsBar();
       updateStatus();
+
+      // 고도화: H 씬에서 모바일 진동 피드백 (respect toggle)
+      if ((scene.type === 'h-scene' || scene.type === 'orgy') && vibrationEnabled) {
+        triggerVibrate([100, 50, 100]);
+      }
     }
 
     function typeText(element, text, speedMs, onComplete) {
@@ -1357,6 +2084,10 @@
         }
         element.innerHTML = fullHTML.substring(0, i + 1);
         i++;
+        // Subtle text SFX on typing reveal (every ~7 chars or punctuation, very low key)
+        if (i % 7 === 0 || /[,.!?。、]/.test(fullHTML[i] || '')) {
+          playSFX('text');
+        }
         setTimeout(tick, speedMs);
       }
       tick();
@@ -1370,11 +2101,14 @@
     }
 
     function showChoices(choices) {
+      stopAuto();
       const container = document.getElementById('choices-container');
       const nextBtn = document.getElementById('next-container');
       container.innerHTML = '';
       nextBtn.classList.add('hidden');
       container.classList.remove('hidden');
+
+      const currentLewd = flags.lewd || 0;
 
       choices.forEach((choice, idx) => {
         // Filter out choices that require a heroine not present in this play's random group
@@ -1382,16 +2116,31 @@
           if (!currentGroup.includes(choice.requires)) return;
         }
         const btn = document.createElement('button');
-        btn.className = `choice-btn w-full text-left px-5 py-3.5 rounded-2xl text-sm leading-snug`;
+        let cls = `choice-btn w-full text-left px-5 py-3.5 rounded-2xl text-sm leading-snug`;
+
+        // Lewd level based varied styles (erotic high-production feel)
+        if (currentLewd >= 9) cls += ' lewd-high';
+        else if (currentLewd >= 4) cls += ' lewd-mid';
+        else cls += ' lewd-low';
+
+        // Heroine thematic variation (detect keywords in choice text)
+        const txt = (choice.text || '').toLowerCase();
+        if (txt.includes('수아') || txt.includes('이수아')) cls += ' heroine-sua';
+        else if (txt.includes('지은') || txt.includes('김지은')) cls += ' heroine-jieun';
+        else if (txt.includes('하린') || txt.includes('박하린')) cls += ' heroine-harin';
+        else if (txt.includes('유진') || txt.includes('최유진')) cls += ' heroine-yujin';
+
+        btn.className = cls;
         btn.innerHTML = choice.text;
         btn.onclick = () => {
+          playSFX('choice');
+          triggerVibrate(22);
           if (choice.flag) {
             Object.assign(flags, choice.flag);
           }
           if (typeof choice.next === 'number') {
             renderScene(choice.next);
           } else {
-            // string ending id
             const endScene = scenes.find(s => s.id == choice.next) || scenes[scenes.length-1];
             showEnding(endScene);
           }
@@ -1409,6 +2158,12 @@
         return;
       }
 
+      playSFX('text');
+      triggerVibrate( (scene.type==='h-scene'||scene.type==='orgy') ? 28 : 10 );
+      // Light vibrate on advance for tactile feel (stronger on H/orgy)
+      const isH = scene.type === 'h-scene' || scene.type === 'orgy';
+      triggerVibrate(isH ? 18 : 8);
+
       if (scene.next !== undefined) {
         if (typeof scene.next === 'number') {
           renderScene(scene.next);
@@ -1420,6 +2175,7 @@
     }
 
     function showEnding(scene) {
+      stopAuto();
       const visual = document.getElementById('visual-area');
       if (scene.bg) visual.style.backgroundImage = `url('${scene.bg}')`;
       
@@ -1480,11 +2236,261 @@
       replay.onclick = () => {
         localStorage.removeItem('game_progress');
         localStorage.removeItem('game_unlockedCG');
+        localStorage.removeItem('game_favorites');
         flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
         unlockedCG = new Set();
+        favorites = new Set();
         renderScene(0);
       };
       document.getElementById('choices-container').appendChild(replay);
+    }
+
+    // === PREMIUM FEATURES: auto-play, skip, improved backlog search, memories, multi save slots ===
+
+    function toggleAutoPlay() {
+      autoMode = !autoMode;
+      const btn = document.getElementById('auto-btn');
+      if (btn) btn.classList.toggle('auto-active', autoMode);
+      if (autoMode) {
+        startAutoPlayTick();
+      } else {
+        stopAutoPlay();
+      }
+    }
+    function startAutoPlayTick() {
+      stopAutoPlay();
+      const speed = Math.max(1200, 2600 - (getTextSpeed() * 180));
+      autoTimer = setTimeout(() => {
+        const choices = document.getElementById('choices-container');
+        if (autoMode && choices && choices.classList.contains('hidden')) {
+          const next = document.getElementById('next-container');
+          if (next && !next.classList.contains('hidden')) {
+            next.querySelector('button')?.click();
+          }
+        }
+        if (autoMode) startAutoPlayTick();
+      }, speed);
+    }
+    function stopAutoPlay() {
+      if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+    }
+
+    function toggleTextSkip() {
+      skipMode = !skipMode;
+      const btn = document.getElementById('skip-btn');
+      if (btn) btn.style.background = skipMode ? '#9f1239' : '';
+      if (skipMode) {
+        // Instantly finish current typing and advance if possible
+        const textEl = document.getElementById('dialogue-text');
+        if (textEl) textEl.innerHTML = textEl.innerHTML || '';
+        setTimeout(() => { if (skipMode) { skipMode = false; if (btn) btn.style.background = ''; nextLine(); } }, 80);
+      }
+    }
+
+    function unlockMemory(memId) {
+      if (!unlockedMemories.has(memId)) {
+        unlockedMemories.add(memId);
+        try { localStorage.setItem('game_memories', JSON.stringify([...unlockedMemories])); } catch(e){}
+        unlockCG(memId.replace('mem_', 'mem_')); // also unlock related CG
+      }
+    }
+    function loadMemories() {
+      try {
+        const saved = localStorage.getItem('game_memories');
+        if (saved) unlockedMemories = new Set(JSON.parse(saved));
+      } catch(e) {}
+    }
+
+    function showMemories() {
+      const modal = document.getElementById('memories-modal');
+      const grid = document.getElementById('memories-grid');
+      grid.innerHTML = '';
+      const memScenes = scenes.filter(s => typeof s.id === 'string' && s.id.startsWith('mem_'));
+      let any = false;
+      memScenes.forEach(mem => {
+        const unlocked = unlockedMemories.has(mem.id);
+        const card = document.createElement('div');
+        card.className = `save-slot flex justify-between items-center ${unlocked ? 'cursor-pointer' : 'opacity-60'}`;
+        card.innerHTML = `
+          <div>
+            <div class="font-medium">${mem.speaker || '그룹'} • ${mem.text.substring(0, 58)}...</div>
+            <div class="text-[10px] text-white/50">${unlocked ? '해금됨 — 탭하여 재생' : '미해금 (Lewd/Favor 높여 해금)'}</div>
+          </div>
+          ${unlocked ? '<div class="text-[#9f1239] text-xs">▶ 재생</div>' : '<div class="text-white/30 text-xs">LOCKED</div>'}
+        `;
+        if (unlocked) {
+          card.onclick = () => {
+            hideMemories();
+            document.getElementById('title-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            renderScene(mem.id);
+          };
+        }
+        grid.appendChild(card);
+        any = any || unlocked;
+      });
+      if (!any) grid.innerHTML = '<div class="text-center py-6 text-white/50 text-sm">아직 해금된 메모리가 없습니다.<br>게임 진행 중 높은 lewd와 favor로 해금하세요.</div>';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function hideMemories() {
+      const modal = document.getElementById('memories-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    // 5 Save Slots
+    function loadAllSlots() {
+      try {
+        const saved = localStorage.getItem('game_save_slots');
+        if (saved) saveSlots = JSON.parse(saved);
+      } catch(e) { saveSlots = {}; }
+    }
+    function saveAllSlots() {
+      try { localStorage.setItem('game_save_slots', JSON.stringify(saveSlots)); } catch(e){}
+    }
+    function showSaveLoad() {
+      loadAllSlots();
+      const modal = document.getElementById('saveload-modal');
+      const container = document.getElementById('save-slots-container');
+      container.innerHTML = '';
+      for (let i = 1; i <= MAX_SLOTS; i++) {
+        const slotId = 'slot' + i;
+        const data = saveSlots[slotId];
+        const div = document.createElement('div');
+        div.className = 'save-slot';
+        if (data) {
+          const date = new Date(data.timestamp || Date.now()).toLocaleString('ko-KR', {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'});
+          div.innerHTML = `
+            <div class="flex justify-between">
+              <div><strong>슬롯 ${i}</strong> <span class="meta">• ${data.playerName || '태현'} • ${data.group ? data.group.length : '?'}명</span></div>
+              <div class="text-[10px] text-[#fda4af]">${date}</div>
+            </div>
+            <div class="text-xs mt-0.5">Lewd ${data.flags ? data.flags.lewd : 0} • Aff ${Math.floor(((data.flags||{}).favorSua||0)+(data.flags||{}).favorJieun+(data.flags||{}).favorHarin+(data.flags||{}).favorYujin)} • 장면 ${data.scene || 0}</div>
+            <div class="flex gap-2 mt-2">
+              <button class="flex-1 py-1 text-xs bg-[#9f1239] rounded-xl" data-action="load" data-slot="${slotId}">불러오기</button>
+              <button class="flex-1 py-1 text-xs bg-white/5 border border-white/10 rounded-xl" data-action="save" data-slot="${slotId}">덮어쓰기</button>
+              <button class="px-2 py-1 text-xs bg-white/5 border border-white/10 rounded-xl" data-action="delete" data-slot="${slotId}">삭제</button>
+            </div>
+          `;
+        } else {
+          div.innerHTML = `
+            <div><strong>슬롯 ${i}</strong> <span class="meta">• 비어 있음</span></div>
+            <button class="mt-2 w-full py-1 text-xs bg-white/5 border border-white/10 rounded-xl" data-action="save" data-slot="${slotId}">현재 상태 저장</button>
+          `;
+        }
+        div.onclick = (e) => {
+          const action = e.target.dataset.action;
+          const sId = e.target.dataset.slot;
+          if (!action || !sId) return;
+          if (action === 'load') loadFromSlot(sId);
+          else if (action === 'save') saveToSlot(sId);
+          else if (action === 'delete') { delete saveSlots[sId]; saveAllSlots(); showSaveLoad(); }
+        };
+        container.appendChild(div);
+      }
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function hideSaveLoad() {
+      const modal = document.getElementById('saveload-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+    function saveToSlot(slotId) {
+      loadAllSlots();
+      const summary = currentGroup.map(k => heroinesPool[k] ? heroinesPool[k].name[0] : '').join('');
+      saveSlots[slotId] = {
+        scene: currentScene,
+        flags: {...flags},
+        group: [...currentGroup],
+        playerName,
+        unlockedCG: [...unlockedCG],
+        unlockedMemories: [...unlockedMemories],
+        timestamp: Date.now(),
+        summary: `${summary || 'G'}${currentGroup.length}`
+      };
+      saveAllSlots();
+      hideSaveLoad();
+      const msg = document.createElement('div');
+      msg.textContent = '슬롯 ' + slotId.replace('slot','') + ' 저장됨';
+      msg.className = 'fixed bottom-20 left-1/2 -translate-x-1/2 text-xs px-3 py-1 bg-black/70 rounded-full z-[200]';
+      document.body.appendChild(msg);
+      setTimeout(() => msg.remove(), 900);
+    }
+    function loadFromSlot(slotId) {
+      loadAllSlots();
+      const data = saveSlots[slotId];
+      if (!data) return;
+      currentScene = data.scene || 0;
+      flags = data.flags || flags;
+      currentGroup = data.group || [];
+      playerName = data.playerName || playerName;
+      if (data.unlockedCG) unlockedCG = new Set(data.unlockedCG);
+      if (data.unlockedMemories) unlockedMemories = new Set(data.unlockedMemories);
+      hideSaveLoad();
+      document.getElementById('title-screen').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+      renderScene(currentScene);
+      renderParticipantsBar();
+      updateStatus();
+    }
+    function quickSaveToSlot() {
+      // auto pick first empty or overwrite 1
+      loadAllSlots();
+      let target = null;
+      for (let i=1; i<=MAX_SLOTS; i++) { if (!saveSlots['slot'+i]) { target = 'slot'+i; break; } }
+      if (!target) target = 'slot1';
+      saveToSlot(target);
+    }
+
+    function showBacklog() {
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-3';
+      modal.onclick = () => modal.remove();
+      const content = document.createElement('div');
+      content.className = 'bg-[#120c0f] border border-white/10 rounded-3xl max-w-2xl w-full max-h-[82vh] overflow-hidden flex flex-col';
+      content.onclick = e => e.stopImmediatePropagation();
+      let html = `
+        <div class="p-4 border-b border-white/10 flex items-center gap-2">
+          <div class="font-semibold flex-1">백로그 (검색 가능)</div>
+          <input id="backlog-search" class="backlog-search" placeholder="검색 (이름/대사)" />
+          <button class="px-3 py-1 text-xs bg-white/10 rounded" onclick="this.closest('.fixed').remove()">닫기</button>
+        </div>
+        <div id="backlog-list" class="flex-1 overflow-auto p-4 text-sm"></div>
+      `;
+      content.innerHTML = html;
+      modal.appendChild(content);
+      document.body.appendChild(modal);
+
+      const input = content.querySelector('#backlog-search');
+      const list = content.querySelector('#backlog-list');
+      function renderList(filter = '') {
+        list.innerHTML = '';
+        const f = filter.toLowerCase();
+        let shown = 0;
+        textHistory.slice().reverse().forEach((entry) => {
+          if (f && !(entry.speaker || '').toLowerCase().includes(f) && !entry.text.toLowerCase().includes(f)) return;
+          shown++;
+          const div = document.createElement('div');
+          div.className = 'backlog-entry';
+          div.innerHTML = `<div class="backlog-speaker">${entry.speaker || '나레이션'}</div><div class="text-white/90">${entry.text.replace(/\n/g,'<br>')}</div>`;
+          list.appendChild(div);
+        });
+        if (!shown) list.innerHTML = '<div class="text-white/50 py-3">결과 없음</div>';
+      }
+      renderList();
+      input.oninput = () => renderList(input.value);
+    }
+
+    function jumpToRandomH() {
+      document.getElementById('title-screen').classList.add('hidden');
+      document.getElementById('game-screen').classList.remove('hidden');
+      flags.lewd = Math.max(flags.lewd || 0, 8);
+      if (currentGroup.length < 2) pickRandomGroup();
+      const hScenes = scenes.filter(s => s.type === 'h-scene' || s.type === 'orgy');
+      const pick = hScenes[Math.floor(Math.random() * hScenes.length)];
+      renderScene(pick.id);
     }
 
     // === Progress ===
@@ -1493,7 +2499,9 @@
         localStorage.setItem('game_progress', JSON.stringify({
           scene: currentScene,
           flags,
-          unlocked: [...unlockedCG]
+          unlocked: [...unlockedCG],
+          memories: [...unlockedMemories],
+          playerName
         }));
       } catch(e) {}
     }
@@ -1506,9 +2514,12 @@
           currentScene = data.scene || 0;
           flags = data.flags || { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
           if (data.unlocked) unlockedCG = new Set(data.unlocked);
+          if (data.memories) unlockedMemories = new Set(data.memories);
+          if (data.playerName) playerName = data.playerName;
         }
       } catch(e) {}
       loadUnlockedCG();
+      loadMemories();
     }
 
     function quickSave() {
@@ -1524,8 +2535,10 @@
       if (!confirm('진행도를 초기화할까요?')) return;
       localStorage.removeItem('game_progress');
       localStorage.removeItem('game_unlockedCG');
+      localStorage.removeItem('game_favorites');
       flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
       unlockedCG = new Set();
+      favorites = new Set();
       currentScene = 0;
       document.getElementById('game-screen').classList.add('hidden');
       document.getElementById('title-screen').classList.remove('hidden');
@@ -1533,7 +2546,27 @@
       hideSettings();
     }
 
-    // === Gallery ===
+    // === Visual Effects: Subtle particle glows for character/scene shifts (erotic high-production) ===
+    function createVisualParticles() {
+      const layer = document.getElementById('visual-particles');
+      if (!layer) return;
+      layer.innerHTML = '';
+      const count = (window.innerWidth < 520) ? 5 : 8;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'p';
+        const size = 2.5 + Math.random() * 4.5;
+        p.style.width = size + 'px';
+        p.style.height = size + 'px';
+        p.style.left = (8 + Math.random() * 84) + '%';
+        p.style.top = (12 + Math.random() * 72) + '%';
+        p.style.animationDelay = (-Math.random() * 26) + 's';
+        p.style.opacity = (0.035 + Math.random() * 0.06).toFixed(3);
+        layer.appendChild(p);
+      }
+    }
+
+    // === Gallery (Full CG Viewer with zoom, desc, favorites - premium eroge quality) ===
     function showGallery() {
       const modal = document.getElementById('gallery-modal');
       const grid = document.getElementById('gallery-grid');
@@ -1544,29 +2577,41 @@
       cgList.forEach(cg => {
         const isUnlocked = unlockedCG.has(cg.id) || cg.unlockLewd === 0;
         if (!isUnlocked && cg.lockedText) {
-          // show locked placeholder
           const div = document.createElement('div');
-          div.className = 'aspect-[3/4] bg-[#1a1114] rounded-2xl border border-white/10 flex items-center justify-center text-center p-4';
+          div.className = 'aspect-[3/4] bg-[#1a1114] rounded-2xl border border-white/10 flex items-center justify-center text-center p-4 cg-card';
           div.innerHTML = `<div class="text-xs text-white/30">${cg.lockedText}</div>`;
           grid.appendChild(div);
           return;
         }
         hasAny = true;
+        const isFav = favorites.has(cg.id);
         const card = document.createElement('div');
-        card.className = 'group relative overflow-hidden rounded-2xl border border-white/10 bg-black aspect-[3/4] cursor-pointer';
+        card.className = 'group relative overflow-hidden rounded-2xl border border-white/10 bg-black aspect-[3/4] cursor-pointer cg-card';
         card.innerHTML = `
           <img src="${cg.src}" class="w-full h-full object-cover group-active:scale-105 transition-transform" alt="${cg.title}">
-          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3">
-            <div class="text-xs font-medium">${cg.title}</div>
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 to-transparent p-2.5">
+            <div class="text-xs font-medium leading-tight">${cg.title}</div>
           </div>
+          <button class="fav-btn absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center text-base transition ${isFav ? 'cg-fav' : 'text-white/40 hover:text-white/70'}" data-id="${cg.id}">♥</button>
         `;
-        card.onclick = () => {
-          // full view
-          const full = document.createElement('div');
-          full.className = 'fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-3';
-          full.innerHTML = `<img src="${cg.src}" class="max-h-[92vh] w-auto rounded-xl shadow-2xl" style="max-width: 100%;">`;
-          full.onclick = () => full.remove();
-          document.body.appendChild(full);
+        // Open full premium viewer with zoom + desc + fav
+        card.onclick = (e) => {
+          if (e.target.closest('.fav-btn')) return;
+          openCGViewer(cg);
+        };
+        // Favorite toggle
+        const favBtn = card.querySelector('.fav-btn');
+        favBtn.onclick = (e) => {
+          e.stopImmediatePropagation();
+          if (favorites.has(cg.id)) {
+            favorites.delete(cg.id);
+            favBtn.classList.remove('cg-fav');
+          } else {
+            favorites.add(cg.id);
+            favBtn.classList.add('cg-fav');
+            triggerVibrate(18);
+          }
+          saveFavorites();
         };
         grid.appendChild(card);
       });
@@ -1580,6 +2625,99 @@
       const modal = document.getElementById('gallery-modal');
       modal.classList.remove('flex');
       modal.classList.add('hidden');
+    }
+
+    // Full CG Viewer: zoom, pan-ish via CSS scale, descriptions, favorite, close
+    let currentZoom = 1;
+    function openCGViewer(cg) {
+      const viewer = document.createElement('div');
+      viewer.className = 'fixed inset-0 cg-viewer z-[220] flex flex-col items-center justify-center p-3';
+      const isFav = favorites.has(cg.id);
+      const desc = cg.desc || '이 CG는 강남 리유니온의 은밀한 순간을 담고 있다.';
+
+      viewer.innerHTML = `
+        <div class="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-10 bg-gradient-to-b from-black/70 to-transparent">
+          <div>
+            <div class="font-semibold text-lg tracking-tight">${cg.title}</div>
+            <div class="text-xs text-white/60">${desc}</div>
+          </div>
+          <div class="flex items-center gap-2">
+            <button class="fav-btn-view px-3 py-1 text-xs rounded-full border border-white/20 ${isFav ? 'cg-fav bg-white/5' : ''}">♥ FAV</button>
+            <button class="close-view px-3 py-1 text-xs rounded-full border border-white/20">CLOSE</button>
+          </div>
+        </div>
+
+        <div class="relative flex-1 flex items-center justify-center w-full overflow-hidden" style="max-height: calc(100vh - 110px);">
+          <img id="cg-zoom-img" src="${cg.src}" class="max-h-[82vh] max-w-[96%] object-contain rounded-xl shadow-2xl select-none" style="transform:scale(1); cursor: grab;">
+        </div>
+
+        <div class="cg-zoom-controls absolute bottom-5 left-1/2 -translate-x-1/2 flex gap-2 bg-black/60 backdrop-blur px-3 py-2 rounded-2xl border border-white/10">
+          <button id="zoom-out">−</button>
+          <button id="zoom-reset">100%</button>
+          <button id="zoom-in">+</button>
+          <button id="zoom-toggle-fav" class="ml-2 px-3 text-xs border-l border-white/10">♥</button>
+        </div>
+      `;
+
+      document.body.appendChild(viewer);
+      currentZoom = 1;
+
+      const img = viewer.querySelector('#cg-zoom-img');
+      const controls = viewer.querySelector('.cg-zoom-controls');
+
+      function applyZoom(z) {
+        currentZoom = Math.max(0.6, Math.min(3.6, z));
+        img.style.transform = `scale(${currentZoom})`;
+      }
+
+      viewer.querySelector('#zoom-in').onclick = () => applyZoom(currentZoom + 0.25);
+      viewer.querySelector('#zoom-out').onclick = () => applyZoom(currentZoom - 0.25);
+      viewer.querySelector('#zoom-reset').onclick = () => applyZoom(1);
+
+      const favViewBtn = viewer.querySelector('#zoom-toggle-fav');
+      function refreshFavBtn() {
+        favViewBtn.textContent = favorites.has(cg.id) ? '♥ FAVED' : '♥ FAVORITE';
+      }
+      refreshFavBtn();
+      favViewBtn.onclick = () => {
+        if (favorites.has(cg.id)) favorites.delete(cg.id); else favorites.add(cg.id);
+        saveFavorites();
+        refreshFavBtn();
+        // Also sync main grid if open
+        triggerVibrate(20);
+      };
+
+      viewer.querySelector('.fav-btn-view').onclick = () => {
+        if (favorites.has(cg.id)) favorites.delete(cg.id); else favorites.add(cg.id);
+        saveFavorites();
+        refreshFavBtn();
+      };
+
+      viewer.querySelector('.close-view').onclick = () => viewer.remove();
+      viewer.onclick = (e) => { if (e.target === viewer) viewer.remove(); };
+
+      // Touch gesture support for zoom on mobile (pinch-ish via double tap + drag scale)
+      let lastTap = 0;
+      img.addEventListener('touchend', (ev) => {
+        const now = Date.now();
+        if (now - lastTap < 280) {
+          applyZoom(currentZoom > 1.2 ? 1 : 2.1);
+        }
+        lastTap = now;
+      }, {passive:true});
+
+      // Simple mouse drag simulation for pan feel (scale only for pure CSS)
+      let drag = false, sx=0, sy=0;
+      img.addEventListener('mousedown', (e)=>{ drag=true; sx=e.clientX; sy=e.clientY; img.style.cursor='grabbing'; });
+      window.addEventListener('mouseup', ()=>{ drag=false; if(img) img.style.cursor='grab'; });
+      window.addEventListener('mousemove', (e)=>{
+        if (!drag || currentZoom <= 1) return;
+        // limited visual offset using translate for nice effect (CSS)
+        const dx = (e.clientX - sx) * 0.04;
+        const dy = (e.clientY - sy) * 0.04;
+        img.style.transform = `scale(${currentZoom}) translate(${dx}px, ${dy}px)`;
+      });
+      img.addEventListener('mouseleave', ()=>{ drag=false; if(img) img.style.transform = `scale(${currentZoom})`; });
     }
 
     // === Settings ===
@@ -1652,7 +2790,81 @@
       modal.classList.add('hidden');
     }
 
+    // === In-Game Menu (text speed, volume, skip speed, vibration) ===
+    function showInGameMenu() {
+      const modal = document.getElementById('ingame-menu-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      wireInGameMenu();
+    }
+    function hideInGameMenu() {
+      const modal = document.getElementById('ingame-menu-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+    function wireInGameMenu() {
+      // Text speed
+      const tSlider = document.getElementById('ingame-text-speed');
+      const tVal = document.getElementById('ingame-text-speed-val');
+      const speeds = ['느림','보통','빠름','매우 빠름'];
+      if (tSlider && tVal) {
+        tSlider.value = document.getElementById('text-speed') ? document.getElementById('text-speed').value : 2;
+        tVal.textContent = speeds[parseInt(tSlider.value)-1] || '보통';
+        tSlider.oninput = () => {
+          tVal.textContent = speeds[parseInt(tSlider.value)-1];
+          const main = document.getElementById('text-speed');
+          if (main) { main.value = tSlider.value; }
+        };
+      }
+
+      // Volume
+      const vSlider = document.getElementById('ingame-bgm-volume');
+      const vVal = document.getElementById('ingame-bgm-vol-val');
+      if (vSlider && vVal) {
+        vSlider.value = document.getElementById('bgm-volume') ? document.getElementById('bgm-volume').value : 65;
+        vVal.textContent = vSlider.value + '%';
+        vSlider.oninput = () => {
+          vVal.textContent = vSlider.value + '%';
+          setBGMVolume(vSlider.value);
+          const mainV = document.getElementById('bgm-volume');
+          if (mainV) mainV.value = vSlider.value;
+        };
+      }
+
+      // Skip speed
+      const sSlider = document.getElementById('ingame-skip-speed');
+      const sVal = document.getElementById('ingame-skip-val');
+      const skipLabels = ['느림','보통','빠름'];
+      if (sSlider && sVal) {
+        sSlider.value = skipSpeed || 2;
+        sVal.textContent = skipLabels[parseInt(sSlider.value)-1] || '보통';
+        sSlider.oninput = () => {
+          skipSpeed = parseInt(sSlider.value);
+          sVal.textContent = skipLabels[skipSpeed-1];
+          try { localStorage.setItem('game_skip', skipSpeed); } catch(e){}
+        };
+      }
+
+      // Vib toggle state
+      const vibBtn = document.getElementById('vib-toggle');
+      if (vibBtn) {
+        vibBtn.textContent = vibrationEnabled ? 'ON' : 'OFF';
+        if (vibrationEnabled) vibBtn.classList.add('on'); else vibBtn.classList.remove('on');
+      }
+    }
+    function toggleVibrationPref() {
+      vibrationEnabled = !vibrationEnabled;
+      const btn = document.getElementById('vib-toggle');
+      if (btn) {
+        btn.textContent = vibrationEnabled ? 'ON' : 'OFF';
+        btn.classList.toggle('on', vibrationEnabled);
+      }
+      try { localStorage.setItem('game_vib', vibrationEnabled ? '1' : '0'); } catch(e){}
+      triggerVibrate(12);
+    }
+
     function backToTitle() {
+      stopAuto();
       stopBGM();
       document.getElementById('game-screen').classList.add('hidden');
       document.getElementById('title-screen').classList.remove('hidden');
@@ -1662,7 +2874,24 @@
     function initPWA() {
       // Register simple service worker for offline cache (index + assets/images)
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
+        navigator.serviceWorker.register('./sw.js').then((reg) => {
+          // PWA perfect: auto update handling
+          if (reg.waiting) {
+            // new sw waiting, could prompt but silent refresh on next load
+          }
+          reg.addEventListener('updatefound', () => {
+            const newSW = reg.installing;
+            if (newSW) {
+              newSW.addEventListener('statechange', () => {
+                if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New content ready; for seamless, post message to activate
+                  // (user can hard refresh or we auto on next nav)
+                  newSW.postMessage && newSW.postMessage({ type: 'SKIP_WAITING' }); // tell sw
+                }
+              });
+            }
+          });
+        }).catch(() => {});
       }
     }
 
@@ -1698,6 +2927,14 @@
 
       // Load any saved
       loadUnlockedCG();
+      loadFavorites();
+      // Load vib / skip prefs
+      try {
+        const v = localStorage.getItem('game_vib');
+        if (v !== null) vibrationEnabled = v === '1';
+        const sk = localStorage.getItem('game_skip');
+        if (sk) skipSpeed = parseInt(sk) || 2;
+      } catch(e){}
 
       // Wire volume from settings even if closed
       const vol = document.getElementById('bgm-volume');
@@ -1736,45 +2973,208 @@
       }
     }
 
-    // Tap visual area to advance (mobile friendly)
+    // Tap visual area to advance (mobile friendly) + double tap auto, long press menu, gestures
     function initMobileTap() {
       const visual = document.getElementById('visual-area');
       if (!visual) return;
+
+      let tapCount = 0;
+      let lastTap = 0;
+      let pressTimer = null;
+
       visual.addEventListener('click', (e) => {
-        // Don't advance if clicking on buttons or choices
-        if (e.target.closest('button') || e.target.closest('#choices-container')) return;
+        if (e.target.closest('button') || e.target.closest('#choices-container') || e.target.closest('.longpress-hint')) return;
         const next = document.getElementById('next-container');
         const choices = document.getElementById('choices-container');
         if (!choices.classList.contains('hidden') && choices.children.length > 0) {
-          // let choice buttons handle
+          // choice handled separately
         } else if (!next.classList.contains('hidden')) {
           next.querySelector('button')?.click();
         }
+        // Double tap detection for auto toggle (high-production mobile UX)
+        const now = Date.now();
+        if (now - lastTap < 320) {
+          tapCount++;
+          if (tapCount >= 2) {
+            toggleAutoPlay();
+            tapCount = 0;
+          }
+        } else {
+          tapCount = 1;
+        }
+        lastTap = now;
       });
 
-      // 고도화: 모바일 스와이프 다음 (오른쪽으로 스와이프 = 다음)
-      let touchStartX = 0;
+      // Long press anywhere on visual -> open in-game menu (erotic polish)
+      visual.addEventListener('touchstart', (e) => {
+        if (e.target.closest('button') || e.target.closest('#choices-container')) return;
+        clearTimeout(pressTimer);
+        pressTimer = setTimeout(() => {
+          showInGameMenu();
+          triggerVibrate(30);
+        }, 620);
+      }, {passive: true});
+      visual.addEventListener('touchend', () => clearTimeout(pressTimer));
+      visual.addEventListener('touchmove', () => clearTimeout(pressTimer));
+      visual.addEventListener('touchcancel', () => clearTimeout(pressTimer));
+
+      // Long press fallback for mouse/desktop
+      visual.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button') || e.target.closest('#choices-container')) return;
+        clearTimeout(pressTimer);
+        pressTimer = setTimeout(() => showInGameMenu(), 780);
+      });
+      visual.addEventListener('mouseup', () => clearTimeout(pressTimer));
+      visual.addEventListener('mouseleave', () => clearTimeout(pressTimer));
+
+      // Swipe gesture improvements (left swipe = advance, down = toggle menu hint)
+      let touchStartX = 0, touchStartY = 0;
       visual.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
       }, {passive: true});
       visual.addEventListener('touchend', (e) => {
         const touchEndX = e.changedTouches[0].screenX;
-        const delta = touchEndX - touchStartX;
-        if (delta < -50) { // 왼쪽 스와이프 = 다음
-          const next = document.getElementById('next-container');
-          const choices = document.getElementById('choices-container');
-          if (!choices.classList.contains('hidden') && choices.children.length > 0) {
-            // choice
-          } else if (!next.classList.contains('hidden')) {
-            next.querySelector('button')?.click();
+        const touchEndY = e.changedTouches[0].screenY;
+        const dx = touchEndX - touchStartX;
+        const dy = touchEndY - touchStartY;
+        const nextEl = document.getElementById('next-container');
+        const chEl = document.getElementById('choices-container');
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 55) {
+          if (dx < -55) { // left swipe advance
+            if (!chEl.classList.contains('hidden') && chEl.children.length > 0) return;
+            if (!nextEl.classList.contains('hidden')) nextEl.querySelector('button')?.click();
           }
+        } else if (dy > 80 && Math.abs(dy) > 60) {
+          // downward swipe -> open menu
+          showInGameMenu();
         }
       }, {passive: true});
+    }
+
+    // Auto play (double tap visual)
+    function toggleAutoPlay() {
+      autoPlaying = !autoPlaying;
+      const autoBtn = document.getElementById('auto-btn');
+      const visual = document.getElementById('visual-area');
+      if (autoBtn) autoBtn.classList.toggle('auto-active', autoPlaying);
+
+      if (autoPlaying) {
+        if (visual) {
+          let ind = visual.querySelector('.auto-indicator');
+          if (!ind) {
+            ind = document.createElement('div');
+            ind.className = 'auto-indicator';
+            ind.textContent = 'AUTO';
+            visual.appendChild(ind);
+          }
+        }
+        startAutoAdvance();
+        triggerVibrate(18);
+      } else {
+        stopAuto();
+        if (visual) {
+          const ind = visual.querySelector('.auto-indicator');
+          if (ind) ind.remove();
+        }
+      }
+    }
+    function startAutoAdvance() {
+      stopAuto();
+      const speed = Math.max(650, getTextSpeed() * 38 + (skipSpeed > 2 ? -280 : 0));
+      autoPlayInterval = setInterval(() => {
+        const gameHidden = document.getElementById('game-screen').classList.contains('hidden');
+        if (gameHidden || !autoPlaying) { stopAuto(); return; }
+        const ch = document.getElementById('choices-container');
+        const nx = document.getElementById('next-container');
+        if (!ch.classList.contains('hidden') && ch.children.length > 0) {
+          // stop on choices for player decision
+          stopAuto();
+          if (document.getElementById('auto-btn')) document.getElementById('auto-btn').classList.remove('auto-active');
+          autoPlaying = false;
+          return;
+        }
+        if (!nx.classList.contains('hidden')) {
+          nx.querySelector('button')?.click();
+        } else {
+          stopAuto();
+        }
+      }, speed);
+    }
+    function stopAuto() {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
+      const visual = document.getElementById('visual-area');
+      if (visual) {
+        const ind = visual.querySelector('.auto-indicator');
+        if (ind) ind.remove();
+      }
+      autoPlaying = false;
+      const ab = document.getElementById('auto-btn');
+      if (ab) ab.classList.remove('auto-active');
+    }
+
+    // Vibration support (toggleable) + sfx helpers already referenced
+    function triggerVibrate(pattern) {
+      if (!vibrationEnabled) return;
+      try {
+        if (navigator.vibrate) navigator.vibrate(pattern || 20);
+      } catch(e){}
+    }
+    // Ensure playSFX exists if referenced (lightweight synthetic)
+    if (typeof window.playSFX === 'undefined') {
+      window.playSFX = function(type) {
+        try {
+          if (!audioContext || !bgmEnabled) return;
+          const o = audioContext.createOscillator();
+          const g = audioContext.createGain();
+          o.type = (type==='h'||type==='orgy') ? 'sawtooth' : 'sine';
+          o.frequency.value = (type==='choice') ? 720 : (type==='h'? 188 : 310);
+          g.gain.value = 0.012;
+          const f = audioContext.createBiquadFilter();
+          f.type='lowpass'; f.frequency.value = 820;
+          o.connect(f); f.connect(g); g.connect(audioContext.destination);
+          o.start();
+          setTimeout(()=>{ try { g.gain.linearRampToValueAtTime(0.0001, audioContext.currentTime+0.18); o.stop(audioContext.currentTime+0.22);}catch(e){} }, (type==='orgy'?180:110));
+        } catch(e){}
+      };
+    }
+
+    function toggleTextSkip() {
+      textSkipMode = !textSkipMode;
+      const btn = document.getElementById('skip-btn');
+      if (btn) btn.style.background = textSkipMode ? '#9f1239' : '';
+      if (textSkipMode) {
+        // Fast forward current text + auto-advance at skip speed
+        const speedFactor = Math.max(1, 4 - skipSpeed);
+        // Instantly complete current text
+        const txt = document.getElementById('dialogue-text');
+        if (txt) {
+          // force finish typing if in progress by re-rendering full
+          const scene = scenes.find(s => s.id === currentScene);
+          if (scene) {
+            let t = scene.text || '';
+            if (playerName) t = t.replace(/태현/g, playerName);
+            txt.innerHTML = `<p>${t.replace(/\n/g,'<br>')}</p>`;
+          }
+        }
+        setTimeout(() => {
+          if (textSkipMode) {
+            nextLine();
+            textSkipMode = false;
+            if (btn) btn.style.background = '';
+          }
+        }, 90 / speedFactor);
+      }
     }
 
     window.onload = function() {
       boot();
       initMobileTap();
+      // Ensure particles layer ready on title (subtle)
+      setTimeout(() => { if (document.getElementById('visual-particles')) createVisualParticles(); }, 420);
     };
   </script>
 </body>
