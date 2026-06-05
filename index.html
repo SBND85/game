@@ -230,6 +230,7 @@
         <button onclick="showGallery()" class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10">갤러리</button>
         <button onclick="quickSave()" class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10">저장</button>
         <button onclick="toggleFullscreen()" class="px-2 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10 hidden sm:block">⛶</button>
+        <button onclick="showBacklog()" class="px-3 py-1 text-xs rounded-full bg-white/5 border border-white/10 active:bg-white/10">백로그</button>
       </div>
     </div>
 
@@ -372,6 +373,7 @@
     let currentBgmController = null;
     let currentSynthGain = null; // used for internal synth fade references
     let playerName = '';
+    let textHistory = []; // for backlog 고도화
 
     // === NEW GAME DATA: 강남 직장인 리유니온 ===
     const heroinesPool = {
@@ -623,6 +625,9 @@
       { id: "sua_aroused", title: "이수아 - 흥분 (에로게 스타일)", src: "assets/images/eroge_sua_aroused.jpg", unlockLewd: 4 },
       { id: "sua_lewd", title: "이수아 - 강한 흥분 (동급생 톤)", src: "assets/images/eroge_sua_lewd.jpg", unlockLewd: 5 },
       { id: "sua_uniform", title: "이수아 - 교복 노스탤지아 (동급생 톤)", src: "assets/images/eroge_uniform_sua.jpg", unlockLewd: 6 },
+      { id: "jieun_uniform", title: "김지은 - 교복 노스탤지아 (동급생 톤)", src: "assets/images/eroge_uniform_jieun.jpg", unlockLewd: 6 },
+      { id: "harin_uniform", title: "박하린 - 교복 노스탤지아 (동급생 톤)", src: "assets/images/eroge_uniform_harin.jpg", unlockLewd: 6 },
+      { id: "yujin_uniform", title: "최유진 - 교복 노스탤지아 (동급생 톤)", src: "assets/images/eroge_uniform_yujin.jpg", unlockLewd: 6 },
       { id: "jieun_lewd", title: "김지은 - 흥분 (에로게 스타일)", src: "assets/images/eroge_jieun_lewd.jpg", unlockLewd: 5 },
       { id: "harin_lewd", title: "박하린 - 흥분 (에로게 스타일)", src: "assets/images/eroge_harin_lewd.jpg", unlockLewd: 5 },
       { id: "lounge", title: "강남 라운지 - 일본 에로게 배경", src: "assets/images/eroge_lounge_bg.jpg", unlockLewd: 0 },
@@ -742,6 +747,26 @@
           renderParticipantsBar();
         };
       }, 50);
+    }
+
+    function showBacklog() {
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-4';
+      modal.onclick = () => modal.remove();
+      const content = document.createElement('div');
+      content.className = 'bg-[#120c0f] border border-white/10 rounded-3xl max-w-2xl w-full max-h-[80vh] overflow-auto p-6 text-sm';
+      content.onclick = e => e.stopImmediatePropagation();
+      let html = '<div class="font-semibold text-lg mb-4">백로그 (이전 대사)</div>';
+      if (textHistory.length === 0) {
+        html += '<div class="text-white/50">아직 대사가 없습니다.</div>';
+      } else {
+        textHistory.forEach((entry, i) => {
+          html += `<div class="mb-3"><span class="text-[#fda4af]">${entry.speaker || '나레이션'}</span>: ${entry.text.replace(/\n/g, '<br>')}</div>`;
+        });
+      }
+      content.innerHTML = html + '<div class="mt-4 text-right"><button class="px-4 py-2 bg-white/10 rounded" onclick="this.closest(\'.fixed\').remove()">닫기</button></div>';
+      modal.appendChild(content);
+      document.body.appendChild(modal);
     }
 
     // === BGM: Multi-layer Synthetic + Real audio support (chill / tension / intense phases) ===
@@ -1194,6 +1219,7 @@
       // Always start with random group selection for this night
       currentScene = 0;
       flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
+      textHistory = [];
       renderScene(0); // group-select will handle random + UI
     }
 
@@ -1295,6 +1321,11 @@
 
       const textEl = document.getElementById('dialogue-text');
       const speed = getTextSpeed();
+
+      if (scene.speaker || sceneText) {
+        textHistory.push({ speaker: scene.speaker || '', text: sceneText });
+        if (textHistory.length > 50) textHistory.shift();
+      }
 
       if (scene.choices && scene.choices.length > 0) {
         textEl.innerHTML = `<p>${sceneText.replace(/\n/g, '<br>')}</p>`;
