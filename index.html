@@ -268,7 +268,7 @@
     .title-premium-bg {
       position: relative;
       background: linear-gradient(178deg, rgba(7,4,5,0.48) 0%, rgba(12,7,9,0.76) 38%, rgba(7,4,5,0.93) 82%),
-                  url('assets/images/gangnam_lounge.jpg');
+                  url('assets/images/eroge_lounge_bg.jpg');
       background-size: cover;
       background-position: center 36%;
       overflow: hidden;
@@ -536,12 +536,12 @@
           </div>
         </div>
         
-        <div class="mt-11 text-[10px] text-white/35 tracking-[3.5px]">MOBILE WEB APP • 29+ ONLY</div>
+        <div class="mt-11 text-[10px] text-white/35 tracking-[3.5px]">PREMIUM EROGE VN • 40+ SCENES • 5 SLOTS • MEMORIES • MOBILE</div>
       </div>
     </div>
     
     <div class="p-4 text-center text-[10px] text-white/28 border-t border-white/10 tracking-[2.5px]">
-      강남 직장인 동기들 · 슬로우번 · 랜덤 2~4명 · 노골적 하렘/난교
+      4 히로인 · 40+ 씬 · 그룹 규모별 H/난교 · 5 슬롯 · 메모리 · 에로게 프리미엄
     </div>
   </div>
 
@@ -605,7 +605,7 @@
     <!-- Visual Area - maximized focus, readability, particles + transitions -->
     <div id="visual-area" 
          class="relative flex-1 bg-black overflow-hidden flex items-end justify-center game-bg bg-transitioning"
-         style="background-image: url('assets/images/gangnam_lounge.jpg'); min-height: 52vh;">
+         style="background-image: url('assets/images/eroge_lounge_bg.jpg'); min-height: 52vh;">
       
       <!-- Participants -->
       <div id="participants-bar" class="hidden w-full px-3 pt-1 pb-0.5 z-20 bg-black/40">
@@ -873,7 +873,7 @@
         img: 'assets/images/eroge_sua_base.jpg', 
         base: 'assets/images/eroge_sua_base.jpg',
         aroused: 'assets/images/eroge_sua_aroused.jpg',
-        lewd: 'assets/images/eroge_sua_lewd.jpg',
+        lewd: 'assets/images/eroge_sua_office_lewd.jpg',
         uniform: 'assets/images/eroge_uniform_sua.jpg',
         desc: '우아하고 장난 많지만 리드 잘하는 타입. 대학 시절부터 플러팅의 달인. 부드럽게 주도하며 자궁 깊숙이 애정 표현. 교복 입으면 완전 에로게 동급생 모드.' 
       },
@@ -881,8 +881,8 @@
         id: 'jieun', name: '김지은', job: '증권사 선임 애널리스트', 
         img: 'assets/images/eroge_jieun_base.jpg', 
         base: 'assets/images/eroge_jieun_base.jpg',
-        aroused: 'assets/images/eroge_jieun_base.jpg',
-        lewd: 'assets/images/eroge_jieun_lewd.jpg',
+        aroused: 'assets/images/eroge_jieun_lewd.jpg',
+        lewd: 'assets/images/eroge_jieun_office_lewd.jpg',
         uniform: 'assets/images/eroge_uniform_jieun.jpg',
         desc: '차갑고 주도적, 말보다 행동파. 압박 속 숨긴 지배욕. 정확하고 거칠게 컨트롤하며 보지/클릿 명령. 교복 코스프레에 극도로 약함.' 
       },
@@ -903,15 +903,6 @@
         lewd: 'assets/images/eroge_yujin_lewd.jpg',
         uniform: 'assets/images/eroge_uniform_yujin.jpg',
         desc: '명랑하고 적극적, 분위기 메이커. 스캔들 좋아함. 거칠게 허리 흔들며 큰 소리 지르는 타입. 교복이 제일 잘 어울리고 호텔 방 열쇠 챙기는 적극파.' 
-      },
-      jisu: { 
-        id: 'jisu', name: '강지수', job: '패션 스타트업 CEO', 
-        img: 'assets/images/eroge_jisu_base.jpg', 
-        base: 'assets/images/eroge_jisu_base.jpg',
-        aroused: 'assets/images/eroge_jisu_base.jpg',
-        lewd: 'assets/images/eroge_jisu_base.jpg',
-        uniform: 'assets/images/eroge_jisu_base.jpg',
-        desc: '자신감 넘치고 창의적, 파티의 여왕. 패션 감각으로 교복을 섹시하게 스타일링. 대담하고 실험적인 플레이 선호.' 
       }
     };
 
@@ -919,8 +910,7 @@
       '이수아': 'sua',
       '김지은': 'jieun',
       '박하린': 'harin',
-      '최유진': 'yujin',
-      '강지수': 'jisu'
+      '최유진': 'yujin'
     };
 
     let currentGroup = []; // array of heroine keys, randomly chosen 2~4
@@ -977,9 +967,9 @@
         { text: "본격 풀 난교로 돌입 (그룹 최대 동시)", next: 26, flag: { lewd: 8 } }
       ] },
       { id: 20, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "이수아", char: "assets/images/eroge_uniform_sua.jpg", text: "수아와 단둘이. 교복 차림으로 침대에 눕는다.\n\n\"태현아... 교복 입은 수아 보지에 천천히 넣어. 자궁까지 닿게. 수아가 조여줄게... 아, 깊어... 대학 때부터 좋아했어. 더 세게 박아. 네 정액으로 수아 자궁 가득 채워... 애정 있게, 느리게... 오랫동안.\" (다른 멤버 관찰/보조)", next: 25 },
-      { id: 21, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_lewd.jpg", text: "지은이 차가운 표정으로 너를 침대에 밀어붙인다. 교복 치마 올리고.\n\n\"무릎 꿇어. 오늘은 내가 리드한다. 혀로 내 클리토리스 빨아. 깊게 파고들어. 증권사 선임이 이렇게까지 타락하는 거 네가 책임져.\"\n\n\"안에 싸. 정확하게. 내 보지에 네 정액 가득 채워. 내가 컨트롤할게. 교복 입은 년 보지 망가뜨려.\"", next: 25 },
+      { id: 21, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_office_lewd.jpg", text: "지은이 차가운 표정으로 너를 침대에 밀어붙인다. 교복 치마 올리고.\n\n\"무릎 꿇어. 오늘은 내가 리드한다. 혀로 내 클리토리스 빨아. 깊게 파고들어. 증권사 선임이 이렇게까지 타락하는 거 네가 책임져.\"\n\n\"안에 싸. 정확하게. 내 보지에 네 정액 가득 채워. 내가 컨트롤할게. 교복 입은 년 보지 망가뜨려.\"", next: 25 },
       { id: 22, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "박하린", char: "assets/images/eroge_uniform_harin.jpg", text: "하린이 몸을 떨며 네 앞에 엎드린다. 교복 치마 속 팬티 내리고 엉덩이 내민다.\n\n\"...보지랑 항문 다 보여주지. 변호사 박하린이 이렇게 더러운 년이 된 거, 태현아 네 탓이야. 손가락으로 내 구멍 파고, 자지로 보지에 박아. 아헤가오 되게 만들어... 정액으로 범벅 해줘. 항문도... 교복 입고 이렇게 변태처럼.\"", next: 25 },
-      { id: 23, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "최유진", char: "assets/images/eroge_uniform_yujin.jpg", text: "유진이 웃으며 교복 입은 채 적극적으로 네 몸 위에 올라탄다. \"태현~ 진짜 좋다! PR답게 나 먼저 움직여볼게!\"\n\n그녀가 빠르게 허리를 흔들며 \"아, 너무 커! 유진 보지 찢어질 것 같아. 더 세게 박아! 소리 지를게~ 다른 애들한테도 자랑할 거야, 교복 입은 우리가 제일 미쳤다고!\"", next: 25 },
+      { id: 23, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "최유진", char: "assets/images/eroge_yujin_lewd.jpg", text: "유진이 웃으며 교복 입은 채 적극적으로 네 몸 위에 올라탄다. \"태현~ 진짜 좋다! PR답게 나 먼저 움직여볼게!\"\n\n그녀가 빠르게 허리를 흔들며 \"아, 너무 커! 유진 보지 찢어질 것 같아. 더 세게 박아! 소리 지를게~ 다른 애들한테도 자랑할 거야, 교복 입은 우리가 제일 미쳤다고!\"", next: 25 },
       { id: 24, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "1:1 후 다른 멤버들이 합류. ${groupSize}명 몸이 겹쳐진다.\n\n듀오/트리오 조합이 시작된다. 예: 수아+지은이 동시에 너를 빨고, 하린은 옆에서 자위를 하며 지켜본다. 유진은 적극적으로 몸을 비비며 \"우리 셋이서도 충분히 미칠 수 있어!\"\n\n그룹 크기에 따라 포지션과 대사가 완전히 달라진다.", choices: [
         { text: "듀오 집중 H 계속", next: 25, flag: { lewd: 8 } },
         { text: "트리오/그룹 난교로 바로 확장", next: 26, flag: { lewd: 9 } }
@@ -1002,8 +992,8 @@
         { text: "하린+유진 듀오 변태 마무리 (그룹 3+ 추천)", next: 32, flag: { favorHarin: 2, favorYujin: 2, lewd: 4 } },
         { text: "모두 함께 새벽 마지막 풀 오르지 (그룹 규모 최대)", next: 33, flag: { lewd: 10 } }
       ] },
-      { id: 30, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "이수아", char: "assets/images/eroge_sua_lewd.jpg", text: "수아가 조용히 네 위에 다시 올라탄다. \"아직... 수아 안에 더 남아있지? 자궁까지 느껴져. 천천히 마지막으로... 사랑하게 해줘.\" (애정 가득 1:1 마무리 H)", next: 34 },
-      { id: 31, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_lewd.jpg", text: "지은이 다시 명령한다. \"한 번 더. 내 보지에 정확히. 교복 입은 채로 마지막으로 타락시켜.\" (지배적 마무리)", next: 34 },
+      { id: 30, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "이수아", char: "assets/images/eroge_sua_hotel_lewd.jpg", text: "수아가 조용히 네 위에 다시 올라탄다. \"아직... 수아 안에 더 남아있지? 자궁까지 느껴져. 천천히 마지막으로... 사랑하게 해줘.\" (애정 가득 1:1 마무리 H)", next: 34 },
+      { id: 31, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "김지은", char: "assets/images/eroge_jieun_bar_lewd.jpg", text: "지은이 다시 명령한다. \"한 번 더. 내 보지에 정확히. 교복 입은 채로 마지막으로 타락시켜.\" (지배적 마무리)", next: 34 },
       { id: 32, type: "h-scene", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "박하린", char: "assets/images/eroge_harin_lewd.jpg", text: "하린과 유진이 서로 몸을 포개며 너를 유혹. \"우리 둘... 교복 입고 더러운 짓 하게 해. 하린 항문, 유진 보지 동시에.\"\n(3인+ 듀오 변태 마무리)", next: 34 },
       { id: 33, type: "orgy", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "새벽 마지막 풀 그룹 난교. ${groupSize}명 전원이 동시에 움직인다. 교복이 정액과 애액으로 흠뻑. 신음과 \"더 세게\", \"아헤\", \"자궁에\", \"범벅\" 등의 말이 방 안을 가득 채운다.\n\n이것이 오늘 밤의 절정.", next: 34 },
       { id: 34, type: "ending", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "새벽 5시. 스위트룸은 완전 난장판.\n\n${groupSize}명의 여자들이 지친 채 서로 기대고 있다. 각자의 백스토리와 오늘의 선택이 모두 드러난 밤.\n\n\"다음에도... 우리끼리 또 하자.\"\n\n(엔딩은 favor, lewd, focus, creampie, groupSize에 따라 완전히 달라진다. Memories도 일부 해금.)", choices: [
@@ -1027,7 +1017,7 @@
       { id: "mem_group4", type: "orgy", bg: "assets/images/eroge_hotel_bg.jpg", speaker: "", char: null, text: "[MEMORY • 해금됨] 풀 4인 교복 오르지. 모든 구멍과 몸이 얽힌 극단 난교.", next: null }
     ];
 
-    // Gallery CG list - Eroge style (all new images properly referenced) + new gangnam variants integrated for variety
+    // Gallery CG list - All eroge_ (lewd/uniform for H-scenes), 4 heroines only
     const cgList = [
       { id: "sua_base", title: "이수아 - 일본 에로게 동급생 톤", src: "assets/images/eroge_sua_base.jpg", unlockLewd: 0 },
       { id: "jieun_base", title: "김지은 - 일본 에로게 동급생 톤", src: "assets/images/eroge_jieun_base.jpg", unlockLewd: 0 },
@@ -1053,7 +1043,9 @@
       { id: "sua_office_lewd", title: "이수아 - 오피스 레드 (에로게 스타일)", src: "assets/images/eroge_sua_office_lewd.jpg", unlockLewd: 7 },
       { id: "yujin_lewd", title: "최유진 - 강한 흥분 (에로게 스타일)", src: "assets/images/eroge_yujin_lewd.jpg", unlockLewd: 6 },
       { id: "yujin_office_lewd", title: "최유진 - 오피스 레드 (에로게 스타일)", src: "assets/images/eroge_yujin_office_lewd.jpg", unlockLewd: 8 },
-      { id: "jisu_base", title: "강지수 - 일본 에로게 동급생 톤", src: "assets/images/eroge_jisu_base.jpg", unlockLewd: 0 }
+      { id: "sua_hotel_lewd", title: "이수아 - 호텔 레드 (에로게 스타일)", src: "assets/images/eroge_sua_hotel_lewd.jpg", unlockLewd: 8 },
+      { id: "jieun_bar_lewd", title: "김지은 - 바 레드 (에로게 스타일)", src: "assets/images/eroge_jieun_bar_lewd.jpg", unlockLewd: 8 },
+
     ];
 
     function unlockCG(id) {
@@ -1143,7 +1135,7 @@
     function showGroupSelectScreen() {
       pickRandomGroup();
       const visual = document.getElementById('visual-area');
-      visual.style.backgroundImage = `url('assets/images/gangnam_lounge.jpg')`;
+      visual.style.backgroundImage = `url('assets/images/eroge_lounge_bg.jpg')`;
       
       const container = document.getElementById('character-container');
       container.innerHTML = '';
@@ -2532,14 +2524,17 @@
     }
 
     function resetProgress() {
-      if (!confirm('진행도를 초기화할까요?')) return;
+      if (!confirm('진행도를 초기화할까요? (슬롯/메모리 포함)')) return;
       localStorage.removeItem('game_progress');
       localStorage.removeItem('game_unlockedCG');
-      localStorage.removeItem('game_favorites');
+      localStorage.removeItem('game_memories');
+      localStorage.removeItem('game_save_slots');
       flags = { lewd: 0, affection: 0, creampie: false, favorSua: 0, favorJieun: 0, favorHarin: 0, favorYujin: 0, focus: null };
       unlockedCG = new Set();
-      favorites = new Set();
+      unlockedMemories = new Set();
+      saveSlots = {};
       currentScene = 0;
+      currentGroup = [];
       document.getElementById('game-screen').classList.add('hidden');
       document.getElementById('title-screen').classList.remove('hidden');
       stopBGM();
@@ -2956,13 +2951,15 @@
       window.jumpToH = () => {
         document.getElementById('title-screen').classList.add('hidden');
         document.getElementById('game-screen').classList.remove('hidden');
-        flags.lewd = 9;
-        flags.favorSua = 3;
-        flags.favorJieun = 2;
-        renderScene(18); // jump to orgy for testing new expanded story
+        flags.lewd = 11;
+        flags.favorSua = 5;
+        flags.favorJieun = 4;
+        flags.favorHarin = 4;
+        pickRandomGroup();
+        renderScene(26); // jump to orgy for testing MAX expanded story
       };
 
-      console.log('%c[GAME] 강남 리유니온 ready: 20 scenes (random 2-4 heroines + skips/requires/favors/branches/dynamic endings), solid mobile, BGM phases, PWA.');
+      console.log('%c[GAME] 강남 리유니온 PREMIUM EROGE ready: 40+ scenes (4 heroines only, eroge_ lewd/uniform H, group-size branches, 7+ endings + Memories), 5 slots, auto/skip, bars, searchable backlog, bottom-nav mobile, persistent localStorage.');
     }
 
     function toggleFullscreen() {
